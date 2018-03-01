@@ -63,6 +63,31 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::get('permissions/{user}/repeat', 'PermissionController@repeat')->name('permissions.repeat');
     Route::get('dashboard/log-chart', 'DashboardController@getLogChartData')->name('dashboard.log.chart');
     Route::get('dashboard/registration-chart', 'DashboardController@getRegistrationChartData')->name('dashboard.registration.chart');
+
+    //Validaciones para cliente
+    Route::get('cliente/validar/rut', 'ClienteController@validarRut')->name('cliente.validar.rut');
+
+    //Ingreso cliente nuevo
+    Route::get('cliente/nuevo', 'ClienteController@nuevoForm')->name('cliente.nuevo');
+        Route::post('cliente/nuevo', 'ClienteController@nuevoStore')->name('cliente.nuevo.store');
+
+    //Listado de Clientes
+    Route::get('cliente/lista', 'ClienteController@lista')->name('cliente.lista');
+    Route::get('cliente/lista/tabla', 'ClienteController@listaTabla')->name('cliente.lista.tabla');
+
+    //Editar cliente
+    Route::get('cliente/editar', 'ClienteController@editarForm')->name('cliente.editar');
+    Route::post('cliente/editar', 'ClienteController@editarUpdate')->name('cliente.editar.update');
+
+    //Habilitar cliente
+    Route::get('cliente/habilitar', 'ClienteController@habilitar')->name('cliente.habilitar');
+
+    //DesHabilitar cliente
+    Route::get('cliente/deshabilitar', 'ClienteController@deshabilitar')->name('cliente.deshabilitar');
+
+
+
+
 });
 
 
@@ -75,4 +100,23 @@ Route::group(['as' => 'protection.'], function () {
     Route::get('membership', 'MembershipController@index')->name('membership')->middleware('protection:' . config('protection.membership.product_module_number') . ',protection.membership.failed');
     Route::get('membership/access-denied', 'MembershipController@failed')->name('membership.failed');
     Route::get('membership/clear-cache/', 'MembershipController@clearValidationCache')->name('membership.clear_validation_cache');
+});
+
+
+
+Route::group(['as' => 'admin'], function () {
+    /**
+     *
+     */
+
+
+    Route::get('salida', 'BodegaController@salidaForm')->name('bodega.salida');
+    Route::post('salida/cilindro/agregar', 'BodegaController@entradaCrear')->name('bodega.entrada.crear');
+    Route::post('salida/cilindro/eliminar', 'BodegaController@entradaCrear')->name('bodega.entrada.crear');
+    Route::post('salida', 'BodegaController@salida')->name('bodega.salida.crear');
+
+    Route::get('inventario', 'BodegaController@formInventario')->name('bodega.inventario.create');
+    Route::post('inventario/comenzar', 'BodegaController@comenzarInventario')->name('bodega.inventario.comenzar');
+    Route::post('inventario/cilindro/agregar', 'BodegaController@inventario')->name('bodega.inventario.comenzar');
+    Route::post('inventario/finalizar', 'BodegaController@finalizarInventario')->name('bodega.inventario.finalizar');
 });
