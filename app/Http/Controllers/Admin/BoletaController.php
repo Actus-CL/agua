@@ -1,11 +1,10 @@
 <?php
 
-namespace App\Http\Controllers\man;
+namespace App\Http\Controllers\Admin;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-
-class EstadoPagoController extends Controller
+class BoletaController extends Controller
 {
     //
 }

@@ -9,6 +9,7 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Routing\Route;
+use App\Cliente;
 
 class DashboardController extends Controller
 {
@@ -29,6 +30,8 @@ class DashboardController extends Controller
      */
     public function index()
     {
+       // $cliente= Cliente::find(1);
+       // dd($cliente->proyectos);
         $counts = [
             'users' => \DB::table('users')->count(),
             'users_unconfirmed' => \DB::table('users')->where('confirmed', false)->count(),

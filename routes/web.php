@@ -64,12 +64,13 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::get('dashboard/log-chart', 'DashboardController@getLogChartData')->name('dashboard.log.chart');
     Route::get('dashboard/registration-chart', 'DashboardController@getRegistrationChartData')->name('dashboard.registration.chart');
 
+
     //Validaciones para cliente
-    Route::get('cliente/validar/rut', 'ClienteController@validarRut')->name('cliente.validar.rut');
+    Route::post('cliente/validar/rut', 'ClienteController@validarRut')->name('cliente.validar.rut'); //Permite validar si un rut existe en la base de datos
 
     //Ingreso cliente nuevo
     Route::get('cliente/nuevo', 'ClienteController@nuevoForm')->name('cliente.nuevo');
-        Route::post('cliente/nuevo', 'ClienteController@nuevoStore')->name('cliente.nuevo.store');
+    Route::post('cliente/nuevo', 'ClienteController@nuevoStore')->name('cliente.nuevo.store');
 
     //Listado de Clientes
     Route::get('cliente/lista', 'ClienteController@lista')->name('cliente.lista');
@@ -87,6 +88,82 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
 
 
 
+    //Ingreso medidor nuevo
+    Route::get('medidor/nuevo', 'MedidorController@nuevoForm')->name('medidor.nuevo');
+    Route::post('medidor/nuevo', 'MedidorController@nuevoStore')->name('medidor.nuevo.store');
+
+    //Listado de medidores
+    Route::get('medidor/lista', 'MedidorController@lista')->name('medidor.lista');
+    Route::get('medidor/lista/tabla', 'MedidorController@listaTabla')->name('medidor.lista.tabla');
+
+    //Editar medidor
+    Route::get('medidor/editar', 'MedidorController@editarForm')->name('medidor.editar');
+    Route::post('medidor/editar', 'MedidorController@editarUpdate')->name('medidor.editar.update');
+
+
+
+    //Ingreso cuenta nuevo
+    Route::get('cuenta/nuevo', 'CuentaController@nuevoForm')->name('cuenta.nuevo');
+    Route::post('cuenta/nuevo', 'CuentaController@nuevoStore')->name('cuenta.nuevo.store');
+
+    //Listado de cuentas
+    Route::get('cuenta/lista', 'CuentaController@lista')->name('cuenta.lista');
+    Route::get('cuenta/lista/tabla', 'CuentaController@listaTabla')->name('cuenta.lista.tabla');
+
+    // Habilitar Cuenta
+    Route::get('cuenta/habilitar/{id}', 'CuentaController@habilitar')->name('cuenta.habilitar');
+
+    // Suspender Cuenta
+    Route::get('cuenta/suspender/{id}', 'CuentaController@suspender')->name('cuenta.suspender');
+
+    //Retirar Cuenta
+    Route::get('cuenta/retirar/{id}', 'CuentaController@retirar')->name('cuenta.retirar');
+
+    //Ver historial de cuenta
+    Route::get('cuenta/lista/historial', 'CuentaController@listaHistorial')->name('cuenta.lista.historial');
+
+    //Ver boletas de cuenta
+    Route::get('cuenta/lista/boletas', 'CuentaController@listaBoletas')->name('cuenta.lista.boletas');
+
+
+
+    //Ingreso periodo nuevo
+    Route::get('periodo/nuevo', 'PeriodoController@nuevoForm')->name('periodo.nuevo');
+    Route::post('periodo/nuevo', 'PeriodoController@nuevoStore')->name('periodo.nuevo.store');
+
+    //Listado de medidores
+    Route::get('periodo/lista', 'PeriodoController@lista')->name('periodo.lista');
+    Route::get('periodo/lista/tabla', 'PeriodoController@listaTabla')->name('periodo.lista.tabla');
+
+    // Activar periodo
+    Route::get('periodo/activar/{id}', 'PeriodoController@habilitar')->name('periodo.activar');
+
+
+    //Mantenedores
+    Route::resource('cuentaestado', 'CRUD\CuentaEstadoController');
+    Route::resource('estadopago', 'CRUD\EstadoPagoController');
+    Route::resource('medidormodelo', 'CRUD\MedidorModeloController');
+    Route::resource('proyecto', 'CRUD\ProyectoController');
+    Route::resource('servicio', 'CRUD\ServicioController');
+
+
+
+    //Ingreso lectura nuevo
+    Route::get('lectura/ingresar', 'LecturaController@nuevoForm')->name('lectura.nuevo');
+
+    //Calculo manual periodo
+    Route::get('periodo/calcular', 'PeriodoController@calcular')->name('periodo.calcular');//muestra el priodo y dá la opcion de calcular
+    Route::post('periodo/calcular', 'PeriodoController@calcularGuardar')->name('periodo.calcular.guardar'); //crea las boletas
+
+    //Ingresar recaudacion manual
+    Route::get('reacaudacion/ingresar', 'RecaudacionController@nuevoForm')->name('recaudacion.nuevo'); // formulario para ingresar la recaudacion
+    Route::post('reacaudacion/ingresar', 'RecaudacionController@nuevoForm')->name('recaudacion.nuevo.store'); //procesar el formulario de recaudacion
+
+
+    //Informe de cuentas atrasadas
+    Route::get('cobranza/lista', 'CobranzaController@lista')->name('cobranza.lista');
+    Route::get('cobranza/lista/tabla', 'CobranzaController@listaTabla')->name('cobranza.lista.tabla');
+
 
 });
 
@@ -102,21 +179,3 @@ Route::group(['as' => 'protection.'], function () {
     Route::get('membership/clear-cache/', 'MembershipController@clearValidationCache')->name('membership.clear_validation_cache');
 });
 
-
-
-Route::group(['as' => 'admin'], function () {
-    /**
-     *
-     */
-
-
-    Route::get('salida', 'BodegaController@salidaForm')->name('bodega.salida');
-    Route::post('salida/cilindro/agregar', 'BodegaController@entradaCrear')->name('bodega.entrada.crear');
-    Route::post('salida/cilindro/eliminar', 'BodegaController@entradaCrear')->name('bodega.entrada.crear');
-    Route::post('salida', 'BodegaController@salida')->name('bodega.salida.crear');
-
-    Route::get('inventario', 'BodegaController@formInventario')->name('bodega.inventario.create');
-    Route::post('inventario/comenzar', 'BodegaController@comenzarInventario')->name('bodega.inventario.comenzar');
-    Route::post('inventario/cilindro/agregar', 'BodegaController@inventario')->name('bodega.inventario.comenzar');
-    Route::post('inventario/finalizar', 'BodegaController@finalizarInventario')->name('bodega.inventario.finalizar');
-});
