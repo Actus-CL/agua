@@ -10,7 +10,7 @@
         <div class="col-md-12 col-sm-12 col-xs-12">
             <div class="x_panel">
                 <div class="x_title">
-                    <h2>Nuevo Periodo <small> </small></h2>
+                    <h2>Ingresar nueva lectura <small> </small></h2>
                     <ul class="nav navbar-right panel_toolbox">
                         <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
                         </li>
@@ -30,22 +30,22 @@
                 </div>
                 <div class="x_content">
                     <br />
-                    <form   data-parsley-validate class="form-horizontal form-label-left autoform" action="{{route("admin.periodo.nuevo")}}" method="post">
+                    <form   data-parsley-validate class="form-horizontal form-label-left autoform" action="{{route("admin.lectura.nuevo")}}" method="post">
                         <div class="row">
                             <div class="col-md-6 col-sm-6 col-xs-12">
 
                                 <div class="form-group">
-                                    <label class="control-label col-md-4 col-sm-4 col-xs-12" for="first-name">Nombre <span class="required">*</span>
+                                    <label class="control-label col-md-4 col-sm-4 col-xs-12" for="first-name">Medidor <span class="required">*</span>
                                     </label>
                                     <div class="col-md-8 col-sm-8 col-xs-12">
-                                        <input type="text" id="nombre" name="nombre" value="{{$bag['nombre']}}"  readonly required="required" class="form-control col-md-7 col-xs-12" >
+                                        <input type="text" name="country" id="autocomplete-custom-append" class="form-control col-md-10" autocomplete="off">
                                     </div>
                                 </div>
                                 <div class="form-group xdisplay_inputx has-feedback">
                                     <label class="control-label col-md-4 col-sm-3 col-xs-12" for="last-name">Desde
                                     </label>
                                     <div class="col-md-8 col-sm-8 col-xs-12">
-                                        <input type="text" class="inputfecha form-control has-feedback-left" id="single_cal1"  name="desde"  value="{{$bag['desde']}}"  aria-describedby="inputSuccess2Status">
+                                        <input type="text" class="inputfecha form-control has-feedback-left" id="single_cal1"  name="desde"  value=""  aria-describedby="inputSuccess2Status">
                                         <span class="fa fa-calendar-o form-control-feedback left" aria-hidden="true"></span>
                                         <span id="inputSuccess2Status" class="sr-only">(success)</span>
                                     </div>
@@ -67,14 +67,14 @@
                                     <label class="control-label col-md-4 col-sm-4 col-xs-12" for="first-name">Mes <span class="required">*</span>
                                     </label>
                                     <div class="col-md-8 col-sm-8 col-xs-12">
-                                        <input type="text" id="mes" name="mes"  required="required" value="{{$bag['mes']}}"  class="form-control col-md-7 col-xs-12">
+                                        <input type="text" id="mes" name="mes"  required="required" value=" "  class="form-control col-md-7 col-xs-12">
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <label class="control-label col-md-4 col-sm-4 col-xs-12" for="last-name">Año  <span class="required">*</span>
                                     </label>
                                     <div class="col-md-8 col-sm-8 col-xs-12">
-                                        <input type="text" id="anio" name="anio"  required="required" value="{{$bag['anio']}}" class="form-control col-md-7 col-xs-12">
+                                        <input type="text" id="anio" name="anio"  required="required" value=" " class="form-control col-md-7 col-xs-12">
                                     </div>
                                 </div>
 
@@ -82,35 +82,6 @@
                         </div>
 
 
-                        <div class="ln_solid"></div>
-                        <h4>Vencimientos</h4>
-                        <div class="row">
-                            <div class="col-md-6 col-sm-6 col-xs-12">
-                                <div class="form-group xdisplay_inputx has-feedback">
-                                    <label class="control-label col-md-4 col-sm-3 col-xs-12" for="last-name">Fecha Maxima de pago
-                                    </label>
-                                    <div class="col-md-8 col-sm-8 col-xs-12">
-                                        <input type="text" class="inputfecha form-control has-feedback-left" id="single_cal1"  name="f_vencimiento_pago"  aria-describedby="inputSuccess2Status">
-                                        <span class="fa fa-calendar-o form-control-feedback left" aria-hidden="true"></span>
-                                        <span id="inputSuccess2Status" class="sr-only">(success)</span>
-                                    </div>
-                                </div>
-
-                            </div>
-
-                            <div class="col-md-6 col-sm-6 col-xs-12">
-
-                                <div class="form-group">
-                                    <label for="middle-name" class="control-label col-md-4 col-sm-3 col-xs-12">Fecha de corte</label>
-                                    <div class="col-md-8 col-sm-8 col-xs-12">
-                                        <input type="text" class="inputfecha form-control has-feedback-left" id="single_cal1"  name="f_vencimiento_corte"  aria-describedby="inputSuccess2Status">
-                                        <span class="fa fa-calendar-o form-control-feedback left" aria-hidden="true"></span>
-                                        <span id="inputSuccess2Status" class="sr-only">(success)</span>
-                                    </div>
-                                </div>
-
-                            </div>
-                        </div>
                         <div class="ln_solid"></div>
 
                         <div class="form-group">
@@ -139,7 +110,7 @@
                 var nombre = mes+anio;
                 console.log(nombre);
                 $('input[name="nombre"]').val(nombre);
-             });
+            });
 
 
 

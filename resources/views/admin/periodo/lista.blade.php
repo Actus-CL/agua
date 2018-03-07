@@ -10,7 +10,7 @@
         <div class="col-md-12 col-sm-12 col-xs-12">
             <div class="x_panel">
                 <div class="x_title">
-                    <h2>Listado de clientes <small> </small></h2>
+                    <h2>Listado de Periodos <small> </small></h2>
                     <ul class="nav navbar-right panel_toolbox">
                         <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
                         </li>
@@ -33,11 +33,12 @@
                     <table id="datatable" class="table table-striped table-bordered" >
                         <thead>
                         <tr>
-                            <th>Nº</th>
-                            <th>Rut</th>
                             <th>Nombre</th>
-                            <th>Email</th>
-                            <th>Direccion</th>
+                            <th>Activo</th>
+                            <th>Desde</th>
+                            <th>Hasta</th>
+                            <th>Pago</th>
+                            <th>Corte</th>
                             <th> </th>
                         </tr>
                         </thead>
@@ -58,13 +59,14 @@
         var tabla = $('#datatable').DataTable({
             processing: true,
             serverSide: true,
-            ajax: "{{ route('admin.cliente.lista.tabla')}}",
+            ajax: "{{ route('admin.periodo.lista.tabla')}}",
             columns: [
-                {data: 'id', name: 'id'},
-                {data: 'rut', name: 'rut'},
                 {data: 'nombre', name: 'nombre'},
-                {data: 'email', name: 'email'},
-                {data: 'direccion', name: 'direccion'},
+                {data: 'activo', name: 'activo'},
+                {data: 'desde', name: 'desde'},
+                {data: 'hasta', name: 'hasta'},
+                {data: 'f_vencimiento_pago', name: 'f_vencimiento_pago'},
+                {data: 'f_vencimiento_corte', name: 'f_vencimiento_corte'},
                 {data: 'action', name: 'action', orderable: false, searchable: false}
             ],
             "bFilter": true,

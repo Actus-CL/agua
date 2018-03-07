@@ -5,8 +5,8 @@
         {{ config('app.name') }}
     </div>
     <div class="m-b-md">
-        Sample users:<br/>
-        Admin user: admin.laravel@labs64.com / password: admin<br/>
-        Demo user: demo.laravel@labs64.com / password: demo
+        Usuarios para prueba:<br/>
+        Admin: rinostrozareb@gmail.com / password: admin<br/>
+        Cliente: cliente@actus.cl / password: demo
     </div>
 @endsection

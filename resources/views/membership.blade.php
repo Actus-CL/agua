@@ -2,21 +2,22 @@
 
 @section('content')
     <div class="title m-b-md">
-        Member area
+        Area de clientes
     </div>
     <div class="m-b-md">
         @if($valid)
-            Your membership status is confirmed. All the protected pages will be accessible.
-            @if($expires)
-                <br/>Your license expires on <i>{{  new \Carbon\Carbon($expires) }}</i>
-            @endif
+            Bienvenido XXXXX
+            <br/>
+            Acá podrá:
+            <ul>
+                <li>Visualizar el estado de su cuenta</li>
+                <li>Ver el historial de su cuenta</li>
+                <li>Realizar pago</li>
+            </ul>
         @else
-            Your membership status isn't confirmed. All the protected pages will not be accessible!
+            Tu cuenta está suspendida
         @endif
 
-        @if($shopUrl)
-            <br/><br/>
-            Click <a href="{{ $shopUrl }}">here</a> to extend or renew your membership.
-        @endif
+
     </div>
 @endsection

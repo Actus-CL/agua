@@ -82,9 +82,9 @@ class RegisterController extends Controller
             'confirmed' => false
         ]);
 
-        if (config('auth.users.default_role')) {
-            $user->roles()->attach(Role::firstOrCreate(['name' => config('auth.users.default_role')]));
-        }
+
+        $user->roles()->attach(Role::firstOrCreate(['name' => 'authenticated']));
+
 
         return $user;
     }

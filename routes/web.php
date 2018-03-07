@@ -65,8 +65,10 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::get('dashboard/registration-chart', 'DashboardController@getRegistrationChartData')->name('dashboard.registration.chart');
 
 
-    //Validaciones para cliente
-    Route::post('cliente/validar/rut', 'ClienteController@validarRut')->name('cliente.validar.rut'); //Permite validar si un rut existe en la base de datos
+    //Validaciones
+    Route::post('validar/db', 'ValidarController@validarDB')->name('validar.db'); //Permite validar si un valor existe en la base de datos
+
+
 
     //Ingreso cliente nuevo
     Route::get('cliente/nuevo', 'ClienteController@nuevoForm')->name('cliente.nuevo');
@@ -86,11 +88,19 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     //DesHabilitar cliente
     Route::get('cliente/deshabilitar', 'ClienteController@deshabilitar')->name('cliente.deshabilitar');
 
+    //Detalle de cliente
+    Route::post('cliente/detalle/', 'ClienteController@detalle')->name('cliente.detalle');
+
+    //Detalle de proyectos
+    Route::post('cliente/detalle/proyectos', 'ClienteController@detalleProyectos')->name('cliente.detalle.proyectos');
 
 
     //Ingreso medidor nuevo
     Route::get('medidor/nuevo', 'MedidorController@nuevoForm')->name('medidor.nuevo');
     Route::post('medidor/nuevo', 'MedidorController@nuevoStore')->name('medidor.nuevo.store');
+
+    //Detalle de medidor
+    Route::post('medidor/detalle/', 'MedidorController@detalle')->name('medidor.detalle');
 
     //Listado de medidores
     Route::get('medidor/lista', 'MedidorController@lista')->name('medidor.lista');
@@ -105,6 +115,8 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     //Ingreso cuenta nuevo
     Route::get('cuenta/nuevo', 'CuentaController@nuevoForm')->name('cuenta.nuevo');
     Route::post('cuenta/nuevo', 'CuentaController@nuevoStore')->name('cuenta.nuevo.store');
+    Route::get('cuenta/lista/clientes/tabla', 'CuentaController@listaClientesTabla')->name('cuenta.lista.clientes.tabla');
+
 
     //Listado de cuentas
     Route::get('cuenta/lista', 'CuentaController@lista')->name('cuenta.lista');

@@ -12,4 +12,9 @@ class Cliente extends Model
     {
         return $this->belongsToMany('App\proyecto' ,'cliente_proyecto');
     }
+
+    public function nombreCompleto()
+    {
+        return $this->nombre .' '. $this->apellido_paterno .' '. $this->apellido_materno;
+    }
 }

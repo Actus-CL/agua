@@ -10,7 +10,7 @@
         <div class="col-md-12 col-sm-12 col-xs-12">
             <div class="x_panel">
                 <div class="x_title">
-                    <h2>Listado de clientes <small> </small></h2>
+                    <h2>Listado de Medidores registrados <small> </small></h2>
                     <ul class="nav navbar-right panel_toolbox">
                         <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
                         </li>
@@ -34,10 +34,12 @@
                         <thead>
                         <tr>
                             <th>Nº</th>
-                            <th>Rut</th>
-                            <th>Nombre</th>
-                            <th>Email</th>
-                            <th>Direccion</th>
+                            <th>Nro de serie</th>
+                            <th>Modelo</th>
+                            <th>Lectura Inicial</th>
+                            <th>Ultima Lectura</th>
+                            <th>Asociado</th>
+                            <th>Cliente asociado</th>
                             <th> </th>
                         </tr>
                         </thead>
@@ -58,13 +60,15 @@
         var tabla = $('#datatable').DataTable({
             processing: true,
             serverSide: true,
-            ajax: "{{ route('admin.cliente.lista.tabla')}}",
+            ajax: "{{ route('admin.medidor.lista.tabla')}}",
             columns: [
                 {data: 'id', name: 'id'},
-                {data: 'rut', name: 'rut'},
-                {data: 'nombre', name: 'nombre'},
-                {data: 'email', name: 'email'},
-                {data: 'direccion', name: 'direccion'},
+                {data: 'serie', name: 'serie'},
+                {data: 'medidor_modelo', name: 'medidor_modelo'},
+                {data: 'lectura_inicial', name: 'lectura_inicial'},
+                {data: 'lectura_ultima', name: 'lectura_ultima'},
+                {data: 'asociado', name: 'asociado'},
+                {data: 'cliente', name: 'cliente'},
                 {data: 'action', name: 'action', orderable: false, searchable: false}
             ],
             "bFilter": true,

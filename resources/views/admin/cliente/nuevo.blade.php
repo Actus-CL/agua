@@ -63,14 +63,14 @@
                                     <label class="control-label col-md-4 col-sm-4 col-xs-12" for="first-name">Rut <span class="required">*</span>
                                     </label>
                                     <div class="col-md-8 col-sm-8 col-xs-12">
-                                        <input type="text" id="rut" name="rut" required="required"  class="form-control col-md-7 col-xs-12">
+                                        <input type="text" id="rut" name="rut"  data-tabla="cliente" required="required"  class="autoval form-control col-md-7 col-xs-12">
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <label class="control-label col-md-4 col-sm-4 col-xs-12" for="last-name">Email  <span class="required">*</span>
                                     </label>
                                     <div class="col-md-8 col-sm-8 col-xs-12">
-                                        <input type="text" id="email" name="email" required="required" class="form-control col-md-7 col-xs-12">
+                                        <input type="text" id="email" name="email" data-tabla="cliente" required="required" class="autoval form-control col-md-7 col-xs-12">
                                     </div>
                                 </div>
                                 <div class="form-group">
@@ -86,9 +86,7 @@
                         <div class="ln_solid"></div>
                         <div class="form-group">
                             <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
-                                <button class="btn btn-primary" type="button">Cancel</button>
-                                <button class="btn btn-primary" type="reset">Reset</button>
-                                <button type="submit" class="btn btn-success" >Submit</button>
+                                <button type="submit" class="btn btn-success" id="btsubmit" >Guardar</button>
                             </div>
                         </div>
 
@@ -107,57 +105,11 @@
         $( document ).ready(function() {
 
 
-            $('.autoform').on('submit', function(){
-                var bt = $(this).find('button[type="submit"]');
-                bt.attr("disabled","disabled");
-                event.preventDefault();
-                var action = $(this).attr("action");
-                var method = $(this).attr("method");
-                $.ajax({
-                    url: action,
-                    type: method,
-                    data: $(this).serialize(),
-                    success: function (data) {
-                        var respuesta = $.parseJSON( data);
-                        //console.log(respuesta.correcto);
 
-                        if ( respuesta.correcto ==1) {
-                            if (respuesta.mensajeOK != null){
-                                alert(respuesta.mensajeOK);
-                            }else{
-                                alert("Se han guardado las modificaciones");
-                            }
-                            if (respuesta.redireccion!= null){
-                                //  $.(respuesta.redireccion);
-                            }else{
-                                location.reload();
-                            }
-                        }else{
-                            if (respuesta.mensajeBAD!= null){
-                                alert(respuesta.mensajeBAD);
-                            }else{
-                                alert("Ha ocurrido un problema");
-                            }
-                        }
-                        // alert("Lo sentimos, ha ocurrido un problema");
-                        bt.removeAttr("disabled");
-                    }
-                });
-            });
-
-            $('#rut').on('blur', function(){
-                var rut = $(this).val();
-                //alert("sfsd");
-                $.ajax({
-                    url: "{{route("admin.cliente.validar.rut")}}",
-                    type: "post",
-                    data: {rut:rut},
-                    success: function (data) {
-                    }
-                });
-            });
         });
-        </script>
+    </script>
+    @parent
+    {{ Html::script(mix('assets/admin/js/dashboard.js')) }}
 @endsection
 
 @section('styles')

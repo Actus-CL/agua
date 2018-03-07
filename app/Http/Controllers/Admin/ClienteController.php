@@ -5,6 +5,10 @@ namespace App\Http\Controllers\Admin;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Cliente;
+use App\Models\Auth\User\User;
+use Ramsey\Uuid\Uuid;
+use App\Models\Auth\Role\Role;
+use DataTables;
 
 
 class ClienteController extends Controller
@@ -15,16 +19,8 @@ class ClienteController extends Controller
      * @param $rut
      * @return bool
      */
-    public function validarRut(Request $request)
-    {
-       /* $cliente = Cliente::where("rut",$request->rut);
-        if($cliente){
-            return true;
-       }else{
-            return false;
-        }*/
-       return "hola";
-    }
+
+
 
     public function nuevoForm()
     {
@@ -37,8 +33,6 @@ class ClienteController extends Controller
     {
         $respuesta= [];
         $cliente = new Cliente();
-
-
         $cliente->nombre= $request->nombre;
         $cliente->apellido_paterno= $request->apellido_paterno;
         $cliente->apellido_materno= $request->apellido_materno;
@@ -47,12 +41,45 @@ class ClienteController extends Controller
         $cliente->direccion= $request->direccion;
         $cliente->save();
 
-        $respuesta["correcto"]=0;
+
+        $user = User::create([
+            'name' => $cliente->nombreCompleto(),
+            'email' => $request->email,
+            'password' => bcrypt($request->rut),
+            'confirmation_code' => Uuid::uuid4(),
+            'confirmed' => false
+        ]);
+
+        $cliente->user_id = $user->id;
+        $cliente->save();
+
+
+
+        if (config('auth.users.default_role')) {
+            $user->roles()->attach(Role::firstOrCreate(['name' => config('auth.users.default_role')]));
+        }
+
+
+
+        $respuesta["correcto"]=1;
         //$respuesta["mensajeOK"]="El cliente ha sido ingresado";
         //$respuesta["mensajeBAD"]="Ha ocurrido un problema y el cliente no ha logrado registrarse";
         //$respuesta["redireccion"]="hola";
 
          return  json_encode($respuesta);
+    }
+
+    public function detalle(Request $request)
+    {
+        $respuesta= [];
+        $cliente = Cliente::find($request->val);
+        return  json_encode($cliente);
+    }
+    public function detalleProyectos(Request $request)
+    {
+        $respuesta= [];
+        $cliente = Cliente::find($request->val);
+        return  json_encode($cliente->proyectos);
     }
 
     public function lista()
@@ -62,18 +89,26 @@ class ClienteController extends Controller
     }
     public function listaTabla(){
 
-        $propiedades = Propiedad::select(['id','titulo','tipo_propiedad_id','tipo_publicacion_id']);
+    $cliente = Cliente::all();
 
-        return Datatables::of($propiedades)->addColumn('action', function ($dato) {
-            return '<a href="'.url('admin/propiedad/editar', $dato).'" class="btn green-meadow btn-xs"><i class="glyphicon glyphicon-edit"></i>Editar</a> 
-                            <a href="'.url('admin/propiedad/foto', $dato).'" class="btn yellow-crusta btn-xs"><i class="glyphicon glyphicon-edit"></i>Añadir fotografías</a> 
-                              <a href="'.url('admin/propiedad/eliminar',$dato->id) .  '" class="btn red-crusta btn-xs"><i class="glyphicon glyphicon-edit"></i>Eliminar</a> 
-                             ';
-        })->editColumn('tipo_propiedad_id', function ($dato) {
-            return $dato->tipo_propiedad->nombre;
-        })->editColumn('tipo_publicacion_id', function ($dato) {
-            return $dato->tipo_publicacion->nombre;
-        })->make(true);
-    }
+    return Datatables::of($cliente)->addColumn('action', function ($dato) {
+        $r= '<a href="'.route('admin.cliente.editar', $dato).'" class="btn btn-primary  btn-xs"><i class="glyphicon glyphicon-edit"></i>Editar</a> ';
+        if($dato->habilitado==1) {
+            $r .= '<a href="' . route('admin.cliente.habilitar') . '" class="btn btn-dark btn-xs"><i class="glyphicon glyphicon-edit"></i>Habilitar</a> ';
+        }else{
+            $r .= '<a href="' . route('admin.cliente.deshabilitar') . '" class="btn btn-default btn-xs"><i class="glyphicon glyphicon-edit"></i>Deshabilitar</a> ';
+        }
+        $r.='<a href="'.url('admin/propiedad/eliminar',$dato->id) .  '" class="btn btn-danger btn-xs"><i class="glyphicon glyphicon-edit"></i>Eliminar</a> ';
+        return $r;
+    })->editColumn('nombre', function ($dato) {
+        return  $dato->nombre  . ' ' .$dato->apellido_paterno . ' ' . $dato->apellido_materno  ;
+    })->make(true);
+
+    /*->editColumn('tipo_propiedad_id', function ($dato) {
+        return $dato->tipo_propiedad->nombre;
+    })->editColumn('tipo_publicacion_id', function ($dato) {
+        return $dato->tipo_publicacion->nombre;
+    }) */
+}
 
 }
