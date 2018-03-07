@@ -18,7 +18,7 @@ class ClienteController extends Controller
      *  Devuelve TRUE si es que ya está ingresado, y False si no lo está
      * @param $rut
      * @return bool
-     * editado por natie
+     * editado por natie2
      */
 
 
