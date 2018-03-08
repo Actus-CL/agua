@@ -1,0 +1,30 @@
+<?php
+
+namespace Tests\Feature;
+
+use Tests\TestCase;
+use Illuminate\Foundation\Testing\WithFaker;
+use Illuminate\Foundation\Testing\RefreshDatabase;
+
+class loginTest extends TestCase
+{
+    /**
+     * A basic test example.
+     *
+     * @return void
+     */
+    public function testExample()
+    {
+       // $this->assertTrue(true);
+
+        $this->visit('/login')
+            ->see('Ingresar al sistema')
+            ->type('rinostrozareb@gmail.com', 'email')
+            ->type('admin', 'password')
+            ->press('Ingresar')
+            ->seePageIs('/')
+            ->see('Agua Control');
+    }
+
+
+}

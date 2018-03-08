@@ -31,6 +31,49 @@
                 <div class="x_content">
                     <br />
                     <form   data-parsley-validate class="form-horizontal form-label-left autoform" action="{{route("admin.lectura.nuevo")}}" method="post">
+
+
+                        <h4>Seleccionar medidor</h4>
+                        <div class="row">
+                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                <div class="form-group">
+                                    <label class="control-label col-md-4 col-sm-4 col-xs-12" for="first-name">Medidor <span class="required">*</span>
+                                    </label>
+                                    <div class="col-md-8 col-sm-8 col-xs-12">
+                                        {{Form::select('medidor_id',$bag['medidor'],null,['class'=>'form-control'])}}
+                                        <input type="text" name="country" id="autocompleteMedidor" class="form-control col-md-7 col-xs-12" />
+                                    </div>
+                                </div>
+                            </div>
+
+
+                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                <div class="form-group">
+                                    <label class="control-label col-md-4 col-sm-4 col-xs-12" for="first-name">Modelo <span class="required">*</span>
+                                    </label>
+                                    <div class="col-md-8 col-sm-8 col-xs-12">
+                                        <input type="text" id="modelo_medidor" name="modelo_medidor"   readonly="readonly" class="autoval form-control col-md-7 col-xs-12" >
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label col-md-4 col-sm-4 col-xs-12" for="first-name">Lectura Inicial <span class="required">*</span>
+                                    </label>
+                                    <div class="col-md-8 col-sm-8 col-xs-12">
+                                        <input type="text" id="lectura_inicial" name="lectura_inicial" readonly="readonly" class="form-control col-md-7 col-xs-12" >
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label col-md-4 col-sm-4 col-xs-12" for="first-name">Ultima Lectura <span class="required">*</span>
+                                    </label>
+                                    <div class="col-md-8 col-sm-8 col-xs-12">
+                                        <input type="text" id="lectura_ultima" name="lectura_ultima" readonly="readonly" class="form-control col-md-7 col-xs-12" >
+                                    </div>
+                                </div>
+
+
+                            </div>
+                        </div>
+                        <div class="ln_solid"></div>
                         <div class="row">
                             <div class="col-md-6 col-sm-6 col-xs-12">
 
@@ -38,8 +81,8 @@
                                     <label class="control-label col-md-4 col-sm-4 col-xs-12" for="first-name">Medidor <span class="required">*</span>
                                     </label>
                                     <div class="col-md-8 col-sm-8 col-xs-12">
-                                        <input type="text" name="country" id="autocomplete-custom-append" class="form-control col-md-10" autocomplete="off">
-                                    </div>
+
+                                      </div>
                                 </div>
                                 <div class="form-group xdisplay_inputx has-feedback">
                                     <label class="control-label col-md-4 col-sm-3 col-xs-12" for="last-name">Desde
@@ -101,15 +144,21 @@
 @endsection
 
 @section('scripts')
+    <script src={{asset("assets/admin/js/jquery.autocomplete.min.js")}} type="text/javascript"></script>
+
     <script>
+
+
+
+
         $( document ).ready(function() {
 
-            $('input[name="mes"],input[name="anio"]').on( 'blur', function(){
-                var mes = $('input[name="mes"]').val();
-                var anio = $('input[name="anio"]').val();
-                var nombre = mes+anio;
-                console.log(nombre);
-                $('input[name="nombre"]').val(nombre);
+
+            $('#autocompleteMedidor').autocomplete({
+                serviceUrl: '{{url('medidor/lista/auto')}}',
+                onSelect: function (suggestion) {
+                    alert('You selected: ' + suggestion.value + ', ' + suggestion.data);
+                }
             });
 
 
@@ -127,6 +176,7 @@
                         // $('#nombre').val(respuesta.nombre);
                         $('#lectura_inicial').val(respuesta['medidor'].lectura_inicial);
                         $('#modelo_medidor').val(respuesta['modelo'][respuesta['medidor'].medidor_modelo_id]);
+                        $('#lectura_ultima').val(respuesta['medidor'].lectura_ultima);
                     }
                 });
 

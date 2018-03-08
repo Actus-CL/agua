@@ -105,6 +105,9 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     //Listado de medidores
     Route::get('medidor/lista', 'MedidorController@lista')->name('medidor.lista');
     Route::get('medidor/lista/tabla', 'MedidorController@listaTabla')->name('medidor.lista.tabla');
+    Route::get('medidor/lista/auto', 'MedidorController@listadoAutocomplete')->name('medidor.lista.auto');
+
+
 
     //Editar medidor
     Route::get('medidor/editar', 'MedidorController@editarForm')->name('medidor.editar');

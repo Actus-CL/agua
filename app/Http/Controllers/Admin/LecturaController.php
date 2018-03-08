@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Medidor;
 
 class LecturaController extends Controller
 {
@@ -12,7 +13,7 @@ class LecturaController extends Controller
         //
         $bag=[];
         //$bag['cliente']=Cliente::all();
-        //$bag['medidor']=Medidor::where('asociado',0)->pluck('serie','id') ;
+        $bag['medidor']=Medidor::where('asociado',0)->pluck('serie','id') ;
         return view('admin.lectura.nuevo', ['bag' => $bag]);
     }
 
