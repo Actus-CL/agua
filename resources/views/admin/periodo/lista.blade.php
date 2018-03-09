@@ -34,7 +34,8 @@
                         <thead>
                         <tr>
                             <th>Nombre</th>
-                            <th>Activo</th>
+                            <th>Activo Lectura</th>
+                            <th>Activo Facturacion</th>
                             <th>Desde</th>
                             <th>Hasta</th>
                             <th>Pago</th>
@@ -62,7 +63,8 @@
             ajax: "{{ route('admin.periodo.lista.tabla')}}",
             columns: [
                 {data: 'nombre', name: 'nombre'},
-                {data: 'activo', name: 'activo'},
+                {data: 'activo_lectura', name: 'activo_lectura'},
+                {data: 'activo_facturacion', name: 'activo_facturacion'},
                 {data: 'desde', name: 'desde'},
                 {data: 'hasta', name: 'hasta'},
                 {data: 'f_vencimiento_pago', name: 'f_vencimiento_pago'},

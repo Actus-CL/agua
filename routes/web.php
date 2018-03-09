@@ -150,8 +150,11 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::get('periodo/lista', 'PeriodoController@lista')->name('periodo.lista');
     Route::get('periodo/lista/tabla', 'PeriodoController@listaTabla')->name('periodo.lista.tabla');
 
+    // Activar periodo lectura
+    Route::get('periodo/activar/lectura/{id}', 'PeriodoController@habilitarLectura')->name('periodo.activar.lectura');
+
     // Activar periodo
-    Route::get('periodo/activar/{id}', 'PeriodoController@habilitar')->name('periodo.activar');
+    Route::get('periodo/activar/facturacion/{id}', 'PeriodoController@habilitarFacturacion')->name('periodo.activar.facturacion');
 
 
     //Mantenedores
@@ -165,6 +168,10 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
 
     //Ingreso lectura nuevo
     Route::get('lectura/ingresar', 'LecturaController@nuevoForm')->name('lectura.nuevo');
+    Route::post('lectura/ingresar', 'LecturaController@nuevoStore')->name('lectura.nuevo.store');
+    Route::post('lectura/periodo/detalle', 'LecturaController@detallePeriodo')->name('lectura.periodo.detalle');
+
+
 
     //Calculo manual periodo
     Route::get('periodo/calcular', 'PeriodoController@calcular')->name('periodo.calcular');//muestra el priodo y dá la opcion de calcular

@@ -63,39 +63,53 @@ class PeriodoController extends Controller
         return Datatables::of($m)->addColumn('action', function ($d) {
             $r= '<a href="'.route('admin.cliente.editar', $d).'" class="btn btn-primary  btn-xs"><i class="glyphicon glyphicon-edit"></i>Editar</a> ';
             $r.= '<a href="'.route('admin.cliente.editar', $d).'" class="btn btn-primary  btn-xs"><i class="glyphicon glyphicon-edit"></i>Boletas</a> ';
-            if($d->activo==0){
-                $r.= '<a href="'.route('admin.periodo.activar', $d).'" class="btn btn-primary  btn-xs"><i class="glyphicon glyphicon-edit"></i>Activar</a> ';
+            if($d->activo_lectura==0){
+                $r.= '<a href="'.route('admin.periodo.activar.lectura', $d).'" class="btn btn-primary  btn-xs"><i class="glyphicon glyphicon-edit"></i>Activar Lectura</a> ';
+            }
+            if($d->activo_facturacion==0){
+                $r.= '<a href="'.route('admin.periodo.activar.facturacion', $d).'" class="btn btn-primary  btn-xs"><i class="glyphicon glyphicon-edit"></i>Activar facturacion</a> ';
             }
              return $r;
-        })->editColumn('activo', function ($dato) {
+        })->editColumn('activo_facturacion', function ($dato) {
             $r="No";
-             if($dato->activo==1){
+             if($dato->activo_facturacion==1){
+                $r="Si";
+            }
+            return $r;
+        })->editColumn('activo_lectura', function ($dato) {
+            $r="No";
+            if($dato->activo_lectura==1){
                 $r="Si";
             }
             return $r;
         })->make(true);
     }
 
-    public function habilitar($id)
+    public function habilitarLectura($id)
     {
         $respuesta= [];
-
-          Periodo::where('activo',1)->each(function($sp){
-            $sp->activo= 0;
+        Periodo::where('activo_lectura',1)->each(function($sp){
+            $sp->activo_lectura= 0;
             $sp->save();
         });
-
-
-
         $p = Periodo::find($id);
-        $p->activo= 1;
+        $p->activo_lectura= 1;
         $p->save();
-
         $respuesta["correcto"]=1;
-        //$respuesta["mensajeOK"]="El cliente ha sido ingresado";
-        //$respuesta["mensajeBAD"]="Ha ocurrido un problema y el cliente no ha logrado registrarse";
-        //$respuesta["redireccion"]="hola";
+        return  redirect(route('admin.periodo.lista'));
+    }
 
+    public function habilitarFacturacion($id)
+    {
+        $respuesta= [];
+        Periodo::where('activo_facturacion',1)->each(function($sp){
+            $sp->activo_facturacion= 0;
+            $sp->save();
+        });
+        $p = Periodo::find($id);
+        $p->activo_facturacion= 1;
+        $p->save();
+        $respuesta["correcto"]=1;
         return  redirect(route('admin.periodo.lista'));
     }
 

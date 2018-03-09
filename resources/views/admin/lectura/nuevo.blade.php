@@ -40,8 +40,14 @@
                                     <label class="control-label col-md-4 col-sm-4 col-xs-12" for="first-name">Medidor <span class="required">*</span>
                                     </label>
                                     <div class="col-md-8 col-sm-8 col-xs-12">
-                                        {{Form::select('medidor_id',$bag['medidor'],null,['class'=>'form-control'])}}
-                                        <input type="text" name="country" id="autocompleteMedidor" class="form-control col-md-7 col-xs-12" />
+                                         <input type="text" name="medidor_serie" id="autocompleteMedidor" class="form-control col-md-7 col-xs-12" />
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label col-md-4 col-sm-4 col-xs-12" for="first-name">Nueva Lectura <span class="required">*</span>
+                                    </label>
+                                    <div class="col-md-8 col-sm-8 col-xs-12">
+                                        <input type="text" name="medidor_serie" id="autocompleteMedidor" class="form-control col-md-7 col-xs-12" />
                                     </div>
                                 </div>
                             </div>
@@ -75,6 +81,31 @@
                         </div>
                         <div class="ln_solid"></div>
                         <div class="row">
+                            <h4>Ultimos 6 periodos</h4>
+
+                            <table class="table table-bordered">
+                                <thead>
+                                <tr>
+                                    @foreach($bag['periodos'] as $p)
+                                    <th>{{$p->nombre}}</th>
+                                    @endforeach
+                                </tr>
+                                </thead>
+                                <tbody >
+                                <tr>
+                                    @foreach($bag['periodos'] as $p)
+                                        <td>
+                                            <input type="text"  name="periodo_id[{{$p->id}}]"  data-medidorid="{{$p->id}}" readonly="readonly"   >
+                                        </td>
+                                    @endforeach
+                                </tr>
+
+                                </tbody>
+                            </table>
+                            </div>
+
+                            <div class="ln_solid"></div>
+                            <div class="row">
                             <div class="col-md-6 col-sm-6 col-xs-12">
 
                                 <div class="form-group">
@@ -154,35 +185,67 @@
         $( document ).ready(function() {
 
 
+
+
+
+
+            var countries = [
+                @foreach($bag['medidor'] as $m )
+                    { value: '{{$m->serie}}', data: '{{$m->id}}' },
+                @endforeach
+            ];
+
             $('#autocompleteMedidor').autocomplete({
-                serviceUrl: '{{url('medidor/lista/auto')}}',
+                lookup: countries,
                 onSelect: function (suggestion) {
-                    alert('You selected: ' + suggestion.value + ', ' + suggestion.data);
+                    var val =  suggestion.data;
+                    $.ajax({
+                        url: "{{route("admin.medidor.detalle")}}",
+                        type: "post",
+                        data: {val:val},
+                        success: function (data) {
+                            //console.log(data);
+                            var respuesta = $.parseJSON( data);
+                            //console.log(respuesta['modelo']);
+                            // $('#nombre').val(respuesta.nombre);
+                            $('#lectura_inicial').val(respuesta['medidor'].lectura_inicial);
+                            $('#modelo_medidor').val(respuesta['modelo'][respuesta['medidor'].medidor_modelo_id]);
+                            $('#lectura_ultima').val(respuesta['medidor'].lectura_ultima);
+                            if(respuesta['medidor'].asociado==0){
+                                alert("El medidor no está asociado");
+                            }
+                        }
+                    });
+
+
+
+
+                    $.ajax({
+                        url: "{{route("admin.lectura.periodo.detalle")}}",
+                        type: "post",
+                        data: {medidor_id:val},
+                        success: function (data) {
+                            //console.log(data);
+                            var respuesta = $.parseJSON( data);
+                            console.log(respuesta );
+                            for (i = 0; i < respuesta.length; i++) {
+                                $('input[name="periodo_id['+respuesta[i].periodo_id+']"]').val(respuesta[i].consumo_promedio);
+                                //text += cars[i] + "<br>";
+                            }
+
+
+
+                            // $('#nombre').val(respuesta.nombre);
+
+                        }
+                    });
+
+
+                    //alert('You selected: ' + suggestion.value + ', ' +);
                 }
             });
 
 
-
-            $('select[name="medidor_id"]').on( 'change', function(){
-                var val = $(this).val();
-                $.ajax({
-                    url: "{{route("admin.medidor.detalle")}}",
-                    type: "post",
-                    data: {val:val},
-                    success: function (data) {
-                        //console.log(data);
-                        var respuesta = $.parseJSON( data);
-                        //console.log(respuesta['modelo']);
-                        // $('#nombre').val(respuesta.nombre);
-                        $('#lectura_inicial').val(respuesta['medidor'].lectura_inicial);
-                        $('#modelo_medidor').val(respuesta['modelo'][respuesta['medidor'].medidor_modelo_id]);
-                        $('#lectura_ultima').val(respuesta['medidor'].lectura_ultima);
-                    }
-                });
-
-
-
-            });
 
         });
     </script>

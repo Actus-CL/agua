@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Admin;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Medidor;
+use App\Periodo;
+use App\MedidorPeriodo;
 
 class LecturaController extends Controller
 {
@@ -13,9 +15,26 @@ class LecturaController extends Controller
         //
         $bag=[];
         //$bag['cliente']=Cliente::all();
-        $bag['medidor']=Medidor::where('asociado',0)->pluck('serie','id') ;
+       // $bag['medidor']=Medidor::where('asociado',1)->get();//->pluck('serie','id') ;
+        $bag['medidor']=Medidor::all();//->pluck('serie','id') ;
+        $bag['periodos']=Periodo::all()->sortByDesc('id')->take(6)->reverse();//->pluck('serie','id') ;
+        //dd($bag['periodos']);
         return view('admin.lectura.nuevo', ['bag' => $bag]);
     }
+
+    public function detallePeriodo(Request $request)
+    {
+        //
+        //$bag=[];
+        //$bag['cliente']=Cliente::all();
+        // $bag['medidor']=Medidor::where('asociado',1)->get();//->pluck('serie','id') ;
+       //$bag['medidor']=Medidor::all();//->pluck('serie','id') ;
+        $medidor_periodo=MedidorPeriodo::where('medidor_id',$request->medidor_id)->get()->sortByDesc('id')->take(6)->reverse();//->pluck('serie','id') ;
+        //dd($bag['medidor_periodo']);
+        return json_encode($medidor_periodo);
+    }
+
+
 
 
     public function nuevoStore(Request $request)

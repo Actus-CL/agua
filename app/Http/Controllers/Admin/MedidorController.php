@@ -26,11 +26,15 @@ class MedidorController extends Controller
         return  json_encode($respuesta);
     }
 
-    public function listadoAutocomplete()
+    public function listadoAutocomplete(Request $request)
     {
-        $medidor= Medidor::all();
-        dd($medidor);
-        return  json_encode($medidor);
+         $medidor= Medidor::where('serie','like','%'.$request->querys.'%')->get();
+        $medidor=$medidor->pluck('serie','id');
+        foreach($medidor as $k=>$m){
+            //dd($m);
+            $medidorArray[]= array( 'value'=> "$k", 'data'=> $m);
+        }
+        return  json_encode($medidorArray);
     }
 
     public function nuevoStore(Request $request)
