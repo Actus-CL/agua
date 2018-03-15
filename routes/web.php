@@ -131,6 +131,11 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     // Suspender Cuenta
     Route::get('cuenta/suspender/{id}', 'CuentaController@suspender')->name('cuenta.suspender');
 
+    // Cuenta
+    Route::get('cuenta/estado/cambiar/{id}/{estado}', 'CuentaController@cambioEstado')->name('cuenta.estado.cambiar');
+
+
+
     //Retirar Cuenta
     Route::get('cuenta/retirar/{id}', 'CuentaController@retirar')->name('cuenta.retirar');
 
@@ -174,8 +179,8 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
 
 
     //Calculo manual periodo
-    Route::get('periodo/calcular', 'PeriodoController@calcular')->name('periodo.calcular');//muestra el priodo y dá la opcion de calcular
-    Route::post('periodo/calcular', 'PeriodoController@calcularGuardar')->name('periodo.calcular.guardar'); //crea las boletas
+    Route::get('periodo/facturar', 'PeriodoController@facturar')->name('periodo.facturar');//muestra el priodo y dá la opcion de calcular
+    Route::post('periodo/facturar', 'PeriodoController@facturarGuardar')->name('periodo.facturar.guardar'); //crea las boletas
 
     //Ingresar recaudacion manual
     Route::get('reacaudacion/ingresar', 'RecaudacionController@nuevoForm')->name('recaudacion.nuevo'); // formulario para ingresar la recaudacion

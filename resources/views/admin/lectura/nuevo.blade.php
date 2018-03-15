@@ -47,9 +47,24 @@
                                     <label class="control-label col-md-4 col-sm-4 col-xs-12" for="first-name">Nueva Lectura <span class="required">*</span>
                                     </label>
                                     <div class="col-md-8 col-sm-8 col-xs-12">
-                                        <input type="text" name="medidor_serie" id="autocompleteMedidor" class="form-control col-md-7 col-xs-12" />
+                                        <input type="text" name="medidor_serie" id="txt_lectura" class="form-control col-md-7 col-xs-12" />
                                     </div>
                                 </div>
+                                <div class="form-group">
+                                    <label class="control-label col-md-4 col-sm-4 col-xs-12" for="first-name">Periodo Activo  <span class="required">*</span>
+                                    </label>
+                                    <div class="col-md-8 col-sm-8 col-xs-12">
+                                        <input type="text"  class="form-control col-md-7 col-xs-12" readonly value="{{$bag['periodo_lec']->nombre}}" />
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label col-md-4 col-sm-4 col-xs-12" for="first-name">Maximo prom mensual  <span class="required">*</span>
+                                    </label>
+                                    <div class="col-md-8 col-sm-8 col-xs-12">
+                                        <input type="text" id="max_prom_mensual"  class="form-control col-md-7 col-xs-12" readonly value="15" />
+                                    </div>
+                                </div>
+
                             </div>
 
 
@@ -95,7 +110,7 @@
                                 <tr>
                                     @foreach($bag['periodos'] as $p)
                                         <td>
-                                            <input type="text"  name="periodo_id[{{$p->id}}]"  data-medidorid="{{$p->id}}" readonly="readonly"   >
+                                            <input type="text"  name="periodo_id[{{$p->id}}]"  data-medidorid="{{$p->id}}" readonly="readonly"  class="periodo_lectura"  >
                                         </td>
                                     @endforeach
                                 </tr>
@@ -183,22 +198,22 @@
 
 
         $( document ).ready(function() {
-
-
-
-
-
-
+            var max_lectura=0;
+            var num_p_vacios=0;
+            var periodos_vacios;
             var countries = [
                 @foreach($bag['medidor'] as $m )
                     { value: '{{$m->serie}}', data: '{{$m->id}}' },
                 @endforeach
             ];
-
             $('#autocompleteMedidor').autocomplete({
                 lookup: countries,
                 onSelect: function (suggestion) {
+                    max_lectura=0;
+                    num_p_vacios=0;
+
                     var val =  suggestion.data;
+                    $('.periodo_lectura').val("");
                     $.ajax({
                         url: "{{route("admin.medidor.detalle")}}",
                         type: "post",
@@ -216,10 +231,6 @@
                             }
                         }
                     });
-
-
-
-
                     $.ajax({
                         url: "{{route("admin.lectura.periodo.detalle")}}",
                         type: "post",
@@ -227,24 +238,78 @@
                         success: function (data) {
                             //console.log(data);
                             var respuesta = $.parseJSON( data);
-                            console.log(respuesta );
+                            //console.log(respuesta );
                             for (i = 0; i < respuesta.length; i++) {
                                 $('input[name="periodo_id['+respuesta[i].periodo_id+']"]').val(respuesta[i].consumo_promedio);
-                                //text += cars[i] + "<br>";
+                                    if(respuesta[i].consumo_promedio>0){
+                                        max_lectura=respuesta[i].consumo_promedio;
+                                    }
                             }
 
 
+                            num_p_vacios=0;
+                            var txt_periodos=$('.periodo_lectura');
+                            //console.log(txt_periodos[1].value);
+                            for (i = 0; i < txt_periodos.length; i++) {
+                                //$('input[name="periodo_id['+respuesta[i].periodo_id+']"]').val(respuesta[i].consumo_promedio);
+                                if(txt_periodos[i].value==""){
+                                    num_p_vacios=num_p_vacios+1;
+                                }
+                            }
 
-                            // $('#nombre').val(respuesta.nombre);
+                            //console.log(num_p_vacios);
+                            //periodos_vacios
+
 
                         }
                     });
+
 
 
                     //alert('You selected: ' + suggestion.value + ', ' +);
                 }
             });
 
+
+            $('#txt_lectura').on( 'keyup', function(e){
+                var val = $(this).val();
+                var prom_mensual= val/num_p_vacios;
+
+                 console.log(prom_mensual);
+                 //max_prom_mensual
+
+
+               /* var txt_periodos=$('.periodo_lectura');
+                //console.log(txt_periodos[1].value);
+                for (i = 0; i < txt_periodos.length; i++) {
+                    //$('input[name="periodo_id['+respuesta[i].periodo_id+']"]').val(respuesta[i].consumo_promedio);
+                    if(txt_periodos[i].value==""){
+                        num_p_vacios=num_p_vacios+1;
+                    }
+                }
+
+                */
+
+                //console.log(e.key);
+                // alert("hola"+key);
+               /* var val = $(this).val();
+                $.ajax({
+                    url: "{{route("admin.medidor.detalle")}}",
+                    type: "post",
+                    data: {val:val},
+                    success: function (data) {
+                        //console.log(data);
+                        var respuesta = $.parseJSON( data);
+                        //console.log(respuesta['modelo']);
+                        // $('#nombre').val(respuesta.nombre);
+                        $('#lectura_inicial').val(respuesta['medidor'].lectura_inicial);
+                        $('#modelo_medidor').val(respuesta['modelo'][respuesta['medidor'].medidor_modelo_id]);
+                    }
+                });
+*/
+
+
+            });
 
 
         });

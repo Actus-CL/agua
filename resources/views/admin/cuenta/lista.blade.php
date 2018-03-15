@@ -39,6 +39,10 @@
                             <th>Medidor</th>
                             <th>Estado</th>
                             <th> </th>
+                            <th> Instalado</th>
+                            <th> Habilitado</th>
+                            <th> Suspendido</th>
+                            <th> Retirado</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -65,7 +69,11 @@
                 {data: 'proyecto', name: 'proyecto'},
                 {data: 'medidor', name: 'medidor'},
                 {data: 'cuenta_estado', name: 'cuenta_estado'},
-                {data: 'action', name: 'action', orderable: false, searchable: false}
+                {data: 'action', name: 'action', orderable: false, searchable: false},
+                {data: 'bt_instalado', name: 'bt_instalado'},
+                {data: 'bt_habilitado', name: 'bt_habilitado'},
+                {data: 'bt_suspendido', name: 'bt_suspendido'},
+                {data: 'bt_retirado', name: 'bt_retirado'},
             ],
             "bFilter": true,
             "iDisplayLength": 10,

@@ -34,13 +34,16 @@
                         <thead>
                         <tr>
                             <th>Nombre</th>
-                            <th>Activo Lectura</th>
-                            <th>Activo Facturacion</th>
+                            <th>Act Lectura</th>
+                            <th>Act Facturacion</th>
+                            <th>Emitido</th>
                             <th>Desde</th>
                             <th>Hasta</th>
                             <th>Pago</th>
                             <th>Corte</th>
                             <th> </th>
+                            <th>Lectura</th>
+                            <th>Facturacion </th>
                         </tr>
                         </thead>
                         <tbody>
@@ -65,11 +68,14 @@
                 {data: 'nombre', name: 'nombre'},
                 {data: 'activo_lectura', name: 'activo_lectura'},
                 {data: 'activo_facturacion', name: 'activo_facturacion'},
+                {data: 'emitido', name: 'emitido'},
                 {data: 'desde', name: 'desde'},
                 {data: 'hasta', name: 'hasta'},
                 {data: 'f_vencimiento_pago', name: 'f_vencimiento_pago'},
                 {data: 'f_vencimiento_corte', name: 'f_vencimiento_corte'},
-                {data: 'action', name: 'action', orderable: false, searchable: false}
+                {data: 'action', name: 'action', orderable: false, searchable: false},
+                {data: 'action_lectura', name: 'action', orderable: false, searchable: false},
+                {data: 'action_facturacion', name: 'action_facturacion', orderable: false, searchable: false}
             ],
             "bFilter": true,
             "iDisplayLength": 10,
