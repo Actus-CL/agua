@@ -172,7 +172,7 @@
 
                 <ul class="nav side-menu">
                     <li>
-                        <a href="{{ route('admin.periodo.calcular') }}">
+                        <a href="{{ route('admin.periodo.facturar') }}">
                             <i class="fa fa-home" aria-hidden="true"></i>
                             Calcular boletas del periodo
                         </a>

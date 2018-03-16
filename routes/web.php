@@ -105,6 +105,9 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     //Listado de medidores
     Route::get('medidor/lista', 'MedidorController@lista')->name('medidor.lista');
     Route::get('medidor/lista/tabla', 'MedidorController@listaTabla')->name('medidor.lista.tabla');
+    Route::get('medidor/lista/auto', 'MedidorController@listadoAutocomplete')->name('medidor.lista.auto');
+
+
 
     //Editar medidor
     Route::get('medidor/editar', 'MedidorController@editarForm')->name('medidor.editar');
@@ -128,6 +131,11 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     // Suspender Cuenta
     Route::get('cuenta/suspender/{id}', 'CuentaController@suspender')->name('cuenta.suspender');
 
+    // Cuenta
+    Route::get('cuenta/estado/cambiar/{id}/{estado}', 'CuentaController@cambioEstado')->name('cuenta.estado.cambiar');
+
+
+
     //Retirar Cuenta
     Route::get('cuenta/retirar/{id}', 'CuentaController@retirar')->name('cuenta.retirar');
 
@@ -147,8 +155,11 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::get('periodo/lista', 'PeriodoController@lista')->name('periodo.lista');
     Route::get('periodo/lista/tabla', 'PeriodoController@listaTabla')->name('periodo.lista.tabla');
 
+    // Activar periodo lectura
+    Route::get('periodo/activar/lectura/{id}', 'PeriodoController@habilitarLectura')->name('periodo.activar.lectura');
+
     // Activar periodo
-    Route::get('periodo/activar/{id}', 'PeriodoController@habilitar')->name('periodo.activar');
+    Route::get('periodo/activar/facturacion/{id}', 'PeriodoController@habilitarFacturacion')->name('periodo.activar.facturacion');
 
 
     //Mantenedores
@@ -162,10 +173,14 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
 
     //Ingreso lectura nuevo
     Route::get('lectura/ingresar', 'LecturaController@nuevoForm')->name('lectura.nuevo');
+    Route::post('lectura/ingresar', 'LecturaController@nuevoStore')->name('lectura.nuevo.store');
+    Route::post('lectura/periodo/detalle', 'LecturaController@detallePeriodo')->name('lectura.periodo.detalle');
+
+
 
     //Calculo manual periodo
-    Route::get('periodo/calcular', 'PeriodoController@calcular')->name('periodo.calcular');//muestra el priodo y dá la opcion de calcular
-    Route::post('periodo/calcular', 'PeriodoController@calcularGuardar')->name('periodo.calcular.guardar'); //crea las boletas
+    Route::get('periodo/facturar', 'PeriodoController@facturar')->name('periodo.facturar');//muestra el priodo y dá la opcion de calcular
+    Route::post('periodo/facturar', 'PeriodoController@facturarGuardar')->name('periodo.facturar.guardar'); //crea las boletas
 
     //Ingresar recaudacion manual
     Route::get('reacaudacion/ingresar', 'RecaudacionController@nuevoForm')->name('recaudacion.nuevo'); // formulario para ingresar la recaudacion

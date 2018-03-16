@@ -23,4 +23,8 @@ class Cuenta extends Model
     {
         return $this->belongsTo('App\CuentaEstado' );
     }
+    public function servicios()
+    {
+        return $this->belongsToMany('App\Servicio' ,'cuentaservicio');
+    }
 }

@@ -7,7 +7,9 @@ use App\Http\Controllers\Controller;
 use App\Cliente;
 use App\Medidor;
 use App\Cuenta;
+use App\CuentaServicio;
 use DataTables;
+use DB;
 
 class CuentaController extends Controller
 {
@@ -60,6 +62,11 @@ class CuentaController extends Controller
         $m->save();
 
 
+        $ncs= new CuentaServicio();
+        $ncs->cuenta_id=$c->id;
+        $ncs->servicio_id=1;
+        $ncs->save();
+
 
         $respuesta["correcto"]=1;
         $respuesta["mensajeOK"]="Se ha creado la cuenta";
@@ -95,7 +102,33 @@ class CuentaController extends Controller
         })->addColumn('cuenta_estado', function ($c) {
             $r = $c->cuentaEstado->nombre;
             return $r;
-        })->make(true);
+        })->addColumn('bt_instalado', function ($d) {
+            $r='';
+            if($d->cuenta_estado_id!=1){
+                $r.= '<a href="'.route('admin.cuenta.estado.cambiar', [$d,1]).'" class="btn btn-primary  btn-xs"><i class="glyphicon glyphicon-edit"></i>Activar</a> ';
+            }
+            return $r;
+        })->addColumn('bt_habilitado', function ($d) {
+            $r='';
+            if($d->cuenta_estado_id!=2){
+                $r.= '<a href="'.route('admin.cuenta.estado.cambiar', [$d,2]).'" class="btn btn-primary  btn-xs"><i class="glyphicon glyphicon-edit"></i>Activar</a> ';
+            }
+            return $r;
+        })->addColumn('bt_suspendido', function ($d) {
+            $r='';
+            if($d->cuenta_estado_id!=3){
+                $r.= '<a href="'.route('admin.cuenta.estado.cambiar', [$d,3]).'" class="btn btn-primary  btn-xs"><i class="glyphicon glyphicon-edit"></i>Activar</a> ';
+            }
+            return $r;
+        })->addColumn('bt_retirado', function ($d) {
+            $r='';
+            if($d->cuenta_estado_id!=4){
+                $r.= '<a href="'.route('admin.cuenta.estado.cambiar', [$d,4]).'" class="btn btn-primary  btn-xs"><i class="glyphicon glyphicon-edit"></i>Activar</a> ';
+            }
+            return $r;
+        })->editColumn('nombre', function ($dato) {
+            return  $dato->nombre  . ' ' .$dato->apellido_paterno . ' ' . $dato->apellido_materno  ;
+        })->rawColumns(['bt_retirado', 'bt_suspendido','bt_habilitado','bt_instalado','action'])->make(true);
 
         /*->editColumn('tipo_propiedad_id', function ($dato) {
             return $dato->tipo_propiedad->nombre;
@@ -105,4 +138,35 @@ class CuentaController extends Controller
     }
 
 
+
+
+
+    public function cambioEstado($id,$cuenta_estado_id)
+    {
+       $c= Cuenta::find($id);
+        $c->cuenta_estado_id=$cuenta_estado_id;
+        $c->save();
+
+       // $css= CuentaServicio::where("cuenta_id",$c->id)->get();
+
+
+
+        $eliminar= DB::query("Delete from cuentaservicio where cuenta_id=".$c->id);
+        //$eliminar->
+
+        if($cuenta_estado_id==1){
+            $ncs= new CuentaServicio();
+            $ncs->cuenta_id=$c->id;
+            $ncs->servicio_id=1;
+            $ncs->save();
+        } elseif($cuenta_estado_id==2){
+            $ncs= new CuentaServicio();
+            $ncs->cuenta_id=$c->id;
+            $ncs->servicio_id=2;
+            $ncs->save();
+        }
+
+
+        return redirect(route("admin.cuenta.lista"));
+    }
 }

@@ -25,6 +25,18 @@ class MedidorController extends Controller
         $respuesta['modelo'] = MedidorModelo::all()->pluck('nombre','id');
         return  json_encode($respuesta);
     }
+
+    public function listadoAutocomplete(Request $request)
+    {
+         $medidor= Medidor::where('serie','like','%'.$request->querys.'%')->get();
+        $medidor=$medidor->pluck('serie','id');
+        foreach($medidor as $k=>$m){
+            //dd($m);
+            $medidorArray[]= array( 'value'=> "$k", 'data'=> $m);
+        }
+        return  json_encode($medidorArray);
+    }
+
     public function nuevoStore(Request $request)
     {
         $respuesta= [];
@@ -32,6 +44,7 @@ class MedidorController extends Controller
         $medidor->serie= $request->serie;
         $medidor->medidor_modelo_id= $request->medidor_modelo_id;
         $medidor->lectura_inicial= $request->lectura_inicial;
+        $medidor->lectura_ultima= $request->lectura_inicial;
         $medidor->save();
 
         $respuesta["correcto"]=1;
