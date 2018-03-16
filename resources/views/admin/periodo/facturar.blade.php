@@ -74,7 +74,7 @@
                         </div>
                         <div class="ln_solid"></div>
                         <div class="row">
-                            <h4>Ultimos 6 periodos</h4>
+                            <h4>Ultimos estado de los ultimos periodos</h4>
 
                             <table class="table table-bordered">
                                 <thead>
