@@ -245,22 +245,13 @@
                                         max_lectura=respuesta[i].consumo_promedio;
                                     }
                             }
-
-
                             num_p_vacios=0;
                             var txt_periodos=$('.periodo_lectura');
-                            //console.log(txt_periodos[1].value);
                             for (i = 0; i < txt_periodos.length; i++) {
-                                //$('input[name="periodo_id['+respuesta[i].periodo_id+']"]').val(respuesta[i].consumo_promedio);
                                 if(txt_periodos[i].value==""){
                                     num_p_vacios=num_p_vacios+1;
                                 }
                             }
-
-                            //console.log(num_p_vacios);
-                            //periodos_vacios
-
-
                         }
                     });
 
