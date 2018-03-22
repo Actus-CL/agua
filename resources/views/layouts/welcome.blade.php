@@ -94,7 +94,7 @@
                             @if(auth()->user()->hasRole('administrator'))
                                 <a href="{{ url('/admin') }}">Administrador</a>
                             @endif
-                            <a href="{{ url('/logout') }}">{{ __('views.welcome.logout') }}</a>
+                            <a href="{{ url('/logout') }}">Cerrar sesion</a>
                         @endif
                     @endif
                 </div>
