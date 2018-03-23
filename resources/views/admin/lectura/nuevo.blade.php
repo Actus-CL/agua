@@ -41,13 +41,14 @@
                                     </label>
                                     <div class="col-md-8 col-sm-8 col-xs-12">
                                          <input type="text" name="medidor_serie" id="autocompleteMedidor" class="form-control col-md-7 col-xs-12" />
+                                        <input type="hidden" name="medidor_id" id="medidor_id"   />
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <label class="control-label col-md-4 col-sm-4 col-xs-12" for="first-name">Nueva Lectura <span class="required">*</span>
                                     </label>
                                     <div class="col-md-8 col-sm-8 col-xs-12">
-                                        <input type="text" name="medidor_serie" id="txt_lectura" class="form-control col-md-7 col-xs-12" />
+                                        <input type="text" name="lectura_actual" id="txt_lectura" class="form-control col-md-7 col-xs-12" />
                                     </div>
                                 </div>
                                 <div class="form-group">
@@ -55,6 +56,7 @@
                                     </label>
                                     <div class="col-md-8 col-sm-8 col-xs-12">
                                         <input type="text"  class="form-control col-md-7 col-xs-12" readonly value="{{$bag['periodo_lec']->nombre}}" />
+                                        <input type="hidden" name="l_periodo_id" id="l_periodo_id"  value="{{$bag['periodo_lec']->id}}" />
                                     </div>
                                 </div>
                                 <div class="form-group">
@@ -92,6 +94,12 @@
                                 </div>
 
 
+                            </div>
+                        </div>
+                        <div class="ln_solid"></div>
+                        <div class="form-group">
+                            <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
+                                <button type="submit" class="btn btn-success" id="btsubmit" >Guardar</button>
                             </div>
                         </div>
                         <div class="ln_solid"></div>
@@ -213,6 +221,8 @@
                     num_p_vacios=0;
 
                     var val =  suggestion.data;
+
+                    $('#medidor_id').val(val);
                     $('.periodo_lectura').val("");
                     $.ajax({
                         url: "{{route("admin.medidor.detalle")}}",
