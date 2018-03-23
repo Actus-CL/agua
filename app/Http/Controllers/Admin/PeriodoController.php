@@ -46,7 +46,8 @@ class PeriodoController extends Controller
         $p->nombre= $request->nombre;
         $p->anio= $request->anio;
         $p->mes= $request->mes;
-        $p->activo= 0;
+        $p->activo_lectura= 0;
+        $p->activo_facturacion= 0;
         $p->save();
 
         $respuesta["correcto"]=1;

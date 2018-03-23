@@ -37,7 +37,7 @@ class MembershipController extends Controller
             $membership->put('shopUrl', $protectionShopToken->shop_url);
         }
 
-        return view('membership')->with($membership->toArray());
+        return view('front.membership')->with($membership->toArray());
     }
 
     public function failed(Request $request)

@@ -15,4 +15,10 @@ class Medidor extends Model
     {
         return $this->hasMany('App\Cuenta' );
     }
+    public function ultima_lectura()
+    {
+        //dd($this->id);
+        return Lectura::where("medidor_id", $this->id)->get()->sortByDesc('id')->take(1)->first();
+    }
+
 }

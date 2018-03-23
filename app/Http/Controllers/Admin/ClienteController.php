@@ -100,6 +100,7 @@ class ClienteController extends Controller
             $r .= '<a href="' . route('admin.cliente.deshabilitar') . '" class="btn btn-default btn-xs"><i class="glyphicon glyphicon-edit"></i>Deshabilitar</a> ';
         }
         $r.='<a href="'.url('admin/propiedad/eliminar',$dato->id) .  '" class="btn btn-danger btn-xs"><i class="glyphicon glyphicon-edit"></i>Eliminar</a> ';
+        $r.='<a href="'.url('admin/propiedad/eliminar',$dato->id) .  '" class="btn btn-default btn-xs"><i class="glyphicon glyphicon-edit"></i>Boletas</a> ';
         return $r;
     })->editColumn('nombre', function ($dato) {
         return  $dato->nombre  . ' ' .$dato->apellido_paterno . ' ' . $dato->apellido_materno  ;
