@@ -82,7 +82,7 @@
         <div class="flex-center position-ref full-height">
 
                 <div class="top-right links">
-                    <a href="{{ route('protection.membership') }}">Portal de clientes</a>
+                    <a href="{{ route('protection.cliente.perfil') }}">Portal de clientes</a>
 
                     @if (Route::has('login'))
                         @if (!Auth::check())
