@@ -43,7 +43,8 @@
 @section('scripts')
     <script src={{asset("assets/admin/js/jquery.dataTables.js")}} type="text/javascript"></script>
     <script src={{asset("assets/admin/js/dataTables.bootstrap.js")}} type="text/javascript"></script>
-
+    <script src={{asset("assets/morris.js/morris.js")}} type="text/javascript"></script>
+    <script src={{asset("assets/raphael/raphael.js")}} type="text/javascript"></script>
     <script>
         $( document ).ready(function() {
             $.ajaxSetup({

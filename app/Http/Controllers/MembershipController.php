@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Auth\User\User;
 use Illuminate\Http\Request;
-
+use App\Cliente;
 class MembershipController extends Controller
 {
     public function __construct()
@@ -36,8 +36,10 @@ class MembershipController extends Controller
 
             $membership->put('shopUrl', $protectionShopToken->shop_url);
         }
+        $cliente=Cliente::find($user->id);
 
-        return view('front.membership')->with($membership->toArray());
+        return view('front.membership',["cliente"=>$cliente])->with($membership->toArray());
+  // return view('front.membership')->with($membership->toArray()))->with($cliente->toArray());
     }
 
     public function failed(Request $request)

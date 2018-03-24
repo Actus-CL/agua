@@ -27,4 +27,8 @@ class Cuenta extends Model
     {
         return $this->belongsToMany('App\Servicio' ,'cuentaservicio');
     }
+    public function boletas()
+    {
+        return $this->hasMany('App\Boleta' );
+    }
 }

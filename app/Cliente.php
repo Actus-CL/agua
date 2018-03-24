@@ -17,4 +17,9 @@ class Cliente extends Model
     {
         return $this->nombre .' '. $this->apellido_paterno .' '. $this->apellido_materno;
     }
+
+    public function cuentas()
+    {
+        return $this->hasMany('App\Cuenta' ,'cliente_id');
+    }
 }

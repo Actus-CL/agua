@@ -7,4 +7,15 @@ use Illuminate\Database\Eloquent\Model;
 class Boleta extends Model
 {
     protected $table = 'boleta';
+
+    public function periodo()
+    {
+        return $this->belongsTo('App\Periodo' );
+    }
+
+    public function estado_pago()
+    {
+        return $this->belongsTo('App\EstadoPago', 'estado_pago_id' );
+    }
+
 }

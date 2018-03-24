@@ -7,7 +7,7 @@
         <div class="col-md-12 col-sm-12 col-xs-12">
             <div class="x_panel">
                 <div class="x_title">
-                    <h2>User Report <small>Activity report</small></h2>
+                    <h2>Estado de cuenta <small></small></h2>
                     <ul class="nav navbar-right panel_toolbox">
                         <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
                         </li>
@@ -33,23 +33,24 @@
                                 <img class="img-responsive avatar-view" src="images/picture.jpg" alt="Avatar" title="Change the avatar">
                             </div>
                         </div>
-                        <h3>Samuel Doe</h3>
+                        <h3>{{ $cliente->nombreCompleto() }}</h3>
 
                         <ul class="list-unstyled user_data">
-                            <li><i class="fa fa-map-marker user-profile-icon"></i> San Francisco, California, USA
+                            <li><i class="fa fa-map-marker user-profile-icon"></i> {{ $cliente->direccion }}
                             </li>
 
+
                             <li>
-                                <i class="fa fa-briefcase user-profile-icon"></i> Software Engineer
+                                <i class="fa fa-briefcase user-profile-icon"></i> {{ $cliente->rut }}
                             </li>
 
                             <li class="m-top-xs">
                                 <i class="fa fa-external-link user-profile-icon"></i>
-                                <a href="http://www.kimlabs.com/profile/" target="_blank">www.kimlabs.com</a>
+                                {{ $cliente->email }}
                             </li>
                         </ul>
 
-                        <a class="btn btn-success"><i class="fa fa-edit m-right-xs"></i>Edit Profile</a>
+                        <a class="btn btn-success"><i class="fa fa-edit m-right-xs"></i>Editar Perfil</a>
                         <br />
 
                         <!-- start skills -->
@@ -87,7 +88,7 @@
 
                         <div class="profile_title">
                             <div class="col-md-6">
-                                <h2>User Activity Report</h2>
+                                <h2>Consumo global últimos 12 periodos</h2>
                             </div>
                             <div class="col-md-6">
                                 <div id="reportrange" class="pull-right" style="margin-top: 5px; background: #fff; cursor: pointer; padding: 5px 10px; border: 1px solid #E6E9ED">
@@ -97,159 +98,85 @@
                             </div>
                         </div>
                         <!-- start of user-activity-graph -->
-                        <div id="graph_bar" style="width:100%; height:280px;"></div>
+                        <div id="graf_historial_boletas" style="width:100%; height:280px;"></div>
                         <!-- end of user-activity-graph -->
 
                         <div class="" role="tabpanel" data-example-id="togglable-tabs">
                             <ul id="myTab" class="nav nav-tabs bar_tabs" role="tablist">
-                                <li role="presentation" class="active"><a href="#tab_content1" id="home-tab" role="tab" data-toggle="tab" aria-expanded="true">Recent Activity</a>
-                                </li>
-                                <li role="presentation" class=""><a href="#tab_content2" role="tab" id="profile-tab" data-toggle="tab" aria-expanded="false">Projects Worked on</a>
-                                </li>
-                                <li role="presentation" class=""><a href="#tab_content3" role="tab" id="profile-tab2" data-toggle="tab" aria-expanded="false">Profile</a>
-                                </li>
+                                <?php
+                                $activo="active";
+                                ?>
+                                @foreach( $cliente->cuentas as $cuenta)
+                                    <li role="presentation" class="{{$activo}}"><a href="#tab_content{{$cuenta->id}}" id="home-tab" role="tab" data-toggle="tab" aria-expanded="true">Nro:{{$cuenta->id}} -  {{$cuenta->proyecto->nombre}}, {{$cuenta->direccion}}</a>
+                                    </li>
+                                        <?php
+                                        $activo="";
+                                        ?>
+                                @endforeach
                             </ul>
                             <div id="myTabContent" class="tab-content">
-                                <div role="tabpanel" class="tab-pane fade active in" id="tab_content1" aria-labelledby="home-tab">
+                                <?php
+                                $activo="active";
+                                ?>
+                                @foreach( $cliente->cuentas as $cuenta)
+                                    <div role="tabpanel" class="tab-pane fade {{$activo}} in" id="tab_content{{$cuenta->id}}" aria-labelledby="home-tab">
+                                        <ul class="quick-list">
+                                            <li><i class="fa fa-bars"></i><b>Medidor:</b>  Serie ({{$cuenta->medidor->serie}}), Ultima Lectura({{$cuenta->medidor->lectura_ultima}})</li>
+                                            <li><i class="fa fa-bar-chart"></i><b>Lugar:</b>  {{$cuenta->proyecto->nombre}}, {{$cuenta->direccion}}</li>
+                                            <li><i class="fa fa-support"></i><b>Estado:</b> {{$cuenta->cuentaEstado->nombre}} </li>
+                                        </ul>
 
-                                    <!-- start recent activity -->
-                                    <ul class="messages">
-                                        <li>
-                                            <img src="images/img.jpg" class="avatar" alt="Avatar">
-                                            <div class="message_date">
-                                                <h3 class="date text-info">24</h3>
-                                                <p class="month">May</p>
-                                            </div>
-                                            <div class="message_wrapper">
-                                                <h4 class="heading">Desmond Davison</h4>
-                                                <blockquote class="message">Raw denim you probably haven't heard of them jean shorts Austin. Nesciunt tofu stumptown aliqua butcher retro keffiyeh dreamcatcher synth.</blockquote>
-                                                <br />
-                                                <p class="url">
-                                                    <span class="fs1 text-info" aria-hidden="true" data-icon=""></span>
-                                                    <a href="#"><i class="fa fa-paperclip"></i> User Acceptance Test.doc </a>
-                                                </p>
-                                            </div>
-                                        </li>
-                                        <li>
-                                            <img src="images/img.jpg" class="avatar" alt="Avatar">
-                                            <div class="message_date">
-                                                <h3 class="date text-error">21</h3>
-                                                <p class="month">May</p>
-                                            </div>
-                                            <div class="message_wrapper">
-                                                <h4 class="heading">Brian Michaels</h4>
-                                                <blockquote class="message">Raw denim you probably haven't heard of them jean shorts Austin. Nesciunt tofu stumptown aliqua butcher retro keffiyeh dreamcatcher synth.</blockquote>
-                                                <br />
-                                                <p class="url">
-                                                    <span class="fs1" aria-hidden="true" data-icon=""></span>
-                                                    <a href="#" data-original-title="">Download</a>
-                                                </p>
-                                            </div>
-                                        </li>
-                                        <li>
-                                            <img src="images/img.jpg" class="avatar" alt="Avatar">
-                                            <div class="message_date">
-                                                <h3 class="date text-info">24</h3>
-                                                <p class="month">May</p>
-                                            </div>
-                                            <div class="message_wrapper">
-                                                <h4 class="heading">Desmond Davison</h4>
-                                                <blockquote class="message">Raw denim you probably haven't heard of them jean shorts Austin. Nesciunt tofu stumptown aliqua butcher retro keffiyeh dreamcatcher synth.</blockquote>
-                                                <br />
-                                                <p class="url">
-                                                    <span class="fs1 text-info" aria-hidden="true" data-icon=""></span>
-                                                    <a href="#"><i class="fa fa-paperclip"></i> User Acceptance Test.doc </a>
-                                                </p>
-                                            </div>
-                                        </li>
-                                        <li>
-                                            <img src="images/img.jpg" class="avatar" alt="Avatar">
-                                            <div class="message_date">
-                                                <h3 class="date text-error">21</h3>
-                                                <p class="month">May</p>
-                                            </div>
-                                            <div class="message_wrapper">
-                                                <h4 class="heading">Brian Michaels</h4>
-                                                <blockquote class="message">Raw denim you probably haven't heard of them jean shorts Austin. Nesciunt tofu stumptown aliqua butcher retro keffiyeh dreamcatcher synth.</blockquote>
-                                                <br />
-                                                <p class="url">
-                                                    <span class="fs1" aria-hidden="true" data-icon=""></span>
-                                                    <a href="#" data-original-title="">Download</a>
-                                                </p>
-                                            </div>
-                                        </li>
 
-                                    </ul>
-                                    <!-- end recent activity -->
 
-                                </div>
-                                <div role="tabpanel" class="tab-pane fade" id="tab_content2" aria-labelledby="profile-tab">
+                                        <table class="data table table-striped no-margin">
+                                            <thead>
+                                            <tr>
+                                                <th>Periodo</th>
+                                                <th>Fecha Emision</th>
+                                                <th>Fecha Vencimiento</th>
+                                                <th>Valor</th>
+                                                <th>Estado</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            @foreach($cuenta->boletas as $boleta)
+                                            <tr>
+                                                <td>{{$boleta->periodo->nombre}}</td>
+                                                <td>{{$boleta->f_emision}}</td>
+                                                <td>{{$boleta->f_vencimiento}}</td>
+                                                <td>{{$boleta->total}}</td>
+                                                <td>
+                                                    <?php
+                                                    if($boleta->estado_pago_id==1){
+                                                        $tipo_b="success"; //pendiente
+                                                    }else  if($boleta->estado_pago_id==2){
+                                                        $tipo_b="danger"; //atrasada
+                                                    }else{
+                                                        $tipo_b="primary"; //pagada
+                                                    }
+                                                    ?>
+                                                    <button type="button" class="btn btn-{{$tipo_b}} btn-xs">
+                                                        {{$boleta->estado_pago->nombre}}
+                                                    </button>
 
-                                    <!-- start user projects -->
-                                    <table class="data table table-striped no-margin">
-                                        <thead>
-                                        <tr>
-                                            <th>#</th>
-                                            <th>Project Name</th>
-                                            <th>Client Company</th>
-                                            <th class="hidden-phone">Hours Spent</th>
-                                            <th>Contribution</th>
-                                        </tr>
-                                        </thead>
-                                        <tbody>
-                                        <tr>
-                                            <td>1</td>
-                                            <td>New Company Takeover Review</td>
-                                            <td>Deveint Inc</td>
-                                            <td class="hidden-phone">18</td>
-                                            <td class="vertical-align-mid">
-                                                <div class="progress">
-                                                    <div class="progress-bar progress-bar-success" data-transitiongoal="35"></div>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>2</td>
-                                            <td>New Partner Contracts Consultanci</td>
-                                            <td>Deveint Inc</td>
-                                            <td class="hidden-phone">13</td>
-                                            <td class="vertical-align-mid">
-                                                <div class="progress">
-                                                    <div class="progress-bar progress-bar-danger" data-transitiongoal="15"></div>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>3</td>
-                                            <td>Partners and Inverstors report</td>
-                                            <td>Deveint Inc</td>
-                                            <td class="hidden-phone">30</td>
-                                            <td class="vertical-align-mid">
-                                                <div class="progress">
-                                                    <div class="progress-bar progress-bar-success" data-transitiongoal="45"></div>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>4</td>
-                                            <td>New Company Takeover Review</td>
-                                            <td>Deveint Inc</td>
-                                            <td class="hidden-phone">28</td>
-                                            <td class="vertical-align-mid">
-                                                <div class="progress">
-                                                    <div class="progress-bar progress-bar-success" data-transitiongoal="75"></div>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        </tbody>
-                                    </table>
-                                    <!-- end user projects -->
+                                                </td>
+                                            </tr>
 
-                                </div>
-                                <div role="tabpanel" class="tab-pane fade" id="tab_content3" aria-labelledby="profile-tab">
-                                    <p>xxFood truck fixie locavore, accusamus mcsweeney's marfa nulla single-origin coffee squid. Exercitation +1 labore velit, blog sartorial PBR leggings next level wes anderson artisan four loko farm-to-table craft beer twee. Qui
-                                        photo booth letterpress, commodo enim craft beer mlkshk </p>
-                                </div>
+
+                                            @endforeach
+
+
+                                            </tbody>
+                                        </table>
+
+
+                                    </div>
+
+                                        <?php
+                                        $activo="";
+                                        ?>
+                                @endforeach
+
                             </div>
                         </div>
                     </div>
@@ -278,7 +205,33 @@
 @section('scripts')
     <script>
         $( document ).ready(function() {
+            if ($('#graf_historial_boletas').length){
 
+                Morris.Bar({
+                    element: 'graf_historial_boletas',
+                    data: [
+                        {device: 'iPhone 4', geekbench: 380},
+                        {device: 'iPhone 4S', geekbench: 655},
+                        {device: 'iPhone 3GS', geekbench: 275},
+                        {device: 'iPhone 5', geekbench: 1571},
+                        {device: 'iPhone 5S', geekbench: 655},
+                        {device: 'iPhone 6', geekbench: 2154},
+                        {device: 'iPhone 6 Plus', geekbench: 1144},
+                        {device: 'iPhone 6S', geekbench: 2371},
+                        {device: 'iPhone 6S Plus', geekbench: 1471},
+                        {device: 'Other', geekbench: 1371}
+                    ],
+                    xkey: 'device',
+                    ykeys: ['geekbench'],
+                    labels: ['Geekbench'],
+                    barRatio: 0.4,
+                    barColors: ['#26B99A', '#34495E', '#ACADAC', '#3498DB'],
+                    xLabelAngle: 35,
+                    hideHover: 'auto',
+                    resize: true
+                });
+
+            }
 
 
         });
