@@ -22,4 +22,9 @@ class Cliente extends Model
     {
         return $this->hasMany('App\Cuenta' ,'cliente_id');
     }
+
+    public function boletas()
+    {
+        return $this->hasMany('App\Boleta' ,'cliente_id');
+    }
 }

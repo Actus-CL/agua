@@ -27,18 +27,17 @@
                 </div>
                 <div class="x_content">
                     <div class="col-md-3 col-sm-3 col-xs-12 profile_left">
-                        <div class="profile_img">
-                            <div id="crop-avatar">
-                                <!-- Current avatar -->
-                                <img class="img-responsive avatar-view" src="images/picture.jpg" alt="Avatar" title="Change the avatar">
-                            </div>
-                        </div>
+                        {{--<div class="profile_img">--}}
+                            {{--<div id="crop-avatar">--}}
+                                {{--<!-- Current avatar -->--}}
+                                {{--<img class="img-responsive avatar-view" src="images/picture.jpg" alt="Avatar" title="Change the avatar">--}}
+                            {{--</div>--}}
+                        {{--</div>--}}
                         <h3>{{ $cliente->nombreCompleto() }}</h3>
 
                         <ul class="list-unstyled user_data">
                             <li><i class="fa fa-map-marker user-profile-icon"></i> {{ $cliente->direccion }}
                             </li>
-
 
                             <li>
                                 <i class="fa fa-briefcase user-profile-icon"></i> {{ $cliente->rut }}
@@ -54,32 +53,31 @@
                         <br />
 
                         <!-- start skills -->
-                        <h4>Skills</h4>
+                        <h4>Detalles</h4>
                         <ul class="list-unstyled user_data">
                             <li>
-                                <p>Web Applications</p>
-                                <div class="progress progress_sm">
-                                    <div class="progress-bar bg-green" role="progressbar" data-transitiongoal="50"></div>
-                                </div>
+                               <b>
+                                   Cuentas asociadas:
+                               </b>
+                                {{ $cliente->cuentas->count() }}
                             </li>
                             <li>
-                                <p>Website Design</p>
-                                <div class="progress progress_sm">
-                                    <div class="progress-bar bg-green" role="progressbar" data-transitiongoal="70"></div>
-                                </div>
+                                <b>
+                                    Total Adeudado:
+                                </b>
+                                @foreach($cliente->cuentas as $cuenta)
+                                    {{dd($cuenta->boletas->where('estado_pago_id','<>',3))}}
+                                @endforeach
+
                             </li>
+
                             <li>
-                                <p>Automation & Testing</p>
-                                <div class="progress progress_sm">
-                                    <div class="progress-bar bg-green" role="progressbar" data-transitiongoal="30"></div>
-                                </div>
+                                Cuentas
+                                {{ $cliente->email }}
                             </li>
-                            <li>
-                                <p>UI / UX</p>
-                                <div class="progress progress_sm">
-                                    <div class="progress-bar bg-green" role="progressbar" data-transitiongoal="50"></div>
-                                </div>
-                            </li>
+
+
+
                         </ul>
                         <!-- end of skills -->
 
@@ -87,15 +85,15 @@
                     <div class="col-md-9 col-sm-9 col-xs-12">
 
                         <div class="profile_title">
-                            <div class="col-md-6">
-                                <h2>Consumo global últimos 12 periodos</h2>
+                            <div class="col-md-12">
+                                <h2>Consumo últimos 12 periodos</h2>
                             </div>
-                            <div class="col-md-6">
-                                <div id="reportrange" class="pull-right" style="margin-top: 5px; background: #fff; cursor: pointer; padding: 5px 10px; border: 1px solid #E6E9ED">
-                                    <i class="glyphicon glyphicon-calendar fa fa-calendar"></i>
-                                    <span>December 30, 2014 - January 28, 2015</span> <b class="caret"></b>
-                                </div>
-                            </div>
+                            {{--<div class="col-md-6">--}}
+                                {{--<div id="reportrange" class="pull-right" style="margin-top: 5px; background: #fff; cursor: pointer; padding: 5px 10px; border: 1px solid #E6E9ED">--}}
+                                    {{--<i class="glyphicon glyphicon-calendar fa fa-calendar"></i>--}}
+                                    {{--<span>December 30, 2014 - January 28, 2015</span> <b class="caret"></b>--}}
+                                {{--</div>--}}
+                            {{--</div>--}}
                         </div>
                         <!-- start of user-activity-graph -->
                         <div id="graf_historial_boletas" style="width:100%; height:280px;"></div>
