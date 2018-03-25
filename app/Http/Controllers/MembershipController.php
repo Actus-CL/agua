@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Auth\User\User;
 use Illuminate\Http\Request;
 use App\Cliente;
+use App\Periodo;
 class MembershipController extends Controller
 {
     public function __construct()
@@ -37,8 +38,10 @@ class MembershipController extends Controller
             $membership->put('shopUrl', $protectionShopToken->shop_url);
         }
         $cliente=Cliente::find($user->id);
+        $periodo_lec=Periodo::where("activo_lectura",1)->first();
+        $periodos=Periodo::where("id","<=",$periodo_lec->id)->get()->sortByDesc('id')->take(6)->reverse();
 
-        return view('front.membership',["cliente"=>$cliente])->with($membership->toArray());
+        return view('front.membership',["cliente"=>$cliente,"periodos"=>$periodos])->with($membership->toArray());
   // return view('front.membership')->with($membership->toArray()))->with($cliente->toArray());
     }
 

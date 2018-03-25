@@ -51,7 +51,7 @@
 
                         <a class="btn btn-success"><i class="fa fa-edit m-right-xs"></i>Editar Perfil</a>
                         <br />
-
+                        <hr>
                         <!-- start skills -->
                         <h4>Detalles</h4>
                         <ul class="list-unstyled user_data">
@@ -65,18 +65,8 @@
                                 <b>
                                     Total Adeudado:
                                 </b>
-                                @foreach($cliente->cuentas as $cuenta)
-                                    {{dd($cuenta->boletas->where('estado_pago_id','<>',3))}}
-                                @endforeach
-
+                                    $ {{$cliente->monto_adeudado()}}
                             </li>
-
-                            <li>
-                                Cuentas
-                                {{ $cliente->email }}
-                            </li>
-
-
 
                         </ul>
                         <!-- end of skills -->
@@ -202,26 +192,21 @@
 
 @section('scripts')
     <script>
+
+
         $( document ).ready(function() {
             if ($('#graf_historial_boletas').length){
 
                 Morris.Bar({
                     element: 'graf_historial_boletas',
                     data: [
-                        {device: 'iPhone 4', geekbench: 380},
-                        {device: 'iPhone 4S', geekbench: 655},
-                        {device: 'iPhone 3GS', geekbench: 275},
-                        {device: 'iPhone 5', geekbench: 1571},
-                        {device: 'iPhone 5S', geekbench: 655},
-                        {device: 'iPhone 6', geekbench: 2154},
-                        {device: 'iPhone 6 Plus', geekbench: 1144},
-                        {device: 'iPhone 6S', geekbench: 2371},
-                        {device: 'iPhone 6S Plus', geekbench: 1471},
-                        {device: 'Other', geekbench: 1371}
+                        @foreach ($periodos as $p)
+                        {periodo: '{{$p->nombre_formato()}}', consumo: {{$p->consumo_cliente($cliente->id)}}} ,
+                        @endforeach
                     ],
-                    xkey: 'device',
-                    ykeys: ['geekbench'],
-                    labels: ['Geekbench'],
+                    xkey: 'periodo',
+                    ykeys: ['consumo'],
+                    labels: ['Consumo'],
                     barRatio: 0.4,
                     barColors: ['#26B99A', '#34495E', '#ACADAC', '#3498DB'],
                     xLabelAngle: 35,
