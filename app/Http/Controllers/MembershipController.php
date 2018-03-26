@@ -45,6 +45,11 @@ class MembershipController extends Controller
   // return view('front.membership')->with($membership->toArray()))->with($cliente->toArray());
     }
 
+
+
+
+
+
     public function failed(Request $request)
     {
         /** @var  $user User */
