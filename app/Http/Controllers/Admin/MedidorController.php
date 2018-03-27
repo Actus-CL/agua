@@ -65,7 +65,7 @@ class MedidorController extends Controller
         $m = Medidor::all();
 
         return Datatables::of($m)->addColumn('action', function ($d) {
-            $r= '<a href="'.route('admin.cliente.editar', $d).'" class="btn btn-primary  btn-xs"><i class="glyphicon glyphicon-edit"></i>Editar</a> ';
+            $r= '<a href="'.route('admin.medidor.editar', $d).'" class="btn btn-primary  btn-xs"><i class="glyphicon glyphicon-edit"></i>Editar</a>  ';
             return $r;
         })->addColumn('medidor_modelo', function ($dato) {
             return  $dato->medidor_modelo->nombre;
@@ -93,4 +93,35 @@ class MedidorController extends Controller
             return $dato->tipo_publicacion->nombre;
         }) */
     }
+
+    public function editarForm($id)
+    {
+      $bag = [];
+      $bag['medidor'] = Medidor::find($id);
+      $bag['medidor_modelo']= MedidorModelo::all()->pluck('nombre','id');
+      return view('admin.medidor.editar', ['bag' => $bag]);
+    }
+
+    public function editarUpdate(Request $request)
+    {
+        $respuesta= [];
+        $medidor = Medidor::find($request->id);
+        $medidor->medidor_modelo_id= $request->medidor_modelo_id;
+        $medidor->lectura_inicial= $request->lectura_inicial;
+        $medidor->lectura_ultima= $request->lectura_ultima;
+        $medidor->save();
+
+        $respuesta["correcto"]=1;
+
+        return  json_encode($respuesta);
+    }
+
+    // public function eliminar($id)
+    // {
+    //     $respuesta= [];
+    //     $medidor = Medidor::find($id);
+    //     $medidor->delete();
+    //     $respuesta["correcto"]=1;
+    //     return json_encode($respuesta);
+    // }
 }
