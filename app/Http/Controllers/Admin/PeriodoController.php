@@ -162,6 +162,7 @@ class PeriodoController extends Controller
 
             $b= new Boleta();
             $b->cuenta_id=$cuenta->id;
+            $b->cliente_id=$cuenta->cliente_id;
             $b->periodo_id=$periodo_fac->id;
             $b->total=100;
             $b->f_vencimiento=$periodo_fac->f_vencimiento_pago;
