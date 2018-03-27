@@ -67,7 +67,7 @@ class PeriodoController extends Controller
         $m = Periodo::all();
         //dd($m);
         return Datatables::of($m)->addColumn('action', function ($d) {
-            $r= '<a href="'.route('admin.cliente.editar', $d).'" class="btn btn-primary  btn-xs"><i class="glyphicon glyphicon-edit"></i>Editar</a> ';
+            $r= '<a href="'.route('admin.periodo.editar', $d).'" class="btn btn-primary  btn-xs"><i class="glyphicon glyphicon-edit"></i>Editar</a> ';
             $r.= '<a href="'.route('admin.cliente.editar', $d).'" class="btn btn-primary  btn-xs"><i class="glyphicon glyphicon-edit"></i>Boletas</a> ';
             return $r;
         })->addColumn('action_lectura', function ($d) {
@@ -189,6 +189,26 @@ class PeriodoController extends Controller
         $respuesta["mensajeOK"]="Se han emitido los cobros correspondientes";
         //$respuesta["mensajeBAD"]="Ha ocurrido un problema y el cliente no ha logrado registrarse";
         //$respuesta["redireccion"]="hola";
+
+        return  json_encode($respuesta);
+    }
+
+    public function editarForm($id)
+    {
+      $bag = [];
+      $bag['periodo'] = Periodo::find($id);
+      return view('admin.periodo.editar', ['bag' => $bag]);
+    }
+
+    public function editarUpdate(Request $request)
+    {
+        $respuesta= [];
+        $periodo = Periodo::find($request->id);
+        $periodo->f_vencimiento_pago= $request->f_vencimiento_pago;
+        $periodo->f_vencimiento_corte= $request->f_vencimiento_corte;
+        $periodo->save();
+
+        $respuesta["correcto"]=1;
 
         return  json_encode($respuesta);
     }
