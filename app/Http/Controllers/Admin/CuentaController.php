@@ -151,7 +151,8 @@ class CuentaController extends Controller
 
 
 
-        $eliminar= DB::query("Delete from cuentaservicio where cuenta_id=".$c->id);
+        //$eliminar= DB::query("Delete from cuentaservicio where cuenta_id=".$c->id);
+        $deleted = DB::delete("delete from users where cuenta_id=?",[$c->id]);
         //$eliminar->
 
         if($cuenta_estado_id==1){

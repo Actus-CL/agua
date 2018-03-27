@@ -1,4 +1,4 @@
-@extends('layouts.welcome')
+@extends('front.welcome')
 
 @section('content')
     <div class="title m-b-md">

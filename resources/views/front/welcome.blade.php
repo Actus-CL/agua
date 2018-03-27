@@ -82,19 +82,19 @@
         <div class="flex-center position-ref full-height">
 
                 <div class="top-right links">
-                    <a href="{{ route('protection.membership') }}">{{ __('views.welcome.member_area') }}</a>
+                    <a href="{{ route('protection.cliente.perfil') }}">Portal de clientes</a>
 
                     @if (Route::has('login'))
                         @if (!Auth::check())
                             @if(config('auth.users.registration'))
-                                <a href="{{ url('/register') }}">{{ __('views.welcome.register') }}</a>
+                                {{--<a href="{{ url('/register') }}">Registrar</a>--}}
                             @endif
-                            <a href="{{ url('/login') }}">{{ __('views.welcome.login') }}</a>
+                            <a href="{{ url('/login') }}">Ingresar al sistema</a>
                         @else
                             @if(auth()->user()->hasRole('administrator'))
-                                <a href="{{ url('/admin') }}">{{ __('views.welcome.admin') }}</a>
+                                <a href="{{ url('/admin') }}">Administrador</a>
                             @endif
-                            <a href="{{ url('/logout') }}">{{ __('views.welcome.logout') }}</a>
+                            <a href="{{ url('/logout') }}">Cerrar sesion</a>
                         @endif
                     @endif
                 </div>

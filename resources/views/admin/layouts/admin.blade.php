@@ -111,7 +111,7 @@
                         if(data==0){
                             $("#btsubmit").removeAttr("disabled");
                         }else{
-                            alert("Ya encuentra registrado en la base de datos");
+                            alert("Ya se encuentra registrado en la base de datos");
                             $(this).focus();
                         }
 

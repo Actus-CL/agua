@@ -46,7 +46,8 @@ class PeriodoController extends Controller
         $p->nombre= $request->nombre;
         $p->anio= $request->anio;
         $p->mes= $request->mes;
-        $p->activo= 0;
+        $p->activo_lectura= 0;
+        $p->activo_facturacion= 0;
         $p->save();
 
         $respuesta["correcto"]=1;
@@ -161,6 +162,7 @@ class PeriodoController extends Controller
 
             $b= new Boleta();
             $b->cuenta_id=$cuenta->id;
+            $b->cliente_id=$cuenta->cliente_id;
             $b->periodo_id=$periodo_fac->id;
             $b->total=100;
             $b->f_vencimiento=$periodo_fac->f_vencimiento_pago;
