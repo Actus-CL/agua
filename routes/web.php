@@ -80,7 +80,11 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
 
     //Editar cliente
     Route::get('cliente/editar', 'ClienteController@editarForm')->name('cliente.editar');
-    Route::post('cliente/editar', 'ClienteController@editarUpdate')->name('cliente.editar.update');
+    Route::get('cliente/editar/{id}', 'ClienteController@editarForm')->name('cliente.editar');
+    Route::post('cliente/editar/guardar', 'ClienteController@editarUpdate')->name('cliente.editar.update');
+
+    //Eliminar cliente
+    Route::get('cliente/eliminar/{id}', 'ClienteController@eliminar')->name('cliente.eliminar');
 
     //Habilitar cliente
     Route::get('cliente/habilitar', 'ClienteController@habilitar')->name('cliente.habilitar');
@@ -111,8 +115,8 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
 
     //Editar medidor
     Route::get('medidor/editar', 'MedidorController@editarForm')->name('medidor.editar');
-    Route::post('medidor/editar', 'MedidorController@editarUpdate')->name('medidor.editar.update');
-
+    Route::get('medidor/editar/{id}', 'MedidorController@editarForm')->name('medidor.editar');
+    Route::post('medidor/editar/guardar', 'MedidorController@editarUpdate')->name('medidor.editar.update');
 
 
     //Ingreso cuenta nuevo
@@ -154,6 +158,12 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     //Listado de medidores
     Route::get('periodo/lista', 'PeriodoController@lista')->name('periodo.lista');
     Route::get('periodo/lista/tabla', 'PeriodoController@listaTabla')->name('periodo.lista.tabla');
+
+    //Editar periodos
+    Route::get('periodo/editar', 'PeriodoController@editarForm')->name('periodo.editar');
+    Route::get('periodo/editar/{id}', 'PeriodoController@editarForm')->name('periodo.editar');
+    Route::post('periodo/editar/guardar', 'PeriodoController@editarUpdate')->name('periodo.editar.update');
+
 
     // Activar periodo lectura
     Route::get('periodo/activar/lectura/{id}', 'PeriodoController@habilitarLectura')->name('periodo.activar.lectura');
@@ -205,4 +215,3 @@ Route::group(['as' => 'protection.'], function () {
     Route::get('membership/access-denied', 'MembershipController@failed')->name('membership.failed');
     Route::get('membership/clear-cache/', 'MembershipController@clearValidationCache')->name('membership.clear_validation_cache');
 });
-
