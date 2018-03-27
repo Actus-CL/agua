@@ -3,6 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use DB;
 
 class Cuenta extends Model
 {
@@ -26,5 +27,9 @@ class Cuenta extends Model
     public function servicios()
     {
         return $this->belongsToMany('App\Servicio' ,'cuentaservicio');
+    }
+    public function boletas()
+    {
+        return $this->hasMany('App\Boleta' );
     }
 }
