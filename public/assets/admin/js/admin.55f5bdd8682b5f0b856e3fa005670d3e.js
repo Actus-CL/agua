@@ -4112,8 +4112,22 @@ if (typeof NProgress != 'undefined') {
 
             $('.inputfecha').daterangepicker({
                 singleDatePicker: true,
-                singleClasses: "picker_1"
+                singleClasses: "picker_1",
+                locale: {
+                    format: 'YYYY-MM-DD',
+                    applyLabel: 'Aplicar',
+                    cancelLabel: 'Limpiar',
+                    fromLabel: 'Desde',
+                    toLabel: 'Hasta',
+                    customRangeLabel: 'Seleccionar rango',
+                    daysOfWeek: ['Do', 'Lu', 'Ma', 'Mi', 'Ju', 'Vi', 'Sa'],
+                    monthNames: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio',
+                        'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre',
+                        'Diciembre'],
+                    firstDay: 1
+                }
             }, function(start, end, label) {
+              alert ("holi");
                 console.log(start.toISOString(), end.toISOString(), label);
             });
 
