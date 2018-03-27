@@ -88,16 +88,16 @@
         });
 
 
-        $('#tabla-listado-propiedades').delegate('.bt_eliminar','click',   function(){
-
-            var id = $(this).data("id");
+        $('#datatable').delegate('.bt_eliminar','click',   function(e){
+          e.preventDefault();
+            var id = $(this).attr("href");
             $.ajax({
-                url: '{{url('admin/propiedad')}}/'+id,
-                type: 'DELETE',
-                data: $('#form-listado-propiedades').serialize(),
+                url: id,
+                type: 'GET',
                 success: function (data) {
-                    if(data=="eliminado"){
-                        alert('La propiedad ha sido eliminado');
+                  data = $.parseJSON( data);
+                    if(data.correcto=="1"){
+                        alert('Registro eliminado');
                         location.reload();
                     }
                 }
