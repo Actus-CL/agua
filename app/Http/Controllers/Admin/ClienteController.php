@@ -18,14 +18,12 @@ class ClienteController extends Controller
      *  Devuelve TRUE si es que ya está ingresado, y False si no lo está
      * @param $rut
      * @return bool
-     * editado por natie2
      */
 
 
 
     public function nuevoForm()
     {
-        //
         return view('admin.cliente.nuevo');
     }
 
@@ -70,6 +68,40 @@ class ClienteController extends Controller
          return  json_encode($respuesta);
     }
 
+    public function editarForm($id)
+    {
+      $bag = [];
+      $bag['cliente'] = Cliente::find($id);
+      return view('admin.cliente.editar', ['bag' => $bag]);
+    }
+
+    public function editarUpdate(Request $request)
+    {
+        $respuesta= [];
+        $cliente = Cliente::find($request->id);
+        $cliente->nombre= $request->nombre;
+        $cliente->apellido_paterno= $request->apellido_paterno;
+        $cliente->apellido_materno= $request->apellido_materno;
+        $cliente->rut= $request->rut;
+        $cliente->email= $request->email;
+        $cliente->direccion= $request->direccion;
+        $cliente->save();
+
+        $respuesta["correcto"]=1;
+
+        return  json_encode($respuesta);
+    }
+
+    public function eliminar($id)
+    {
+        $respuesta= [];
+        $cliente = Cliente::find($id);
+        $cliente->delete();
+        $respuesta["correcto"]=1;
+        return json_encode($respuesta);
+    }
+
+
     public function detalle(Request $request)
     {
         $respuesta= [];
@@ -99,7 +131,7 @@ class ClienteController extends Controller
         }else{
             $r .= '<a href="' . route('admin.cliente.deshabilitar') . '" class="btn btn-default btn-xs"><i class="glyphicon glyphicon-edit"></i>Deshabilitar</a> ';
         }
-        $r.='<a href="'.url('admin/propiedad/eliminar',$dato->id) .  '" class="btn btn-danger btn-xs"><i class="glyphicon glyphicon-edit"></i>Eliminar</a> ';
+        $r.='<a href="'.route('admin.cliente.eliminar',$dato->id) .  '" class="btn btn-danger btn-xs bt_eliminar"><i class="glyphicon glyphicon-edit"></i>Eliminar</a> ';
         return $r;
     })->editColumn('nombre', function ($dato) {
         return  $dato->nombre  . ' ' .$dato->apellido_paterno . ' ' . $dato->apellido_materno  ;
