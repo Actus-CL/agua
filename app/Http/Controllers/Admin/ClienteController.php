@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Cliente;
+use App\Boleta;
 use App\Models\Auth\User\User;
 use Ramsey\Uuid\Uuid;
 use App\Models\Auth\Role\Role;
@@ -158,7 +159,7 @@ class ClienteController extends Controller
         }
 
         $r.='<a href="'.route('admin.cliente.eliminar',$dato->id) .  '" class="btn btn-danger btn-xs bt_eliminar"><i class="glyphicon glyphicon-edit"></i>Eliminar</a> ';
-        $r.='<a href="'.url('admin/propiedad/eliminar',$dato->id) .  '" class="btn btn-default btn-xs"><i class="glyphicon glyphicon-edit"></i>Boletas</a> ';
+        $r.='<a href="'.route('admin.cliente.boleta', $dato->id) .  '" class="btn btn-default btn-xs"><i class="glyphicon glyphicon-edit"></i>Boletas</a> ';
 
         return $r;
     })->editColumn('nombre', function ($dato) {
@@ -171,5 +172,24 @@ class ClienteController extends Controller
         return $dato->tipo_publicacion->nombre;
     }) */
 }
+
+    public function boleta($id)
+    {
+      $bag = [];
+      $bag['boleta'] = Boleta::where('cliente_id', $id);
+      $bag['cliente'] = Cliente::find($id);
+      return view('admin.cliente.boleta', ['bag' => $bag]);
+    }
+
+    public function boletaLista($id){
+
+    $boleta = Boleta::select('id', 'periodo_id', 'f_emision', 'f_vencimiento', 'total' ,'estado_pago_id')->where('cliente_id', $id);
+
+    return Datatables::of($boleta)->editColumn('periodo_id', function ($dato) {
+        return  $dato->periodo->nombre;
+      })->editColumn('estado_pago_id', function ($dato) {
+          return  $dato->estado_pago->nombre;
+      })->make(true);
+    }
 
 }
