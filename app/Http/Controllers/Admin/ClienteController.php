@@ -92,6 +92,31 @@ class ClienteController extends Controller
         return  json_encode($respuesta);
     }
 
+    public function habilitar(Request $request)
+    {
+        $respuesta= [];
+        $cliente = Cliente::find($request->id);
+        $cliente->habilitado= 1;
+        $cliente->save();
+
+        $respuesta["correcto"]=1;
+
+        return  json_encode($respuesta);
+    }
+
+    public function deshabilitar(Request $request)
+    {
+        $respuesta= [];
+        $cliente = Cliente::find($request->id);
+        $cliente->habilitado= 0;
+        $cliente->save();
+
+        $respuesta["correcto"]=1;
+
+        return  json_encode($respuesta);
+    }
+
+
     public function eliminar($id)
     {
         $respuesta= [];
@@ -127,14 +152,14 @@ class ClienteController extends Controller
     return Datatables::of($cliente)->addColumn('action', function ($dato) {
         $r= '<a href="'.route('admin.cliente.editar', $dato).'" class="btn btn-primary  btn-xs"><i class="glyphicon glyphicon-edit"></i>Editar</a> ';
         if($dato->habilitado==1) {
-            $r .= '<a href="' . route('admin.cliente.habilitar') . '" class="btn btn-dark btn-xs"><i class="glyphicon glyphicon-edit"></i>Habilitar</a> ';
+            $r .= '<a href="' . route('admin.cliente.deshabilitar', $dato->id) . '" class="habilitar btn btn-dark btn-xs"><i class="glyphicon glyphicon-edit"></i>Deshabilitar</a> ';
         }else{
-            $r .= '<a href="' . route('admin.cliente.deshabilitar') . '" class="btn btn-default btn-xs"><i class="glyphicon glyphicon-edit"></i>Deshabilitar</a> ';
+            $r .= '<a href="' . route('admin.cliente.habilitar', $dato->id) . '" class="deshabilitar btn btn-default btn-xs"><i class="glyphicon glyphicon-edit"></i>Habilitar</a> ';
         }
- 
+
         $r.='<a href="'.route('admin.cliente.eliminar',$dato->id) .  '" class="btn btn-danger btn-xs bt_eliminar"><i class="glyphicon glyphicon-edit"></i>Eliminar</a> ';
         $r.='<a href="'.url('admin/propiedad/eliminar',$dato->id) .  '" class="btn btn-default btn-xs"><i class="glyphicon glyphicon-edit"></i>Boletas</a> ';
- 
+
         return $r;
     })->editColumn('nombre', function ($dato) {
         return  $dato->nombre  . ' ' .$dato->apellido_paterno . ' ' . $dato->apellido_materno  ;
