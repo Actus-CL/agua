@@ -78,6 +78,10 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::get('cliente/lista', 'ClienteController@lista')->name('cliente.lista');
     Route::get('cliente/lista/tabla', 'ClienteController@listaTabla')->name('cliente.lista.tabla');
 
+    //Listado de boletas
+    Route::get('cliente/boleta/{id}', 'ClienteController@boleta')->name('cliente.boleta');
+    Route::get('cliente/boleta/lista/{id}', 'ClienteController@boletaLista')->name('cliente.boleta.lista');
+
     //Editar cliente
     Route::get('cliente/editar', 'ClienteController@editarForm')->name('cliente.editar');
     Route::get('cliente/editar/{id}', 'ClienteController@editarForm')->name('cliente.editar');
