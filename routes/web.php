@@ -87,10 +87,10 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::get('cliente/eliminar/{id}', 'ClienteController@eliminar')->name('cliente.eliminar');
 
     //Habilitar cliente
-    Route::get('cliente/habilitar', 'ClienteController@habilitar')->name('cliente.habilitar');
+    Route::get('cliente/habilitar/{id}', 'ClienteController@habilitar')->name('cliente.habilitar');
 
     //DesHabilitar cliente
-    Route::get('cliente/deshabilitar', 'ClienteController@deshabilitar')->name('cliente.deshabilitar');
+    Route::get('cliente/deshabilitar/{id}', 'ClienteController@deshabilitar')->name('cliente.deshabilitar');
 
     //Detalle de cliente
     Route::post('cliente/detalle/', 'ClienteController@detalle')->name('cliente.detalle');
