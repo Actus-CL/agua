@@ -104,6 +104,38 @@
             });
         });
 
+        $('#datatable').delegate('.habilitar','click',   function(e){
+          e.preventDefault();
+            var id = $(this).attr("href");
+            $.ajax({
+                url: id,
+                type: 'GET',
+                success: function (data) {
+                  data = $.parseJSON( data);
+                    if(data.correcto=="1"){
+                        alert('Cliente habilitado');
+                        location.reload();
+                    }
+                }
+            });
+        });
+
+        $('#datatable').delegate('.deshabilitar','click',   function(e){
+          e.preventDefault();
+            var id = $(this).attr("href");
+            $.ajax({
+                url: id,
+                type: 'GET',
+                success: function (data) {
+                  data = $.parseJSON( data);
+                    if(data.correcto=="1"){
+                        alert('Cliente deshabilitado');
+                        location.reload();
+                    }
+                }
+            });
+        });
+
     });
 
 </script>
