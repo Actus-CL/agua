@@ -142,6 +142,11 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::get('cuenta/boleta/{id}', 'CuentaController@boleta')->name('cuenta.boleta');
     Route::get('cuenta/boleta/lista/{id}', 'CuentaController@boletaLista')->name('cuenta.boleta.lista');
 
+    //Listado de servicios
+    Route::get('cuenta/servicio/{id}', 'CuentaController@servicio')->name('cuenta.servicio');
+    Route::get('cuenta/servicio/lista/{id}', 'CuentaController@servicioLista')->name('cuenta.servicio.lista');
+
+
     // Habilitar Cuenta
     Route::get('cuenta/habilitar/{id}', 'CuentaController@habilitar')->name('cuenta.habilitar');
 
