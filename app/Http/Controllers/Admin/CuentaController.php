@@ -89,7 +89,7 @@ class CuentaController extends Controller
 
         return Datatables::of($m)->addColumn('action', function ($d) {
             $r= '<a href="'.route('admin.cuenta.boleta', $d->id).'" class="btn btn-primary  btn-xs"><i class="glyphicon glyphicon-edit"></i>Boletas</a> ';
-            $r.= '<a href="'.route('admin.cliente.editar', $d).'" class="btn btn-primary  btn-xs"><i class="glyphicon glyphicon-edit"></i>Estado</a> ';
+            $r.= '<a href="'.route('admin.cuenta.editar', $d).'" class="btn btn-primary  btn-xs"><i class="glyphicon glyphicon-edit"></i>Editar</a> ';
             $r.= '<a href="'.route('admin.cliente.editar', $d).'" class="btn btn-primary  btn-xs"><i class="glyphicon glyphicon-edit"></i>Servicios</a> ';
             return $r;
         })->addColumn('proyecto', function ($dato) {
@@ -189,5 +189,35 @@ class CuentaController extends Controller
       })->editColumn('estado_pago_id', function ($dato) {
           return  $dato->estado_pago->nombre;
       })->make(true);
+    }
+
+    public function editarForm($id)
+    {
+      $bag = [];
+      $bag['cuenta'] = Cuenta::find($id);
+      $bag['medidor'] = Medidor::all()->where('asociado', 0)->pluck('serie','id');
+      return view('admin.cuenta.editar', ['bag' => $bag]);
+    }
+
+    public function editarUpdate(Request $request)
+    {
+        $respuesta= [];
+        $cuenta = Cuenta::find($request->id);
+
+        if($request->medidor_id != 0){
+
+          $cuenta->medidor_id= $request->medidor_id;
+          $cuenta->save();
+          $medidor_actual = Medidor::find($request->medidor_actual);
+          $medidor_actual->asociado = 0;
+          $medidor_actual->save();
+          $medidor = Medidor::find($request->medidor_id);
+          $medidor->asociado = 1;
+          $medidor->save();
+        }
+
+        $respuesta["correcto"]=1;
+
+        return  json_encode($respuesta);
     }
 }
