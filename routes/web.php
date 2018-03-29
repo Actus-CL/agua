@@ -182,6 +182,10 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::get('periodo/editar/{id}', 'PeriodoController@editarForm')->name('periodo.editar');
     Route::post('periodo/editar/guardar', 'PeriodoController@editarUpdate')->name('periodo.editar.update');
 
+    //Listado de boletas
+    Route::get('periodo/boleta/{id}', 'PeriodoController@boleta')->name('periodo.boleta');
+    Route::get('periodo/boleta/lista/{id}', 'PeriodoController@boletaLista')->name('periodo.boleta.lista');
+
 
     // Activar periodo lectura
     Route::get('periodo/activar/lectura/{id}', 'PeriodoController@habilitarLectura')->name('periodo.activar.lectura');
