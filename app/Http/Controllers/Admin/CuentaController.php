@@ -9,6 +9,7 @@ use App\Medidor;
 use App\Cuenta;
 use App\Boleta;
 use App\CuentaServicio;
+use App\Servicio;
 use DataTables;
 use DB;
 
@@ -90,7 +91,7 @@ class CuentaController extends Controller
         return Datatables::of($m)->addColumn('action', function ($d) {
             $r= '<a href="'.route('admin.cuenta.boleta', $d->id).'" class="btn btn-primary  btn-xs"><i class="glyphicon glyphicon-edit"></i>Boletas</a> ';
             $r.= '<a href="'.route('admin.cuenta.editar', $d).'" class="btn btn-primary  btn-xs"><i class="glyphicon glyphicon-edit"></i>Editar</a> ';
-            $r.= '<a href="'.route('admin.cliente.editar', $d).'" class="btn btn-primary  btn-xs"><i class="glyphicon glyphicon-edit"></i>Servicios</a> ';
+            $r.= '<a href="'.route('admin.cuenta.servicio', $d).'" class="btn btn-primary  btn-xs"><i class="glyphicon glyphicon-edit"></i>Servicios</a> ';
             return $r;
         })->addColumn('proyecto', function ($dato) {
             return  $dato->proyecto->nombre;
@@ -219,5 +220,23 @@ class CuentaController extends Controller
         $respuesta["correcto"]=1;
 
         return  json_encode($respuesta);
+    }
+
+    public function servicio($id)
+    {
+      $bag = [];
+      $bag['cuenta'] = Cuenta::where('id', $id)->first();
+      $bag['cuentaservicio'] = CuentaServicio::where('cuenta_id', $id);
+      return view('admin.cuenta.servicio', ['bag' => $bag]);
+    }
+
+    public function servicioLista($id){
+
+    $cuenta = CuentaServicio::select('servicio_id')->where('cuenta_id', $id);
+
+    return Datatables::of($cuenta)->editColumn('servicio_id', function ($dato) {
+        $servicio = Servicio::find($dato->servicio_id);
+        return  $servicio->nombre;
+      })->make(true);
     }
 }
