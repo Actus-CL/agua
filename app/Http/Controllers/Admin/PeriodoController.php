@@ -69,7 +69,7 @@ class PeriodoController extends Controller
         //dd($m);
         return Datatables::of($m)->addColumn('action', function ($d) {
             $r= '<a href="'.route('admin.periodo.editar', $d).'" class="btn btn-primary  btn-xs"><i class="glyphicon glyphicon-edit"></i>Editar</a> ';
-            $r.= '<a href="'.route('admin.cliente.editar', $d).'" class="btn btn-primary  btn-xs"><i class="glyphicon glyphicon-edit"></i>Boletas</a> ';
+            $r.= '<a href="'.route('admin.periodo.boleta', $d->id).'" class="btn btn-primary  btn-xs"><i class="glyphicon glyphicon-edit"></i>Boletas</a> ';
             return $r;
         })->addColumn('action_lectura', function ($d) {
             $r='';
@@ -213,6 +213,25 @@ class PeriodoController extends Controller
         $respuesta["correcto"]=1;
 
         return  json_encode($respuesta);
+    }
+
+    public function boleta($id)
+    {
+      $bag = [];
+      $bag['boleta'] = Boleta::where('periodo_id', $id);
+      $bag['periodo'] = Periodo::find($id);
+      return view('admin.periodo.boleta', ['bag' => $bag]);
+    }
+
+    public function boletaLista($id){
+
+    $boleta = Boleta::select('id', 'cuenta_id', 'f_emision', 'f_vencimiento', 'total' ,'estado_pago_id')->where('periodo_id', $id);
+
+    return Datatables::of($boleta)->editColumn('cuenta_id', function ($dato) {
+        return  $dato->cuenta->id;
+      })->editColumn('estado_pago_id', function ($dato) {
+          return  $dato->estado_pago->nombre;
+      })->make(true);
     }
 
 
