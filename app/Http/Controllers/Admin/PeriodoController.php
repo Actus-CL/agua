@@ -206,11 +206,36 @@ class PeriodoController extends Controller
     {
         $respuesta= [];
         $periodo = Periodo::find($request->id);
-        $periodo->f_vencimiento_pago= $request->f_vencimiento_pago;
-        $periodo->f_vencimiento_corte= $request->f_vencimiento_corte;
-        $periodo->save();
+        //True si
+        //ambos vencimientos son superiores a fecha 'hasta'
+        //fecha de corte es superior a pago
+        //fecha de pago es inferior a corte
 
-        $respuesta["correcto"]=1;
+        if($request->f_vencimiento_corte < $request->hasta){
+          $respuesta["correcto"]=0;
+          $respuesta["mensajeBAD"]="Fecha de corte debe ser superior a fecha 'hasta' ";
+        }else if($request->f_vencimiento_pago < $request->hasta){
+          $respuesta["correcto"]=0;
+          $respuesta["mensajeBAD"]="Fecha de pago debe ser superior a fecha 'hasta' ";
+        }else if ($request->f_vencimiento_corte < $request->f_vencimiento_pago) {
+          $respuesta["correcto"]=0;
+          $respuesta["mensajeBAD"]="Fecha de corte debe ser superior a la de pago";
+        }else if ($request->f_vencimiento_pago > $request->f_vencimiento_corte) {
+          $respuesta["correcto"]=0;
+          $respuesta["mensajeBAD"]="Fecha de pago debe ser inferior a la de corte";
+        }else if ($request->f_vencimiento_pago == $request->f_vencimiento_corte) {
+          $respuesta["correcto"]=0;
+          $respuesta["mensajeBAD"]="Fechas no pueden ser iguales";
+        }else {
+          $periodo->f_vencimiento_pago= $request->f_vencimiento_pago;
+          $periodo->f_vencimiento_corte= $request->f_vencimiento_corte;
+          $periodo->desde= $request->desde;
+          //falta validación de fechas. Donde desde (actual) no debe ser inferior al hasta (anterior)
+          $periodo->hasta= $request->hasta;
+          $periodo->save();
+          $respuesta["correcto"]=1;
+        }
+        // $respuesta["correcto"]=1;
 
         return  json_encode($respuesta);
     }
