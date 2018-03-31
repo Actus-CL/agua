@@ -46,7 +46,7 @@
                                     <label class="control-label col-md-4 col-sm-3 col-xs-12" for="last-name">Desde
                                     </label>
                                     <div class="col-md-8 col-sm-8 col-xs-12">
-                                        <input type="text" class="form-control has-feedback-left" readonly name="desde"  value="{{$bag['periodo']->desde}}"  aria-describedby="inputSuccess2Status">
+                                        <input type="text" class="form-control has-feedback-left" name="desde"  value="{{$bag['periodo']->desde}}"  aria-describedby="inputSuccess2Status">
                                         <span class="fa fa-calendar-o form-control-feedback left" aria-hidden="true"></span>
                                         <span id="inputSuccess2Status" class="sr-only">(success)</span>
                                     </div>
@@ -54,7 +54,7 @@
                                 <div class="form-group">
                                     <label for="middle-name" class="control-label col-md-4 col-sm-3 col-xs-12">Hasta</label>
                                     <div class="col-md-8 col-sm-8 col-xs-12">
-                                        <input type="text" class="form-control has-feedback-left" readonly name="hasta" value="{{$bag['periodo']->hasta}}" aria-describedby="inputSuccess2Status">
+                                        <input type="text" class="form-control has-feedback-left" name="hasta" value="{{$bag['periodo']->hasta}}" aria-describedby="inputSuccess2Status">
                                         <span class="fa fa-calendar-o form-control-feedback left" aria-hidden="true"></span>
                                         <span id="inputSuccess2Status" class="sr-only">(success)</span>
                                     </div>
@@ -63,7 +63,7 @@
 
                         </div>
 
-                        
+
                         <div class="ln_solid"></div>
                         <h4>Vencimientos</h4>
                         <div class="row">
@@ -72,7 +72,7 @@
                                     <label class="control-label col-md-4 col-sm-3 col-xs-12" for="last-name">Fecha pago
                                     </label>
                                     <div class="col-md-8 col-sm-8 col-xs-12">
-                                        <input type="text" class="form-control has-feedback-left" name="f_vencimiento_pago" id="single_cal1" value="{{$bag['periodo']->f_vencimiento_pago}}" aria-describedby="inputSuccess2Status">
+                                        <input type="text" class="form-control has-feedback-left" name="f_vencimiento_pago" value="{{$bag['periodo']->f_vencimiento_pago}}" aria-describedby="inputSuccess2Status">
                                         <span class="fa fa-calendar-o form-control-feedback left" aria-hidden="true"></span>
                                         <span id="inputSuccess2Status" class="sr-only">(success)</span>
                                     </div>
@@ -85,7 +85,7 @@
                                 <div class="form-group">
                                     <label for="middle-name" class="control-label col-md-4 col-sm-3 col-xs-12">Fecha de corte</label>
                                     <div class="col-md-8 col-sm-8 col-xs-12">
-                                        <input type="text" class="form-control has-feedback-left" name="f_vencimiento_corte" id="single_cal1" value="{{$bag['periodo']->f_vencimiento_corte}}" aria-describedby="inputSuccess2Status">
+                                        <input type="text" class="form-control has-feedback-left" name="f_vencimiento_corte" value="{{$bag['periodo']->f_vencimiento_corte}}" aria-describedby="inputSuccess2Status">
                                         <span class="fa fa-calendar-o form-control-feedback left" aria-hidden="true"></span>
                                         <span id="inputSuccess2Status" class="sr-only">(success)</span>
                                     </div>
