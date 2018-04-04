@@ -18,4 +18,9 @@ class Boleta extends Model
         return $this->belongsTo('App\EstadoPago', 'estado_pago_id' );
     }
 
+    public function cuenta()
+    {
+        return $this->belongsTo('App\Cuenta', 'cuenta_id' );
+    }
+
 }
