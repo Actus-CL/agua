@@ -78,6 +78,10 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::get('cliente/lista', 'ClienteController@lista')->name('cliente.lista');
     Route::get('cliente/lista/tabla', 'ClienteController@listaTabla')->name('cliente.lista.tabla');
 
+    //Listado de boletas
+    Route::get('cliente/boleta/{id}', 'ClienteController@boleta')->name('cliente.boleta');
+    Route::get('cliente/boleta/lista/{id}', 'ClienteController@boletaLista')->name('cliente.boleta.lista');
+
     //Editar cliente
     Route::get('cliente/editar', 'ClienteController@editarForm')->name('cliente.editar');
     Route::get('cliente/editar/{id}', 'ClienteController@editarForm')->name('cliente.editar');
@@ -87,10 +91,10 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::get('cliente/eliminar/{id}', 'ClienteController@eliminar')->name('cliente.eliminar');
 
     //Habilitar cliente
-    Route::get('cliente/habilitar', 'ClienteController@habilitar')->name('cliente.habilitar');
+    Route::get('cliente/habilitar/{id}', 'ClienteController@habilitar')->name('cliente.habilitar');
 
     //DesHabilitar cliente
-    Route::get('cliente/deshabilitar', 'ClienteController@deshabilitar')->name('cliente.deshabilitar');
+    Route::get('cliente/deshabilitar/{id}', 'ClienteController@deshabilitar')->name('cliente.deshabilitar');
 
     //Detalle de cliente
     Route::post('cliente/detalle/', 'ClienteController@detalle')->name('cliente.detalle');
