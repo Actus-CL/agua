@@ -9,6 +9,11 @@ class AlertaTipo extends Model
 {
     protected $table = 'alerta_tipo';
 
+    public function alertas()
+    {
+        return $this->hasMany('App\Models\Alerta\Alerta' );
+    }
+
     /*
     public function proyectos()
     {

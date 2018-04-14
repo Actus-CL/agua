@@ -9,6 +9,16 @@ class AlertaEntregaCorreo extends Model
 {
     protected $table = 'alerta_entrega_correo';
 
+    public function user()
+    {
+        return $this->belongsTo('App\Models\Auth\User\User' ,'user_id');
+    }
+
+    public function alerta()
+    {
+        return $this->belongsTo('App\Models\Alerta\Alerta' ,'alerta_id');
+    }
+
     /*
     public function proyectos()
     {

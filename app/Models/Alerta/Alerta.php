@@ -9,6 +9,21 @@ class Alerta extends Model
 {
     protected $table = 'alerta';
 
+    public function alerta_tipo()
+    {
+        return $this->belongsTo('App\Models\Alerta\AlertaTipo' ,'alerta_id');
+    }
+
+    public function alerta_entrega_correo()
+    {
+        return $this->hasMany('App\Models\Alerta\AlertaEntregaCorreo' );
+    }
+
+    public function AlertaEntregaSistema()
+    {
+        return $this->hasMany('App\Models\Alerta\alerta_entrega_sistema' );
+    }
+
     /*
     public function proyectos()
     {
