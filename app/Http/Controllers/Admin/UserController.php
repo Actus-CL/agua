@@ -7,6 +7,7 @@ use App\Models\Auth\User\User;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Validator;
+use Ramsey\Uuid\Uuid;
 
 class UserController extends Controller
 {
@@ -27,7 +28,7 @@ class UserController extends Controller
      */
     public function create()
     {
-        //
+        return view('admin.users.new');
     }
 
     /**
@@ -38,7 +39,22 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        //
+
+        $user = User::create([
+            'name' => $request->name,
+            'email' => $request->email,
+            'password' => bcrypt($request->password),
+            'confirmation_code' => Uuid::uuid4(),
+            'confirmed' => true
+        ]);
+
+        $user->roles()->attach(1);
+        $user->roles()->attach(2);
+
+        $respuesta["correcto"]=1;
+
+      return  json_encode($respuesta);
+
     }
 
     /**
