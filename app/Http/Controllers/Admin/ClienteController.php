@@ -100,6 +100,11 @@ class ClienteController extends Controller
         $cliente->habilitado= 1;
         $cliente->save();
 
+        $user_id = Cliente::select('user_id')->where('id',$request->id)->first();
+        $user = User::find($user_id->user_id);
+        $user->active = 1;
+        $user->save();
+
         $respuesta["correcto"]=1;
 
         return  json_encode($respuesta);
@@ -112,7 +117,13 @@ class ClienteController extends Controller
         $cliente->habilitado= 0;
         $cliente->save();
 
+        $user_id = Cliente::select('user_id')->where('id',$request->id)->first();
+        $user = User::find($user_id->user_id);
+        $user->active = 0;
+        $user->save();
+
         $respuesta["correcto"]=1;
+
 
         return  json_encode($respuesta);
     }
