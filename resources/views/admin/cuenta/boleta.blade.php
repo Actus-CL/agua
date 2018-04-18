@@ -58,7 +58,7 @@
         var tabla = $('#datatable').DataTable({
             processing: true,
             serverSide: true,
-            ajax: "{{ route('admin.cliente.boleta.lista', $cuenta_id)}}",
+            ajax: "{{ route('admin.cuenta.boleta.lista', $cuenta_id)}}",
             columns: [
                 {data: 'id', name: 'id'},
                 {data: 'periodo_id', name: 'periodo_id'},
