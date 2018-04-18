@@ -175,6 +175,13 @@ class ClienteController extends Controller
         return $r;
     })->editColumn('nombre', function ($dato) {
         return  $dato->nombre  . ' ' .$dato->apellido_paterno . ' ' . $dato->apellido_materno  ;
+    })->editColumn('habilitado', function ($dato) {
+        if($dato->habilitado == 1){
+          return "Habilitado";
+        }
+        else {
+          return "Deshabilitado";
+        }
     })->make(true);
 
     /*->editColumn('tipo_propiedad_id', function ($dato) {
