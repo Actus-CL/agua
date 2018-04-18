@@ -60,5 +60,9 @@
         <div class="pull-right">
             {{ $users->links() }}
         </div>
+
+        <div class="pull-left">
+            <a href="{{route('admin.users.create')}}" class="btn btn-primary  btn-xs"><i class="glyphicon glyphicon-edit"></i>Nuevo usuario de sistema</a>
+        </div>
     </div>
 @endsection

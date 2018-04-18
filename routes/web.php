@@ -54,6 +54,8 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::get('/', 'DashboardController@index')->name('dashboard');
 
     //Users
+    Route::get('users/nuevo', 'UserController@create')->name('users.create');
+    Route::post('users/nuevo', 'UserController@store')->name('users.store');
     Route::get('users', 'UserController@index')->name('users');
     Route::get('users/{user}', 'UserController@show')->name('users.show');
     Route::get('users/{user}/edit', 'UserController@edit')->name('users.edit');
