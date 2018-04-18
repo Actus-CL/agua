@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Validator;
 use Ramsey\Uuid\Uuid;
+use DataTables;
 
 class UserController extends Controller
 {
@@ -138,5 +139,15 @@ class UserController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function lista()
+    {
+        return view('admin.users.lista');
+    }
+    public function listaTabla(){
+
+      $roles = Role::all();
+      return Datatables::of($roles)->make(true);
     }
 }

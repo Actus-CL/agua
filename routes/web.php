@@ -56,6 +56,8 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     //Users
     Route::get('users/nuevo', 'UserController@create')->name('users.create');
     Route::post('users/nuevo', 'UserController@store')->name('users.store');
+    Route::get('users/lista', 'UserController@lista')->name('users.lista');
+    Route::get('users/lista/tabla', 'UserController@listaTabla')->name('users.lista.tabla');
     Route::get('users', 'UserController@index')->name('users');
     Route::get('users/{user}', 'UserController@show')->name('users.show');
     Route::get('users/{user}/edit', 'UserController@edit')->name('users.edit');
