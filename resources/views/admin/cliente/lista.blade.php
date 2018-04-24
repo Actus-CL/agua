@@ -38,6 +38,7 @@
                             <th>Nombre</th>
                             <th>Email</th>
                             <th>Direccion</th>
+                            <th>Estado</th>
                             <th> </th>
                         </tr>
                         </thead>
@@ -65,6 +66,7 @@
                 {data: 'nombre', name: 'nombre'},
                 {data: 'email', name: 'email'},
                 {data: 'direccion', name: 'direccion'},
+                {data: 'habilitado', name: 'habilitado'},
                 {data: 'action', name: 'action', orderable: false, searchable: false}
             ],
             "bFilter": true,

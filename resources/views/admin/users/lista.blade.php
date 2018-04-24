@@ -4,13 +4,13 @@
     <!-- page content -->
     <!-- top tiles -->
 
-<?php $cuenta_id = $bag['cuenta']->id ?>
+
 
     <div class="row">
         <div class="col-md-12 col-sm-12 col-xs-12">
             <div class="x_panel">
                 <div class="x_title">
-                    <h2>Listado de boletas<small> </small></h2>
+                    <h2>Listado de roles<small> </small></h2>
                     <ul class="nav navbar-right panel_toolbox">
                         <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
                         </li>
@@ -33,12 +33,8 @@
                     <table id="datatable" class="table table-striped table-bordered" >
                         <thead>
                         <tr>
-                            <th>Nº</th>
-                            <th>Periodo</th>
-                            <th>Fecha emisión</th>
-                            <th>Fecha vencimiento</th>
-                            <th>Valor</th>
-                            <th>Estado</th>
+                            <th>ID</th>
+                            <th>Nombre</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -58,15 +54,10 @@
         var tabla = $('#datatable').DataTable({
             processing: true,
             serverSide: true,
-            ajax: "{{ route('admin.cuenta.boleta.lista', $cuenta_id)}}",
+            ajax: "{{ route('admin.users.lista.tabla')}}",
             columns: [
-                {data: 'id', name: 'id'},
-                {data: 'periodo_id', name: 'periodo_id'},
-                {data: 'f_emision', name: 'f_emision'},
-                {data: 'f_vencimiento', name: 'f_vencimiento'},
-                {data: 'total', name: 'total'},
-                {data: 'estado_pago_id', name: 'estado_pago_id'},
-
+              {data: 'id', name: 'id'},
+              {data: 'name', name: 'name'}
             ],
             "bFilter": true,
             "iDisplayLength": 10,
@@ -87,7 +78,6 @@
             }
 
         });
-
 
     });
 

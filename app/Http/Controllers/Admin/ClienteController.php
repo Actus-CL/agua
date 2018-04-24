@@ -100,6 +100,11 @@ class ClienteController extends Controller
         $cliente->habilitado= 1;
         $cliente->save();
 
+        $user_id = Cliente::select('user_id')->where('id',$request->id)->first();
+        $user = User::find($user_id->user_id);
+        $user->active = 1;
+        $user->save();
+
         $respuesta["correcto"]=1;
 
         return  json_encode($respuesta);
@@ -112,7 +117,13 @@ class ClienteController extends Controller
         $cliente->habilitado= 0;
         $cliente->save();
 
+        $user_id = Cliente::select('user_id')->where('id',$request->id)->first();
+        $user = User::find($user_id->user_id);
+        $user->active = 0;
+        $user->save();
+
         $respuesta["correcto"]=1;
+
 
         return  json_encode($respuesta);
     }
@@ -164,6 +175,13 @@ class ClienteController extends Controller
         return $r;
     })->editColumn('nombre', function ($dato) {
         return  $dato->nombre  . ' ' .$dato->apellido_paterno . ' ' . $dato->apellido_materno  ;
+    })->editColumn('habilitado', function ($dato) {
+        if($dato->habilitado == 1){
+          return "Habilitado";
+        }
+        else {
+          return "Deshabilitado";
+        }
     })->make(true);
 
     /*->editColumn('tipo_propiedad_id', function ($dato) {
