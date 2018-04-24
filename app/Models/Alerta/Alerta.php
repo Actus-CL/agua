@@ -4,10 +4,13 @@ namespace App\Models\Alerta;
 
 use Illuminate\Database\Eloquent\Model;
 use DB;
+use Carbon\Carbon;
 
 class Alerta extends Model
 {
     protected $table = 'alerta';
+
+   // protected $dates = [ 'created_at'];
 
     public function alerta_tipo()
     {
@@ -19,39 +22,20 @@ class Alerta extends Model
         return $this->hasMany('App\Models\Alerta\AlertaEntregaCorreo' );
     }
 
-    public function AlertaEntregaSistema()
+    public function alerta_entrega_sistema ()
     {
-        return $this->hasMany('App\Models\Alerta\alerta_entrega_sistema' );
+        return $this->hasMany('App\Models\Alerta\AlertaEntregaSistema' );
     }
 
-    /*
-    public function proyectos()
+    public function fechaForHumans ()
     {
-        return $this->belongsToMany('App\proyecto' ,'cliente_proyecto');
-    }
+        Carbon::setLocale('es');
 
-    public function nombreCompleto()
-    {
-        return $this->nombre .' '. $this->apellido_paterno .' '. $this->apellido_materno;
+        $carbon = new  Carbon();
+        $date1= $carbon->now();
+        $date2 =   $this->created_at;
+        $dif= $date1->diffForHumans($date2,true,false,2);
+    dd($dif);
+        return $dif;
     }
-
-    public function cuentas()
-    {
-        return $this->hasMany('App\Cuenta' ,'cliente_id');
-    }
-
-    public function boletas()
-    {
-        return $this->hasMany('App\Boleta' ,'cliente_id');
-    }
-    public function monto_adeudado()
-    {
-        $monto_total=0;
-        $montodb= DB::select('select SUM(total) as monto_total from boleta where estado_pago_id <> 3 and cliente_id = ?', [$this->id]);
-        if($montodb>0){
-            $monto_total=$montodb[0]->monto_total;
-        }
-        return $monto_total;
-    }
-    */
 }

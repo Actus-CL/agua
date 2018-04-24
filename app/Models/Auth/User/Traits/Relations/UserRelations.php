@@ -50,4 +50,25 @@ trait UserRelations
     {
         return $this->hasMany(ProtectionShopToken::class);
     }
+
+    /**
+     * Relation con Alertas
+     *
+     * @return mixed
+     */
+    public function alerta_entrega_correo()
+    {
+        $clase = 'App\Models\Alerta\AlertaEntregaCorreo';
+        if (class_exists($clase)){
+            return $this->hasMany($clase);
+        }
+
+        return $this->hasMany('App\Models\Alerta\AlertaEntregaCorreo' );
+    }
+
+    public function alerta_entrega_sistema ()
+    {
+        return $this->hasMany('App\Models\Alerta\AlertaEntregaSistema' );
+    }
+
 }

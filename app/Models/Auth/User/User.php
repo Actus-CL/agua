@@ -11,6 +11,10 @@ use App\Models\Auth\User\Traits\Ables\Rolable;
 use App\Models\Auth\User\Traits\Scopes\UserScopes;
 use App\Models\Auth\User\Traits\Relations\UserRelations;
 use Kyslik\ColumnSortable\Sortable;
+use App\Models\Alerta\Alerta;
+use App\Models\Alerta\AlertaTipo;
+use App\Models\Alerta\AlertaEntregaSistema;
+use App\Models\Alerta\AlertaEntregaCorreo;
 
 /**
  * App\Models\Auth\User\User
@@ -89,4 +93,31 @@ class User extends Authenticatable
      * @var array
      */
     protected $dates = ['deleted_at'];
+
+
+    public function AgregarAlerta($titulo,$mensaje,$tipo=1)
+    {
+
+        $alerta = new Alerta();
+        $alerta->titulo=$titulo;
+        $alerta->mensaje=$mensaje;
+        $alerta->alerta_tipo_id=$tipo;
+        $alerta->save();
+        $alerta_tipo= AlertaTipo::find($tipo);
+        if($alerta_tipo->por_correo==1){
+            $correo= new AlertaEntregaCorreo();
+            $correo->user_id= $this->id;
+            $correo->alerta_id= $alerta->id;
+            $correo->save();
+        }
+        if($alerta_tipo->por_sistema==1){
+            $correo= new AlertaEntregaSistema();
+            $correo->user_id= $this->id;
+            $correo->alerta_id= $alerta->id;
+            $correo->save();
+        }
+    }
+
+
+
 }

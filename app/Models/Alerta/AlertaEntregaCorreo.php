@@ -5,10 +5,9 @@ namespace App\Models\Alerta;
 use Illuminate\Database\Eloquent\Model;
 use DB;
 
-class AlertaEntregaSistema extends Model
+class AlertaEntregaCorreo extends Model
 {
-    protected $table = 'alerta_entrega_sistema';
-
+    protected $table = 'alerta_entrega_correo';
 
     public function user()
     {

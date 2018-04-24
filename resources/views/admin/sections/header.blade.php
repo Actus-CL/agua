@@ -20,6 +20,48 @@
                         </li>
                     </ul>
                 </li>
+
+                <li role="presentation" class="dropdown">
+                    <a href="javascript:;" class="dropdown-toggle info-number" data-toggle="dropdown" aria-expanded="false">
+                        <i class="fa fa-envelope-o"></i>
+                        @php
+                            $mensajes=auth()->user()->alerta_entrega_sistema->where('entregado',0);
+                        @endphp
+                        <span class="badge bg-green">{{ $mensajes->count() }}</span>
+                    </a>
+                    <ul id="menu1" class="dropdown-menu list-unstyled msg_list" role="menu">
+                        @foreach($mensajes as $mensaje)
+                        <li>
+                            <a >
+
+
+                                <span>
+                                    <span>{{$mensaje->alerta->titulo}}:</span>
+
+                                    @php
+
+                                    @endphp
+
+                                    <span class="time">3 mins ago  {{$mensaje->alerta->fechaForHumans()}}  </span>
+                                </span>
+                                <span class="message">
+                                    {{$mensaje->alerta->mensaje}}
+                                </span>
+
+
+                            </a>
+                        </li>
+                        @endforeach
+                        {{--<li>--}}
+                            {{--<div class="text-center">--}}
+                                {{--<a>--}}
+                                    {{--<strong>Ver todas las alertas</strong>--}}
+                                    {{--<i class="fa fa-angle-right"></i>--}}
+                                {{--</a>--}}
+                            {{--</div>--}}
+                        {{--</li>--}}
+                    </ul>
+                </li>
             </ul>
         </nav>
     </div>

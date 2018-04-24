@@ -49,4 +49,12 @@ class Role extends Model
      */
     protected $fillable = ['name'];
 
+    public function AgregarAlerta($titulo,$mensaje,$tipo=1)
+    {
+        $usuarios= $this->users;
+        foreach ($usuarios as $user){
+            $user->AgregarAlerta($titulo,$mensaje,$tipo);
+        }
+
+    }
 }

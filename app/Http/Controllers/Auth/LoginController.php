@@ -38,6 +38,11 @@ class LoginController extends Controller
         $this->middleware('guest', ['except' => 'logout']);
     }
 
+
+
+
+
+
     /**
      * Log the user out of the application.
      *
@@ -106,7 +111,9 @@ class LoginController extends Controller
                 ->withInput($request->only($this->username(), 'remember'))
                 ->withErrors($errors);
         }
-
+        //Agrega alerta de ingreso
+        auth()->user()->AgregarAlerta("Alerta de ingreso a sistema","Se ha registrado un acceso al sistema");
+        //
         return redirect()->intended($this->redirectPath());
     }
 }
