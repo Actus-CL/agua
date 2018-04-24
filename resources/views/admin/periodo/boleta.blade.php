@@ -4,13 +4,13 @@
     <!-- page content -->
     <!-- top tiles -->
 
-
+<?php $periodo_id = $bag['periodo']->id ?>
 
     <div class="row">
         <div class="col-md-12 col-sm-12 col-xs-12">
             <div class="x_panel">
                 <div class="x_title">
-                    <h2>Listado de clientes <small> </small></h2>
+                    <h2>Listado de boletas<small> Periodo: {{$bag['periodo']->nombre}}</small></h2>
                     <ul class="nav navbar-right panel_toolbox">
                         <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
                         </li>
@@ -34,12 +34,11 @@
                         <thead>
                         <tr>
                             <th>Nº</th>
-                            <th>Rut</th>
-                            <th>Nombre</th>
-                            <th>Email</th>
-                            <th>Direccion</th>
+                            <th>Nº Cuenta</th>
+                            <th>Fecha emisión</th>
+                            <th>Fecha vencimiento</th>
+                            <th>Valor</th>
                             <th>Estado</th>
-                            <th> </th>
                         </tr>
                         </thead>
                         <tbody>
@@ -59,15 +58,15 @@
         var tabla = $('#datatable').DataTable({
             processing: true,
             serverSide: true,
-            ajax: "{{ route('admin.cliente.lista.tabla')}}",
+            ajax: "{{ route('admin.periodo.boleta.lista', $periodo_id)}}",
             columns: [
                 {data: 'id', name: 'id'},
-                {data: 'rut', name: 'rut'},
-                {data: 'nombre', name: 'nombre'},
-                {data: 'email', name: 'email'},
-                {data: 'direccion', name: 'direccion'},
-                {data: 'habilitado', name: 'habilitado'},
-                {data: 'action', name: 'action', orderable: false, searchable: false}
+                {data: 'cuenta_id', name: 'cuenta_id'},
+                {data: 'f_emision', name: 'f_emision'},
+                {data: 'f_vencimiento', name: 'f_vencimiento'},
+                {data: 'total', name: 'total'},
+                {data: 'estado_pago_id', name: 'estado_pago_id'},
+
             ],
             "bFilter": true,
             "iDisplayLength": 10,
@@ -89,54 +88,6 @@
 
         });
 
-
-        $('#datatable').delegate('.bt_eliminar','click',   function(e){
-          e.preventDefault();
-            var id = $(this).attr("href");
-            $.ajax({
-                url: id,
-                type: 'GET',
-                success: function (data) {
-                  data = $.parseJSON( data);
-                    if(data.correcto=="1"){
-                        alert('Registro eliminado');
-                        location.reload();
-                    }
-                }
-            });
-        });
-
-        $('#datatable').delegate('.habilitar','click',   function(e){
-          e.preventDefault();
-            var id = $(this).attr("href");
-            $.ajax({
-                url: id,
-                type: 'GET',
-                success: function (data) {
-                  data = $.parseJSON( data);
-                    if(data.correcto=="1"){
-                        alert('Cliente habilitado');
-                        location.reload();
-                    }
-                }
-            });
-        });
-
-        $('#datatable').delegate('.deshabilitar','click',   function(e){
-          e.preventDefault();
-            var id = $(this).attr("href");
-            $.ajax({
-                url: id,
-                type: 'GET',
-                success: function (data) {
-                  data = $.parseJSON( data);
-                    if(data.correcto=="1"){
-                        alert('Cliente deshabilitado');
-                        location.reload();
-                    }
-                }
-            });
-        });
 
     });
 

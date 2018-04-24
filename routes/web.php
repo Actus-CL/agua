@@ -54,6 +54,10 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::get('/', 'DashboardController@index')->name('dashboard');
 
     //Users
+    Route::get('users/nuevo', 'UserController@create')->name('users.create');
+    Route::post('users/nuevo', 'UserController@store')->name('users.store');
+    Route::get('users/lista', 'UserController@lista')->name('users.lista');
+    Route::get('users/lista/tabla', 'UserController@listaTabla')->name('users.lista.tabla');
     Route::get('users', 'UserController@index')->name('users');
     Route::get('users/{user}', 'UserController@show')->name('users.show');
     Route::get('users/{user}/edit', 'UserController@edit')->name('users.edit');
@@ -78,6 +82,10 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::get('cliente/lista', 'ClienteController@lista')->name('cliente.lista');
     Route::get('cliente/lista/tabla', 'ClienteController@listaTabla')->name('cliente.lista.tabla');
 
+    //Listado de boletas
+    Route::get('cliente/boleta/{id}', 'ClienteController@boleta')->name('cliente.boleta');
+    Route::get('cliente/boleta/lista/{id}', 'ClienteController@boletaLista')->name('cliente.boleta.lista');
+
     //Editar cliente
     Route::get('cliente/editar', 'ClienteController@editarForm')->name('cliente.editar');
     Route::get('cliente/editar/{id}', 'ClienteController@editarForm')->name('cliente.editar');
@@ -87,10 +95,10 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::get('cliente/eliminar/{id}', 'ClienteController@eliminar')->name('cliente.eliminar');
 
     //Habilitar cliente
-    Route::get('cliente/habilitar', 'ClienteController@habilitar')->name('cliente.habilitar');
+    Route::get('cliente/habilitar/{id}', 'ClienteController@habilitar')->name('cliente.habilitar');
 
     //DesHabilitar cliente
-    Route::get('cliente/deshabilitar', 'ClienteController@deshabilitar')->name('cliente.deshabilitar');
+    Route::get('cliente/deshabilitar/{id}', 'ClienteController@deshabilitar')->name('cliente.deshabilitar');
 
     //Detalle de cliente
     Route::post('cliente/detalle/', 'ClienteController@detalle')->name('cliente.detalle');
@@ -129,6 +137,20 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::get('cuenta/lista', 'CuentaController@lista')->name('cuenta.lista');
     Route::get('cuenta/lista/tabla', 'CuentaController@listaTabla')->name('cuenta.lista.tabla');
 
+    //Editar cuenta
+    Route::get('cuenta/editar', 'CuentaController@editarForm')->name('cuenta.editar');
+    Route::get('cuenta/editar/{id}', 'CuentaController@editarForm')->name('cuenta.editar');
+    Route::post('cuenta/editar/guardar', 'CuentaController@editarUpdate')->name('cuenta.editar.update');
+
+    //Listado de boletas
+    Route::get('cuenta/boleta/{id}', 'CuentaController@boleta')->name('cuenta.boleta');
+    Route::get('cuenta/boleta/lista/{id}', 'CuentaController@boletaLista')->name('cuenta.boleta.lista');
+
+    //Listado de servicios
+    Route::get('cuenta/servicio/{id}', 'CuentaController@servicio')->name('cuenta.servicio');
+    Route::get('cuenta/servicio/lista/{id}', 'CuentaController@servicioLista')->name('cuenta.servicio.lista');
+
+
     // Habilitar Cuenta
     Route::get('cuenta/habilitar/{id}', 'CuentaController@habilitar')->name('cuenta.habilitar');
 
@@ -163,6 +185,10 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::get('periodo/editar', 'PeriodoController@editarForm')->name('periodo.editar');
     Route::get('periodo/editar/{id}', 'PeriodoController@editarForm')->name('periodo.editar');
     Route::post('periodo/editar/guardar', 'PeriodoController@editarUpdate')->name('periodo.editar.update');
+
+    //Listado de boletas
+    Route::get('periodo/boleta/{id}', 'PeriodoController@boleta')->name('periodo.boleta');
+    Route::get('periodo/boleta/lista/{id}', 'PeriodoController@boletaLista')->name('periodo.boleta.lista');
 
 
     // Activar periodo lectura

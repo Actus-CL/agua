@@ -69,7 +69,7 @@ class PeriodoController extends Controller
         //dd($m);
         return Datatables::of($m)->addColumn('action', function ($d) {
             $r= '<a href="'.route('admin.periodo.editar', $d).'" class="btn btn-primary  btn-xs"><i class="glyphicon glyphicon-edit"></i>Editar</a> ';
-            $r.= '<a href="'.route('admin.cliente.editar', $d).'" class="btn btn-primary  btn-xs"><i class="glyphicon glyphicon-edit"></i>Boletas</a> ';
+            $r.= '<a href="'.route('admin.periodo.boleta', $d->id).'" class="btn btn-primary  btn-xs"><i class="glyphicon glyphicon-edit"></i>Boletas</a> ';
             return $r;
         })->addColumn('action_lectura', function ($d) {
             $r='';
@@ -206,13 +206,57 @@ class PeriodoController extends Controller
     {
         $respuesta= [];
         $periodo = Periodo::find($request->id);
-        $periodo->f_vencimiento_pago= $request->f_vencimiento_pago;
-        $periodo->f_vencimiento_corte= $request->f_vencimiento_corte;
-        $periodo->save();
+        //True si
+        //ambos vencimientos son superiores a fecha 'hasta'
+        //fecha de corte es superior a pago
+        //fecha de pago es inferior a corte
 
-        $respuesta["correcto"]=1;
+        if($request->f_vencimiento_corte < $request->hasta){
+          $respuesta["correcto"]=0;
+          $respuesta["mensajeBAD"]="Fecha de corte debe ser superior a fecha 'hasta' ";
+        }else if($request->f_vencimiento_pago < $request->hasta){
+          $respuesta["correcto"]=0;
+          $respuesta["mensajeBAD"]="Fecha de pago debe ser superior a fecha 'hasta' ";
+        }else if ($request->f_vencimiento_corte < $request->f_vencimiento_pago) {
+          $respuesta["correcto"]=0;
+          $respuesta["mensajeBAD"]="Fecha de corte debe ser superior a la de pago";
+        }else if ($request->f_vencimiento_pago > $request->f_vencimiento_corte) {
+          $respuesta["correcto"]=0;
+          $respuesta["mensajeBAD"]="Fecha de pago debe ser inferior a la de corte";
+        }else if ($request->f_vencimiento_pago == $request->f_vencimiento_corte) {
+          $respuesta["correcto"]=0;
+          $respuesta["mensajeBAD"]="Fechas no pueden ser iguales";
+        }else {
+          $periodo->f_vencimiento_pago= $request->f_vencimiento_pago;
+          $periodo->f_vencimiento_corte= $request->f_vencimiento_corte;
+          $periodo->desde= $request->desde;
+          //falta validación de fechas. Donde desde (actual) no debe ser inferior al hasta (anterior)
+          $periodo->hasta= $request->hasta;
+          $periodo->save();
+          $respuesta["correcto"]=1;
+        }
+        // $respuesta["correcto"]=1;
 
         return  json_encode($respuesta);
+    }
+
+    public function boleta($id)
+    {
+      $bag = [];
+      $bag['boleta'] = Boleta::where('periodo_id', $id);
+      $bag['periodo'] = Periodo::find($id);
+      return view('admin.periodo.boleta', ['bag' => $bag]);
+    }
+
+    public function boletaLista($id){
+
+    $boleta = Boleta::select('id', 'cuenta_id', 'f_emision', 'f_vencimiento', 'total' ,'estado_pago_id')->where('periodo_id', $id);
+
+    return Datatables::of($boleta)->editColumn('cuenta_id', function ($dato) {
+        return  $dato->cuenta->id;
+      })->editColumn('estado_pago_id', function ($dato) {
+          return  $dato->estado_pago->nombre;
+      })->make(true);
     }
 
 
