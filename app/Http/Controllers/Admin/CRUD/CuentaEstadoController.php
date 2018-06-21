@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Admin\CRUD;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\CuentaEstado;
+use DataTables;
 
 class CuentaEstadoController extends Controller
 {
@@ -14,8 +16,18 @@ class CuentaEstadoController extends Controller
      */
     public function index()
     {
-        //
+        return view('admin.crud.estado_cuenta.lista');
     }
+
+    public function tabla(){
+
+      $estadocuenta = CuentaEstado::select('id', 'nombre')->get();
+
+
+      return Datatables::of($estadocuenta)->make(true);
+
+    }
+
 
     /**
      * Show the form for creating a new resource.
@@ -24,7 +36,7 @@ class CuentaEstadoController extends Controller
      */
     public function create()
     {
-        //
+        return view('admin.crud.estado_cuenta.nuevo');
     }
 
     /**
@@ -35,7 +47,14 @@ class CuentaEstadoController extends Controller
      */
     public function store(Request $request)
     {
-        //
+      $respuesta= [];
+      $estadocuenta = new CuentaEstado();
+      $estadocuenta->nombre= $request->nombre;
+      $estadocuenta->save();
+
+      $respuesta["correcto"]=1;
+
+      return  json_encode($respuesta);
     }
 
     /**

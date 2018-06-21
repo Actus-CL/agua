@@ -10,7 +10,7 @@
         <div class="col-md-12 col-sm-12 col-xs-12">
             <div class="x_panel">
                 <div class="x_title">
-                    <h2>Nuevo servicio</h2>
+                    <h2>Editar proyecto <small>"{{$bag['proyecto']->nombre}}"</small></h2>
                     <ul class="nav navbar-right panel_toolbox">
                         <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
                         </li>
@@ -30,25 +30,16 @@
                 </div>
                 <div class="x_content">
                     <br />
-                    <form id="demo-form2" data-parsley-validate class="form-horizontal form-label-left autoform" action="{{route("admin.servicio.store")}}" method="post">
-
+                    <form id="demo-form2" data-parsley-validate class="form-horizontal form-label-left autoform" action="{{route('admin.proyecto.update', $bag['proyecto']->id)}}" method="put">
+                      <input type="hidden" name="id" id="id" value="{{$bag['proyecto']->id}}">
                         <div class="row">
                             <div class="col-md-6 col-sm-6 col-xs-12">
 
                                 <div class="form-group">
-                                    <label class="control-label col-md-4 col-sm-4 col-xs-12" for="first-name">Nombre del servicio<span class="required">*</span>
+                                    <label class="control-label col-md-4 col-sm-4 col-xs-12" for="first-name">Nombre<span class="required">*</span>
                                     </label>
                                     <div class="col-md-8 col-sm-8 col-xs-12">
-                                        <input type="text" id="nombre" name="nombre" required="required" class="form-control col-md-7 col-xs-12">
-                                    </div>
-                                </div>
-
-                                <div class="form-group">
-                                    <label class="control-label col-md-4 col-sm-4 col-xs-12" for="first-name">Valor<span class="required">*</span>
-                                    </label>
-                                    <div class="col-md-8 col-sm-8 col-xs-12">
-
-                                        <input type="text" id="total" name="total" required="required" class="form-control col-md-7 col-xs-12">
+                                        <input type="text" id="nombre" name="nombre" required="required" class="form-control col-md-7 col-xs-12" value="{{$bag['proyecto']->nombre}}">
                                     </div>
                                 </div>
                             </div>
@@ -63,8 +54,8 @@
                         <div class="ln_solid"></div>
                         <div class="form-group">
                             <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
-                                <a href="{!! route('admin.servicio.index') !!}"><button class="btn btn-primary" type="button">Cancelar</button></a>
-                                <button type="submit" class="btn btn-success" id="btsubmit" >Crear</button>
+                                <a href="{!! route('admin.proyecto.index') !!}"><button class="btn btn-primary" type="button">Cancelar</button></a>
+                                <button type="submit" class="btn btn-success" id="btsubmit" >Actualizar</button>
                             </div>
                         </div>
 

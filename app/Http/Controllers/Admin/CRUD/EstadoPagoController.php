@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Admin\CRUD;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\EstadoPago;
+use DataTables;
 
 class EstadoPagoController extends Controller
 {
@@ -14,8 +16,18 @@ class EstadoPagoController extends Controller
      */
     public function index()
     {
-        //
+        return view('admin.crud.estado_pago.lista');
     }
+
+    public function tabla(){
+
+      $estadopago = EstadoPago::select('id', 'nombre')->get();
+
+
+      return Datatables::of($estadopago)->make(true);
+
+    }
+
 
     /**
      * Show the form for creating a new resource.
@@ -24,7 +36,7 @@ class EstadoPagoController extends Controller
      */
     public function create()
     {
-        //
+        return view('admin.crud.estado_pago.nuevo');
     }
 
     /**
@@ -35,7 +47,14 @@ class EstadoPagoController extends Controller
      */
     public function store(Request $request)
     {
-        //
+      $respuesta= [];
+      $estadopago = new EstadoPago();
+      $estadopago->nombre= $request->nombre;
+      $estadopago->save();
+
+      $respuesta["correcto"]=1;
+
+      return  json_encode($respuesta);
     }
 
     /**

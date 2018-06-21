@@ -199,10 +199,15 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
 
 
     //Mantenedores
+    Route::get('cuentaestado/tabla', 'CRUD\CuentaEstadoController@tabla')->name('cuentaestado.tabla');
     Route::resource('cuentaestado', 'CRUD\CuentaEstadoController');
+    Route::get('estadopago/tabla', 'CRUD\EstadoPagoController@tabla')->name('estadopago.tabla');
     Route::resource('estadopago', 'CRUD\EstadoPagoController');
+    Route::get('medidormodelo/tabla', 'CRUD\MedidorModeloController@tabla')->name('medidormodelo.tabla');
     Route::resource('medidormodelo', 'CRUD\MedidorModeloController');
+    Route::get('proyecto/tabla', 'CRUD\ProyectoController@tabla')->name('proyecto.tabla');
     Route::resource('proyecto', 'CRUD\ProyectoController');
+    Route::get('servicio/tabla', 'CRUD\ServicioController@tabla')->name('servicio.tabla');
     Route::resource('servicio', 'CRUD\ServicioController');
 
 

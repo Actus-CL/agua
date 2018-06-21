@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Admin\CRUD;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Proyecto;
+use DataTables;
 
 class ProyectoController extends Controller
 {
@@ -14,8 +16,19 @@ class ProyectoController extends Controller
      */
     public function index()
     {
-        //
+        return view('admin.crud.proyecto.lista');
     }
+
+    public function tabla(){
+
+      $proyecto = Proyecto::select('id', 'nombre')->get();
+
+      return Datatables::of($proyecto)->addColumn('action', function ($dato) {
+          return '<a href="'.route('admin.proyecto.show', $dato->id).'" class="btn btn-primary btn-xs"><i class="glyphicon glyphicon-edit"></i>Editar</a> ';
+          })->make(true);
+
+    }
+
 
     /**
      * Show the form for creating a new resource.
@@ -24,7 +37,7 @@ class ProyectoController extends Controller
      */
     public function create()
     {
-        //
+        return view('admin.crud.proyecto.nuevo');
     }
 
     /**
@@ -35,7 +48,14 @@ class ProyectoController extends Controller
      */
     public function store(Request $request)
     {
-        //
+      $respuesta= [];
+      $proyecto = new Proyecto();
+      $proyecto->nombre= $request->nombre;
+      $proyecto->save();
+
+      $respuesta["correcto"]=1;
+
+      return  json_encode($respuesta);
     }
 
     /**
@@ -46,7 +66,9 @@ class ProyectoController extends Controller
      */
     public function show($id)
     {
-        //
+      $bag = [];
+      $bag['proyecto'] = Proyecto::find($id);
+      return view('admin.crud.proyecto.editar', ['bag' => $bag]);
     }
 
     /**
@@ -57,7 +79,7 @@ class ProyectoController extends Controller
      */
     public function edit($id)
     {
-        //
+      //
     }
 
     /**
@@ -67,9 +89,16 @@ class ProyectoController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
-        //
+      $respuesta= [];
+      $proyecto = Proyecto::find($request->id);
+      $proyecto->nombre= $request->nombre;
+      $proyecto->save();
+
+      $respuesta["correcto"]=1;
+
+      return  json_encode($respuesta);
     }
 
     /**
