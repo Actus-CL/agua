@@ -164,9 +164,9 @@ class ClienteController extends Controller
     return Datatables::of($cliente)->addColumn('action', function ($dato) {
         $r= '<a href="'.route('admin.cliente.editar', $dato).'" class="btn btn-primary  btn-xs"><i class="glyphicon glyphicon-edit"></i>Editar</a> ';
         if($dato->habilitado==1) {
-            $r .= '<a href="' . route('admin.cliente.deshabilitar', $dato->id) . '" class="habilitar btn btn-dark btn-xs"><i class="glyphicon glyphicon-edit"></i>Deshabilitar</a> ';
+            $r .= '<a href="' . route('admin.cliente.deshabilitar', $dato->id) . '" class="deshabilitar btn btn-dark btn-xs"><i class="glyphicon glyphicon-edit"></i>Deshabilitar</a> ';
         }else{
-            $r .= '<a href="' . route('admin.cliente.habilitar', $dato->id) . '" class="deshabilitar btn btn-default btn-xs"><i class="glyphicon glyphicon-edit"></i>Habilitar</a> ';
+            $r .= '<a href="' . route('admin.cliente.habilitar', $dato->id) . '" class="habilitar btn btn-default btn-xs"><i class="glyphicon glyphicon-edit"></i>Habilitar</a> ';
         }
 
         $r.='<a href="'.route('admin.cliente.eliminar',$dato->id) .  '" class="btn btn-danger btn-xs bt_eliminar"><i class="glyphicon glyphicon-edit"></i>Eliminar</a> ';
