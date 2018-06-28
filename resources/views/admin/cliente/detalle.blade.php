@@ -30,7 +30,7 @@
                 </div>
                 <div class="x_content">
                     <br />
-                    <form   data-parsley-validate class="form-horizontal form-label-left autoform" action="{{route("admin.cliente.guardar.proyecto")}}" method="post">
+                    <form   data-parsley-validate class="form-horizontal form-label-left autoform"  method="post">
                       <input type="hidden" value="{{$bag['cliente']->id}}" id="id" name="id">
                         <div class="row">
                             <div class="col-md-12 col-sm-12 col-xs-12">
@@ -42,6 +42,7 @@
                                     <?php
                                     $checked = "";
                                     $proyectos = $bag['cliente']->proyectos;
+                                    $cliente=$bag['cliente'];
 
                                     $consulta = $proyectos->where('id', $p->id)->first();
                                     // dd($consulta);
@@ -52,7 +53,7 @@
                                     }
                                     ?>
                                     <li class="list-group-item">
-                                        <input class="form-check-input" type="checkbox" value="{{$p->id}}" id="proyecto_id" name="proyecto_id" {{$checked}}>
+                                        <input class="form-check-input checkPj" type="checkbox" value="{{ $p->id }}" id="proyecto_id" clienteid="{{ $cliente->id }}" proyectoid="{{ $p->id }}" name="proyecto_id" {{$checked}}>
                                         <label class="form-check-label" for="proyecto_id">{{$p->nombre}}</label>
                                     </li>
                                   @endforeach
@@ -68,7 +69,7 @@
                         <div class="ln_solid"></div>
                         <div class="form-group">
                             <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
-                                <button type="submit" class="btn btn-success" id="btsubmit" >Guardar cambios</button>
+                                <a href="{{ route('admin.cliente.lista') }}"  class="btn btn-success"   >Volver</a>
                             </div>
                         </div>
 
@@ -85,9 +86,37 @@
 @section('scripts')
     <script>
         $( document ).ready(function() {
+            $('.checkPj').click(function() {
 
+                if (!$(this).is(':checked')) {
+                    action="{{ route('admin.cliente.desasociar.proyecto') }}";
+                }else{
+                    action="{{ route('admin.cliente.asociar.proyecto') }}";
+                }
 
+                var proyecto_id=$(this).attr('proyectoid');
+                var cliente_id=$(this).attr('clienteid');
+                $.ajax({
+                    url: action,
+                    type: 'POST',
+                    data: {cliente_id:cliente_id, proyecto_id:proyecto_id},
+                    success: function (data) {
+                        var respuesta = $.parseJSON( data);
+                        //console.log(respuesta.correcto);
 
+                        if ( respuesta.correcto ==1) {
+                            
+                                //alert("Se han guardado las modificaciones");
+                             
+                        }else{
+                            //alert("Se han guardado las modificaciones");
+                        }
+                        
+                    }
+                });
+            });
+
+ 
         });
     </script>
     @parent

@@ -104,8 +104,8 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::get('cliente/detalle/{id}', 'ClienteController@detalle')->name('cliente.detalle');
 
     //Detalle de proyectos
-    Route::post('cliente/detalle/guardar', 'ClienteController@guardarProyectos')->name('cliente.guardar.proyecto');
-
+    Route::post('cliente/detalle/asociar', 'ClienteController@asociar')->name('cliente.asociar.proyecto');
+    Route::post('cliente/detalle/desasociar', 'ClienteController@desasociar')->name('cliente.desasociar.proyecto');
 
     //Ingreso medidor nuevo
     Route::get('medidor/nuevo', 'MedidorController@nuevoForm')->name('medidor.nuevo');

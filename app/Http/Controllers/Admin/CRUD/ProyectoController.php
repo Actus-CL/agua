@@ -26,7 +26,14 @@ class ProyectoController extends Controller
 
       return Datatables::of($proyecto)->addColumn('action', function ($dato) {
           $r= '<a href="'.route('admin.proyecto.show', $dato->id).'" class="btn btn-primary btn-xs"><i class="glyphicon glyphicon-edit"></i>Editar</a>';
-          $r.='<a href="'.route('admin.proyecto.destroy',$dato->id) .  '" class="btn btn-danger btn-xs bt_eliminar"><i class="glyphicon glyphicon-edit"></i>Eliminar</a> ';
+           
+          $clientes=$dato->clientes()->count();
+          if($clientes > 0){
+            $r.='<a   class="btn btn-danger btn-xs bt_eliminar"><i class="glyphicon glyphicon-edit"></i>Existen Clientes asociados</a> ';
+          }else{
+            $r.='<a href="'.route('admin.proyecto.destroy',$dato->id) .  '" class="btn btn-danger btn-xs bt_eliminar"><i class="glyphicon glyphicon-edit"></i>Eliminar</a> ';
+          }
+          
           return $r;
           })->make(true);
 
