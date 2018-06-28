@@ -101,10 +101,10 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::get('cliente/deshabilitar/{id}', 'ClienteController@deshabilitar')->name('cliente.deshabilitar');
 
     //Detalle de cliente
-    Route::post('cliente/detalle/', 'ClienteController@detalle')->name('cliente.detalle');
+    Route::get('cliente/detalle/{id}', 'ClienteController@detalle')->name('cliente.detalle');
 
     //Detalle de proyectos
-    Route::post('cliente/detalle/proyectos', 'ClienteController@detalleProyectos')->name('cliente.detalle.proyectos');
+    Route::post('cliente/detalle/guardar', 'ClienteController@guardarProyectos')->name('cliente.guardar.proyecto');
 
 
     //Ingreso medidor nuevo

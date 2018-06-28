@@ -83,6 +83,25 @@
 
         });
 
+        $('#datatable').delegate('.bt_eliminar','click',   function(e){
+          e.preventDefault();
+            var id = $(this).attr("href");
+            $.ajax({
+                url: id,
+                type: 'GET',
+                success: function (data) {
+                  data = $.parseJSON( data);
+                    if(data.correcto=="1"){
+                        alert('Proyecto eliminado');
+                        location.reload();
+                    }else{
+                      alert('El proyecto está asociado a una o más cuentas. No puede ser eliminado');
+                      location.reload();
+                    }
+                }
+            });
+        });
+
 
     });
 
