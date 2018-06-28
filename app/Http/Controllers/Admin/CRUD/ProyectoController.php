@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin\CRUD;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Proyecto;
+use App\Cliente;
 use DataTables;
 
 class ProyectoController extends Controller
@@ -24,7 +25,9 @@ class ProyectoController extends Controller
       $proyecto = Proyecto::select('id', 'nombre')->get();
 
       return Datatables::of($proyecto)->addColumn('action', function ($dato) {
-          return '<a href="'.route('admin.proyecto.show', $dato->id).'" class="btn btn-primary btn-xs"><i class="glyphicon glyphicon-edit"></i>Editar</a> ';
+          $r= '<a href="'.route('admin.proyecto.show', $dato->id).'" class="btn btn-primary btn-xs"><i class="glyphicon glyphicon-edit"></i>Editar</a>';
+          $r.='<a href="'.route('admin.proyecto.destroy',$dato->id) .  '" class="btn btn-danger btn-xs bt_eliminar"><i class="glyphicon glyphicon-edit"></i>Eliminar</a> ';
+          return $r;
           })->make(true);
 
     }
@@ -109,6 +112,20 @@ class ProyectoController extends Controller
      */
     public function destroy($id)
     {
-        //
+      $respuesta= [];
+      /*$cliente = Cliente::all();
+      $proyectos = $cliente->proyectos();
+      $consulta = $proyectos->where('proyecto_id', $id)->first();
+
+      if($consulta){
+        $respuesta["correcto"]=0;
+
+      }else{*/
+        $proyecto = Proyecto::find($id);
+        $proyecto->delete();
+        $respuesta["correcto"]=1;
+      /*}*/
+
+      return json_encode($respuesta);
     }
 }

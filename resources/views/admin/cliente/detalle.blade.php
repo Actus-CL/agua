@@ -10,7 +10,7 @@
         <div class="col-md-12 col-sm-12 col-xs-12">
             <div class="x_panel">
                 <div class="x_title">
-                    <h2>Editar servicio</h2>
+                    <h2>Proyectos <small>cliente: {{$bag['cliente']->nombreCompleto()}}</small></h2>
                     <ul class="nav navbar-right panel_toolbox">
                         <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
                         </li>
@@ -30,27 +30,35 @@
                 </div>
                 <div class="x_content">
                     <br />
-                    <form id="demo-form2" data-parsley-validate class="form-horizontal form-label-left autoform" action="{{route('admin.servicio.update', $bag['servicio']->id)}}" method="put">
-                      <input type="hidden" name="id" id="id" value="{{$bag['servicio']->id}}">
+                    <form   data-parsley-validate class="form-horizontal form-label-left autoform" action="{{route("admin.cliente.guardar.proyecto")}}" method="post">
+                      <input type="hidden" value="{{$bag['cliente']->id}}" id="id" name="id">
                         <div class="row">
-                            <div class="col-md-6 col-sm-6 col-xs-12">
+                            <div class="col-md-12 col-sm-12 col-xs-12">
 
-                                <div class="form-group">
+                              <div class="form-check">
+                                <ul class="list-group">
 
-                                    <p class="col-md-8 col-sm-8 col-xs-12 text-right" for="first-name">{{$bag['servicio']->nombre}}</p>
+                                  @foreach($bag['proyecto'] as $p)
+                                    <?php
+                                    $checked = "";
+                                    $proyectos = $bag['cliente']->proyectos;
 
-                                    <div class="input-group">
-                                        <span class="input-group-addon">$</span>
-                                        <label class="sr-only" for="total">Valor</label>
-                                        <input type="text" class="form-control col-md-4 col-sm-4 col-xs-12" id="total" name="total" value="{{$bag['servicio']->total}}">
-                                    </div>
+                                    $consulta = $proyectos->where('id', $p->id)->first();
+                                    // dd($consulta);
+                                    if($consulta){
+                                      $checked = "checked";
+                                    }else{
+                                      $checked = "";
+                                    }
+                                    ?>
+                                    <li class="list-group-item">
+                                        <input class="form-check-input" type="checkbox" value="{{$p->id}}" id="proyecto_id" name="proyecto_id" {{$checked}}>
+                                        <label class="form-check-label" for="proyecto_id">{{$p->nombre}}</label>
+                                    </li>
+                                  @endforeach
 
-                                </div>
-
-                            </div>
-
-
-                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                </ul>
+                              </div>
 
                             </div>
 
@@ -60,8 +68,7 @@
                         <div class="ln_solid"></div>
                         <div class="form-group">
                             <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
-                                <a href="{!! route('admin.servicio.index') !!}"><button class="btn btn-primary" type="button">Cancelar</button></a>
-                                <button type="submit" class="btn btn-success" id="btsubmit" >Actualizar</button>
+                                <button type="submit" class="btn btn-success" id="btsubmit" >Guardar cambios</button>
                             </div>
                         </div>
 
@@ -76,13 +83,13 @@
 @endsection
 
 @section('scripts')
-  <script>
-      $( document ).ready(function() {
+    <script>
+        $( document ).ready(function() {
 
 
 
-      });
-  </script>
+        });
+    </script>
     @parent
     {{ Html::script(mix('assets/admin/js/dashboard.js')) }}
 @endsection

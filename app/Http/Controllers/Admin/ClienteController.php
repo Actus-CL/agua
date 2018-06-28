@@ -6,10 +6,12 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Cliente;
 use App\Boleta;
+use App\Proyecto;
 use App\Models\Auth\User\User;
 use Ramsey\Uuid\Uuid;
 use App\Models\Auth\Role\Role;
 use DataTables;
+use DB;
 
 
 class ClienteController extends Controller
@@ -139,17 +141,27 @@ class ClienteController extends Controller
     }
 
 
-    public function detalle(Request $request)
+    public function detalle($id)
     {
         $respuesta= [];
-        $cliente = Cliente::find($request->val);
-        return  json_encode($cliente);
+        $bag['cliente'] = Cliente::find($id);
+        $bag['proyecto'] = Proyecto::all();
+
+        return view('admin.cliente.detalle', ['bag' => $bag]);
+
     }
-    public function detalleProyectos(Request $request)
+
+    public function guardarProyectos(Request $request)
     {
-        $respuesta= [];
-        $cliente = Cliente::find($request->val);
-        return  json_encode($cliente->proyectos);
+      $respuesta= [];
+      $cliente = Cliente::find($request->id);
+      $cliente->proyectos()->attach($request->proyecto_id);
+      $cliente->save();
+
+      $respuesta["correcto"]=1;
+
+      return  json_encode($respuesta);
+
     }
 
     public function lista()
@@ -159,18 +171,20 @@ class ClienteController extends Controller
     }
     public function listaTabla(){
 
-    $cliente = Cliente::all();
+      $cliente = Cliente::all();
+
 
     return Datatables::of($cliente)->addColumn('action', function ($dato) {
-        $r= '<a href="'.route('admin.cliente.editar', $dato).'" class="btn btn-primary  btn-xs"><i class="glyphicon glyphicon-edit"></i>Editar</a> ';
+        $r= '<a href="'.route('admin.cliente.editar', $dato->id).'" class="btn btn-primary  btn-xs"><i class="glyphicon glyphicon-edit"></i>Editar</a> ';
         if($dato->habilitado==1) {
             $r .= '<a href="' . route('admin.cliente.deshabilitar', $dato->id) . '" class="deshabilitar btn btn-dark btn-xs"><i class="glyphicon glyphicon-edit"></i>Deshabilitar</a> ';
         }else{
             $r .= '<a href="' . route('admin.cliente.habilitar', $dato->id) . '" class="habilitar btn btn-default btn-xs"><i class="glyphicon glyphicon-edit"></i>Habilitar</a> ';
         }
 
-        $r.='<a href="'.route('admin.cliente.eliminar',$dato->id) .  '" class="btn btn-danger btn-xs bt_eliminar"><i class="glyphicon glyphicon-edit"></i>Eliminar</a> ';
+        $r.='<a href="'.route('admin.cliente.detalle',$dato->id) .  '" class="btn btn-warning btn-xs"><i class="glyphicon glyphicon-edit"></i>Gestionar proyectos</a> ';
         $r.='<a href="'.route('admin.cliente.boleta', $dato->id) .  '" class="btn btn-default btn-xs"><i class="glyphicon glyphicon-edit"></i>Boletas</a> ';
+        $r.='<a href="'.route('admin.cliente.eliminar',$dato->id) .  '" class="btn btn-danger btn-xs bt_eliminar"><i class="glyphicon glyphicon-edit"></i>Eliminar</a> ';
 
         return $r;
     })->editColumn('nombre', function ($dato) {
@@ -181,6 +195,13 @@ class ClienteController extends Controller
         }
         else {
           return "Deshabilitado";
+        }
+    })->editColumn('cliente_id', function ($dato) {
+        if($dato->cliente_id){
+          return "Si";
+        }
+        else {
+          return "No";
         }
     })->make(true);
 

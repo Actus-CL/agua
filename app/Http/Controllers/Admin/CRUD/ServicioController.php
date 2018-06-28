@@ -94,7 +94,6 @@ class ServicioController extends Controller
     {
       $respuesta= [];
       $servicio = Servicio::find($request->id);
-      $servicio->nombre= $request->nombre;
       $servicio->total= $request->total;
       $servicio->save();
 
