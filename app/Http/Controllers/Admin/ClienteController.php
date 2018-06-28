@@ -151,10 +151,10 @@ class ClienteController extends Controller
 
     }
 
-    public function guardarProyectos(Request $request)
+    public function asociar(Request $request)
     {
       $respuesta= [];
-      $cliente = Cliente::find($request->id);
+      $cliente = Cliente::find($request->cliente_id);
       $cliente->proyectos()->attach($request->proyecto_id);
       $cliente->save();
 
@@ -163,6 +163,19 @@ class ClienteController extends Controller
       return  json_encode($respuesta);
 
     }
+    public function desasociar(Request $request)
+    {
+      $respuesta= [];
+      $cliente = Cliente::find($request->cliente_id);
+      $cliente->proyectos()->detach($request->proyecto_id);
+      $cliente->save();
+
+      $respuesta["correcto"]=1;
+
+      return  json_encode($respuesta);
+
+    }
+    
 
     public function lista()
     {
