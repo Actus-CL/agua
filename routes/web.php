@@ -101,9 +101,12 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::get('cliente/deshabilitar/{id}', 'ClienteController@deshabilitar')->name('cliente.deshabilitar');
 
     //Detalle de cliente
-    Route::get('cliente/detalle/{id}', 'ClienteController@detalle')->name('cliente.detalle');
+    Route::post('cliente/detalle', 'ClienteController@detalle')->name('cliente.detalle');
+    Route::post('cliente/detalle/proyectos', 'ClienteController@detalleProyectos')->name('cliente.detalle.proyectos');
+
 
     //Detalle de proyectos
+    Route::get('cliente/detalle/listado/{id}', 'ClienteController@detalleAsociar')->name('cliente.asociar');
     Route::post('cliente/detalle/asociar', 'ClienteController@asociar')->name('cliente.asociar.proyecto');
     Route::post('cliente/detalle/desasociar', 'ClienteController@desasociar')->name('cliente.desasociar.proyecto');
 
