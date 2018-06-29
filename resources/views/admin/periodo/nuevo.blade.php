@@ -90,7 +90,7 @@
                                     <label class="control-label col-md-4 col-sm-3 col-xs-12" for="last-name">Fecha Maxima de pago
                                     </label>
                                     <div class="col-md-8 col-sm-8 col-xs-12">
-                                        <input type="text" class="inputfecha form-control has-feedback-left" id="single_cal1"  name="f_vencimiento_pago"  aria-describedby="inputSuccess2Status">
+                                        <input type="text" class="inputfecha form-control has-feedback-left"   name="f_vencimiento_pago"  aria-describedby="inputSuccess2Status">
                                         <span class="fa fa-calendar-o form-control-feedback left" aria-hidden="true"></span>
                                         <span id="inputSuccess2Status" class="sr-only">(success)</span>
                                     </div>
@@ -103,7 +103,7 @@
                                 <div class="form-group">
                                     <label for="middle-name" class="control-label col-md-4 col-sm-3 col-xs-12">Fecha de corte</label>
                                     <div class="col-md-8 col-sm-8 col-xs-12">
-                                        <input type="text" class="inputfecha form-control has-feedback-left" id="single_cal1"  name="f_vencimiento_corte"  aria-describedby="inputSuccess2Status">
+                                        <input type="text" class="inputfecha form-control has-feedback-left"  name="f_vencimiento_corte"  aria-describedby="inputSuccess2Status">
                                         <span class="fa fa-calendar-o form-control-feedback left" aria-hidden="true"></span>
                                         <span id="inputSuccess2Status" class="sr-only">(success)</span>
                                     </div>
