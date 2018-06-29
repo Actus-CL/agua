@@ -31,6 +31,7 @@
         "laravel/socialite": "^3.0",
         "laravel/tinker": "~1.0",
         "laravelcollective/html": "5.5.*",
+        "orphans/git-deploy-laravel": "^0.4.0",
         "yajra/laravel-datatables-oracle": "~8.0"
     },
     "require-dev": {

@@ -24,7 +24,7 @@ class EventServiceProvider extends ServiceProvider
         Login::class => [LoginListener::class],
         Logout::class => [LogoutListener::class],
         Registered::class => [RegisteredListener::class],
-        SocialLogin::class => [SocialLoginListener::class],
+        SocialLogin::class => [SocialLoginListener::class]
     ];
 
     /**
