@@ -68,7 +68,7 @@
                 {data: 'email', name: 'email'},
                 {data: 'direccion', name: 'direccion'},
                 {data: 'habilitado', name: 'habilitado'},
-                {data: 'cliente_id', name: 'cliente_id'},
+                {data: 'asociado', name: 'asociado', orderable: false, searchable: false},
                 {data: 'action', name: 'action', orderable: false, searchable: false}
             ],
             "bFilter": true,

@@ -209,14 +209,20 @@ class ClienteController extends Controller
         else {
           return "Deshabilitado";
         }
-    })->editColumn('cliente_id', function ($dato) {
-        if($dato->cliente_id){
-          return "Si";
+    })->editColumn('asociado', function ($dato) {
+       
+       
+        if($dato->proyectos()->count()>0){
+            $cli="Si";
+            foreach($dato->proyectos()->get() as $pj    ){
+                $cli.=" <br>[". $pj->nombre."]";
+            }
+          return  $cli;
         }
         else {
           return "No";
         }
-    })->make(true);
+    })->rawColumns(['asociado','action'])->make(true);
 
     /*->editColumn('tipo_propiedad_id', function ($dato) {
         return $dato->tipo_propiedad->nombre;
