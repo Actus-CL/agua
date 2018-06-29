@@ -45,7 +45,7 @@
                                     <label class="control-label col-md-4 col-sm-3 col-xs-12" for="last-name">Desde
                                     </label>
                                     <div class="col-md-8 col-sm-8 col-xs-12">
-                                        <input type="text" class="inputfecha form-control has-feedback-left" id="single_cal1"  name="desde"  value="{{$bag['desde']}}"  aria-describedby="inputSuccess2Status">
+                                        <input type="text" class="inputfecha form-control has-feedback-left" id="single_cal1"  name="desde"    aria-describedby="inputSuccess2Status">
                                         <span class="fa fa-calendar-o form-control-feedback left" aria-hidden="true"></span>
                                         <span id="inputSuccess2Status" class="sr-only">(success)</span>
                                     </div>
