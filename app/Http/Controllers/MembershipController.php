@@ -38,8 +38,8 @@ class MembershipController extends Controller
 
             $membership->put('shopUrl', $protectionShopToken->shop_url);
         }
-        $cliente=Cliente::where("user_id",$user->id);
-        dd($cliente);
+        $cliente=Cliente::where("user_id",$user->id)->first();
+        //dd($cliente);
         $periodo_lec=Periodo::where("activo_lectura",1)->first();
         $periodos=Periodo::where("id","<=",$periodo_lec->id)->get()->sortByDesc('id')->take(6)->reverse();
 
