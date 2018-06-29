@@ -25,15 +25,20 @@ class ProyectoController extends Controller
       $proyecto = Proyecto::select('id', 'nombre')->get();
 
       return Datatables::of($proyecto)->addColumn('action', function ($dato) {
-          $r= '<a href="'.route('admin.proyecto.show', $dato->id).'" class="btn btn-primary btn-xs"><i class="glyphicon glyphicon-edit"></i>Editar</a>';
+        $r=' <form method="POST" action="'.route('admin.proyecto.destroy',$dato->id) .  '" >'; 
+        $r.= '<a href="'.route('admin.proyecto.show', $dato->id).'" class="btn btn-primary btn-xs"><i class="glyphicon glyphicon-edit"></i>Editar</a>';
            
           $clientes=$dato->clientes()->count();
           if($clientes > 0){
             $r.='<a   class="btn btn-danger btn-xs bt_eliminar"><i class="glyphicon glyphicon-edit"></i>Existen Clientes asociados</a> ';
           }else{
-            $r.='<a href="'.route('admin.proyecto.destroy',$dato->id) .  '" class="btn btn-danger btn-xs bt_eliminar"><i class="glyphicon glyphicon-edit"></i>Eliminar</a> ';
+            $r.='  <input type="hidden" name="_method" value="DELETE">
+                    <input type="hidden" name="_token" value="'.csrf_token().'"> 
+                    <button type="submit"class="btn btn-danger btn-xs">
+                          <i class="glyphicon glyphicon-edit"></i>Eliminar
+                    </button>  ';
           }
-          
+          $r.=' </form>'; 
           return $r;
           })->make(true);
 
@@ -119,20 +124,10 @@ class ProyectoController extends Controller
      */
     public function destroy($id)
     {
-      $respuesta= [];
-      /*$cliente = Cliente::all();
-      $proyectos = $cliente->proyectos();
-      $consulta = $proyectos->where('proyecto_id', $id)->first();
-
-      if($consulta){
-        $respuesta["correcto"]=0;
-
-      }else{*/
+      
         $proyecto = Proyecto::find($id);
-        $proyecto->delete();
-        $respuesta["correcto"]=1;
-      /*}*/
-
-      return json_encode($respuesta);
+        $proyecto->delete(); 
+        return view('admin.crud.proyecto.lista');
+ 
     }
 }
