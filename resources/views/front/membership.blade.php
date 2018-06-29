@@ -33,7 +33,7 @@
                                 {{--<img class="img-responsive avatar-view" src="images/picture.jpg" alt="Avatar" title="Change the avatar">--}}
                             {{--</div>--}}
                         {{--</div>--}}
-                        {{ dd($cliente) }}
+                       
                         <h3>{{ $cliente->nombreCompleto() }}</h3>
 
                         <ul class="list-unstyled user_data">

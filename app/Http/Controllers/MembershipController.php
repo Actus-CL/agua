@@ -17,6 +17,7 @@ class MembershipController extends Controller
     {
         /** @var  $user User */
         $user = $request->user();
+         
 
         $membership = collect([
             'valid' => true,
@@ -37,7 +38,7 @@ class MembershipController extends Controller
 
             $membership->put('shopUrl', $protectionShopToken->shop_url);
         }
-        $cliente=Cliente::find($user->id);
+        $cliente=Cliente::where("user_id",$user->id);
         $periodo_lec=Periodo::where("activo_lectura",1)->first();
         $periodos=Periodo::where("id","<=",$periodo_lec->id)->get()->sortByDesc('id')->take(6)->reverse();
 
