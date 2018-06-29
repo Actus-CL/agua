@@ -101,91 +101,11 @@
                             <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
                                 <button type="submit" class="btn btn-success" id="btsubmit" >Guardar</button>
                             </div>
-                        </div>
-                        <div class="ln_solid"></div>
-                        <div class="row">
-                            <h4>Ultimos 6 periodos</h4>
+                        </div> 
+                      
 
-                            <table class="table table-bordered">
-                                <thead>
-                                <tr>
-                                    @foreach($bag['periodos'] as $p)
-                                    <th>{{$p->nombre}}</th>
-                                    @endforeach
-                                </tr>
-                                </thead>
-                                <tbody >
-                                <tr>
-                                    @foreach($bag['periodos'] as $p)
-                                        <td>
-                                            <input type="text"  name="periodo_id[{{$p->id}}]"  data-medidorid="{{$p->id}}" readonly="readonly"  class="periodo_lectura"  >
-                                        </td>
-                                    @endforeach
-                                </tr>
-
-                                </tbody>
-                            </table>
-                            </div>
-
-                            <div class="ln_solid"></div>
-                            <div class="row">
-                            <div class="col-md-6 col-sm-6 col-xs-12">
-
-                                <div class="form-group">
-                                    <label class="control-label col-md-4 col-sm-4 col-xs-12" for="first-name">Medidor <span class="required">*</span>
-                                    </label>
-                                    <div class="col-md-8 col-sm-8 col-xs-12">
-
-                                      </div>
-                                </div>
-                                <div class="form-group xdisplay_inputx has-feedback">
-                                    <label class="control-label col-md-4 col-sm-3 col-xs-12" for="last-name">Desde
-                                    </label>
-                                    <div class="col-md-8 col-sm-8 col-xs-12">
-                                        <input type="text" class="inputfecha form-control has-feedback-left" id="single_cal1"  name="desde"  value=""  aria-describedby="inputSuccess2Status">
-                                        <span class="fa fa-calendar-o form-control-feedback left" aria-hidden="true"></span>
-                                        <span id="inputSuccess2Status" class="sr-only">(success)</span>
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label for="middle-name" class="control-label col-md-4 col-sm-3 col-xs-12">Hasta</label>
-                                    <div class="col-md-8 col-sm-8 col-xs-12">
-                                        <input type="text" class="inputfecha form-control has-feedback-left" id="single_cal1"  name="hasta"  aria-describedby="inputSuccess2Status">
-                                        <span class="fa fa-calendar-o form-control-feedback left" aria-hidden="true"></span>
-                                        <span id="inputSuccess2Status" class="sr-only">(success)</span>
-                                    </div>
-                                </div>
-                            </div>
-
-
-                            <div class="col-md-6 col-sm-6 col-xs-12">
-
-                                <div class="form-group">
-                                    <label class="control-label col-md-4 col-sm-4 col-xs-12" for="first-name">Mes <span class="required">*</span>
-                                    </label>
-                                    <div class="col-md-8 col-sm-8 col-xs-12">
-                                        <input type="text" id="mes" name="mes"  required="required" value=" "  class="form-control col-md-7 col-xs-12">
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label class="control-label col-md-4 col-sm-4 col-xs-12" for="last-name">Año  <span class="required">*</span>
-                                    </label>
-                                    <div class="col-md-8 col-sm-8 col-xs-12">
-                                        <input type="text" id="anio" name="anio"  required="required" value=" " class="form-control col-md-7 col-xs-12">
-                                    </div>
-                                </div>
-
-                            </div>
-                        </div>
-
-
-                        <div class="ln_solid"></div>
-
-                        <div class="form-group">
-                            <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
-                                <button type="submit" class="btn btn-success" id="btsubmit" >Guardar</button>
-                            </div>
-                        </div>
+                            
+ 
 
                     </form>
                 </div>
