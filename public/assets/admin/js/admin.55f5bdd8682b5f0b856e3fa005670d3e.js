@@ -4127,7 +4127,7 @@ if (typeof NProgress != 'undefined') {
                     firstDay: 1
                 }
             }, function(start, end, label) {
-              alert ("holi");
+              //alert ("holi");
                 console.log(start.toISOString(), end.toISOString(), label);
             });
 
