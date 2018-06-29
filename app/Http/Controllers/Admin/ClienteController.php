@@ -49,7 +49,7 @@ class ClienteController extends Controller
             'email' => $request->email,
             'password' => bcrypt($request->rut),
             'confirmation_code' => Uuid::uuid4(),
-            'confirmed' => false
+            'confirmed' => true
         ]);
 
         $cliente->user_id = $user->id;
