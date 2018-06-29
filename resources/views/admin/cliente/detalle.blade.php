@@ -30,7 +30,7 @@
                 </div>
                 <div class="x_content">
                     <br />
-                    <form   data-parsley-validate class="form-horizontal form-label-left autoform" action="{{route("admin.cliente.guardar.proyecto")}}" method="post">
+                    <form   data-parsley-validate class="form-horizontal form-label-left autoform" action="{{route("admin.cliente.asociar.guardar")}}" method="post">
                       <input type="hidden" value="{{$bag['cliente']->id}}" id="id" name="id">
                         <div class="row">
                             <div class="col-md-12 col-sm-12 col-xs-12">

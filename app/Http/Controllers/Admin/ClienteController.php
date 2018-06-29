@@ -141,7 +141,27 @@ class ClienteController extends Controller
     }
 
 
-    public function detalle($id)
+    public function detalle(Request $request)
+    {
+        $respuesta= [];
+        $bag['cliente'] = Cliente::find($request->val);
+
+        return json_encode($cliente);
+
+    }
+
+    public function detalleProyectos(Request $request)
+    {
+      $respuesta= [];
+      $cliente = Cliente::find($request->val);
+
+
+      return  json_encode($cliente->proyectos);
+
+    }
+
+
+    public function asociarCliente($id)
     {
         $respuesta= [];
         $bag['cliente'] = Cliente::find($id);
@@ -151,7 +171,7 @@ class ClienteController extends Controller
 
     }
 
-    public function guardarProyectos(Request $request)
+    public function guardarAsociar(Request $request)
     {
       $respuesta= [];
       $cliente = Cliente::find($request->id);
@@ -163,6 +183,8 @@ class ClienteController extends Controller
       return  json_encode($respuesta);
 
     }
+
+
 
     public function lista()
     {
@@ -182,7 +204,7 @@ class ClienteController extends Controller
             $r .= '<a href="' . route('admin.cliente.habilitar', $dato->id) . '" class="habilitar btn btn-default btn-xs"><i class="glyphicon glyphicon-edit"></i>Habilitar</a> ';
         }
 
-        $r.='<a href="'.route('admin.cliente.detalle',$dato->id) .  '" class="btn btn-warning btn-xs"><i class="glyphicon glyphicon-edit"></i>Gestionar proyectos</a> ';
+        $r.='<a href="'.route('admin.cliente.asociar',$dato->id) .  '" class="btn btn-warning btn-xs"><i class="glyphicon glyphicon-edit"></i>Gestionar proyectos</a> ';
         $r.='<a href="'.route('admin.cliente.boleta', $dato->id) .  '" class="btn btn-default btn-xs"><i class="glyphicon glyphicon-edit"></i>Boletas</a> ';
         $r.='<a href="'.route('admin.cliente.eliminar',$dato->id) .  '" class="btn btn-danger btn-xs bt_eliminar"><i class="glyphicon glyphicon-edit"></i>Eliminar</a> ';
 
