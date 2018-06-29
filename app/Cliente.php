@@ -11,7 +11,7 @@ class Cliente extends Model
 
     public function proyectos()
     {
-        return $this->belongsToMany('App\proyecto' ,'cliente_proyecto');
+        return $this->belongsToMany('App\Proyecto' ,'cliente_proyecto');
     }
 
     public function nombreCompleto()

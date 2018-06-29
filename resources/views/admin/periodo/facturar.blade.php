@@ -73,29 +73,7 @@
                             </div>
                         </div>
                         <div class="ln_solid"></div>
-                        <div class="row">
-                            <h4>Ultimos estado de los ultimos periodos</h4>
-
-                            <table class="table table-bordered">
-                                <thead>
-                                <tr>
-                                    @foreach($bag['periodos'] as $p)
-                                        <th>{{$p->nombre}}</th>
-                                    @endforeach
-                                </tr>
-                                </thead>
-                                <tbody >
-                                <tr>
-                                    @foreach($bag['periodos'] as $p)
-                                        <td>
-                                            <input type="text"  name="periodo_id[{{$p->id}}]"  data-medidorid="{{$p->id}}" readonly="readonly"  class="periodo_lectura"  >
-                                        </td>
-                                    @endforeach
-                                </tr>
-
-                                </tbody>
-                            </table>
-                        </div>
+                   
 
                         <div class="ln_solid"></div>
 
