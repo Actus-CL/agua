@@ -57,9 +57,9 @@ class ClienteController extends Controller
 
 
 
-        if (config('auth.users.default_role')) {
+        //if (config('auth.users.default_role')) {
             $user->roles()->attach(Role::firstOrCreate(['name' => config('auth.users.default_role')]));
-        }
+        //}
 
 
 
