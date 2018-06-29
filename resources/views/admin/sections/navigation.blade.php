@@ -182,7 +182,7 @@
 
                 <ul class="nav side-menu">
                     <li>
-                        <a href="{{ route('admin.recaudacion.nuevo') }}">
+                        <a href="#">
                             <i class="fa fa-home" aria-hidden="true"></i>
                             Ingresar Recaudacion
                         </a>
@@ -197,7 +197,7 @@
                 <h3>Informes</h3>
                 <ul class="nav side-menu">
                     <li>
-                        <a href="{{ route('admin.cobranza.lista') }}">
+                        <a href="#">
                             <i class="fa fa-home" aria-hidden="true"></i>
                             Cuentas atrasadas
                         </a>
