@@ -197,7 +197,7 @@
                 <h3>Informes</h3>
                 <ul class="nav side-menu">
                     <li>
-                        <a href="#">
+                        <a href="{{ route('admin.cobranza.lista') }}">
                             <i class="fa fa-home" aria-hidden="true"></i>
                             Cuentas atrasadas
                         </a>
