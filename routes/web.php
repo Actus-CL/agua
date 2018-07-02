@@ -234,6 +234,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     //Informe de cuentas atrasadas
     Route::get('cobranza/lista', 'CobranzaController@lista')->name('cobranza.lista');
     Route::get('cobranza/lista/tabla', 'CobranzaController@listaTabla')->name('cobranza.lista.tabla');
+    Route::get('cobranza/detalle/{id}', 'CobranzaController@detalleCobranza')->name('cobranza.detalle');
 
 
 });
