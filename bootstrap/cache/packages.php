@@ -1,23 +1,23 @@
 <?php return array (
-  'barryvdh/laravel-ide-helper' => 
-  array (
-    'providers' => 
-    array (
-      0 => 'Barryvdh\\LaravelIdeHelper\\IdeHelperServiceProvider',
-    ),
-  ),
-  'orphans/git-deploy-laravel' => 
-  array (
-    'providers' => 
-    array (
-      0 => 'Orphans\\GitDeploy\\GitDeployServiceProvider',
-    ),
-  ),
   'laravel/dusk' => 
   array (
     'providers' => 
     array (
       0 => 'Laravel\\Dusk\\DuskServiceProvider',
+    ),
+  ),
+  'arcanedev/log-viewer' => 
+  array (
+    'providers' => 
+    array (
+      0 => 'Arcanedev\\LogViewer\\LogViewerServiceProvider',
+    ),
+  ),
+  'barryvdh/laravel-ide-helper' => 
+  array (
+    'providers' => 
+    array (
+      0 => 'Barryvdh\\LaravelIdeHelper\\IdeHelperServiceProvider',
     ),
   ),
   'nesbot/carbon' => 
@@ -32,13 +32,6 @@
     'providers' => 
     array (
       0 => 'AlbertCht\\InvisibleReCaptcha\\InvisibleReCaptchaServiceProvider',
-    ),
-  ),
-  'arcanedev/log-viewer' => 
-  array (
-    'providers' => 
-    array (
-      0 => 'Arcanedev\\LogViewer\\LogViewerServiceProvider',
     ),
   ),
   'creativeorange/gravatar' => 
@@ -98,6 +91,13 @@
     'aliases' => 
     array (
       'DataTables' => 'Yajra\\DataTables\\Facades\\DataTables',
+    ),
+  ),
+  'orphans/git-deploy-laravel' => 
+  array (
+    'providers' => 
+    array (
+      0 => 'Orphans\\GitDeploy\\GitDeployServiceProvider',
     ),
   ),
 );
