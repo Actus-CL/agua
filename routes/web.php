@@ -227,8 +227,11 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::post('periodo/facturar', 'PeriodoController@facturarGuardar')->name('periodo.facturar.guardar'); //crea las boletas
 
     //Ingresar recaudacion manual
-    Route::get('reacaudacion/ingresar', 'RecaudacionController@nuevoForm')->name('recaudacion.nuevo'); // formulario para ingresar la recaudacion
-    Route::post('reacaudacion/ingresar', 'RecaudacionController@nuevoForm')->name('recaudacion.nuevo.store'); //procesar el formulario de recaudacion
+    Route::get('recaudacion/lista', 'RecaudacionController@lista')->name('recaudacion.lista');
+    Route::get('recaudacion/lista/tabla', 'RecaudacionController@listaTabla')->name('recaudacion.lista.tabla');
+    Route::get('recaudacion/detalle/{id}', 'RecaudacionController@detalleRecaudacion')->name('recaudacion.detalle');
+    Route::post('recaudacion/detalle/pagar', 'RecaudacionController@pagarUpdate')->name('recaudacion.pagar');
+
 
 
     //Informe de cuentas atrasadas

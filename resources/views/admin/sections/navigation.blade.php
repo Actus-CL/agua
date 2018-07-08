@@ -182,7 +182,7 @@
 
                 <ul class="nav side-menu">
                     <li>
-                        <a href="#">
+                        <a href="{{ route('admin.recaudacion.lista') }}">
                             <i class="fa fa-home" aria-hidden="true"></i>
                             Ingresar Recaudacion
                         </a>
