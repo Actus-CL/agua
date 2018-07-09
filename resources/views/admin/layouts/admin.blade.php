@@ -74,7 +74,7 @@
                                 alert("Se han guardado las modificaciones");
                             }
                             if (respuesta.redireccion!= null){
-                                //  $.(respuesta.redireccion);
+                                location.href = respuesta.redireccion;
                             }else{
                                 location.reload();
                             }
