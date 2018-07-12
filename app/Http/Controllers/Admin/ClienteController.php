@@ -41,7 +41,7 @@ class ClienteController extends Controller
         $cliente->rut= $request->rut;
         $cliente->email= $request->email;
         $cliente->direccion= $request->direccion;
-        $cliente->save();
+        //$cliente->save();
 
 
         $user = User::create([
@@ -53,7 +53,7 @@ class ClienteController extends Controller
         ]);
 
         $cliente->user_id = $user->id;
-        $cliente->save();
+       // $cliente->save();
 
 
 
