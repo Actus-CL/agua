@@ -12,6 +12,7 @@ use App\Parametro;
 use App\Boleta;
 use App\BoletaDetalle;
 use DataTables;
+use Carbon\Carbon;
 class PeriodoController extends Controller
 {
     public function nuevoForm()
@@ -33,27 +34,52 @@ class PeriodoController extends Controller
         $bag['mes']=$mes;
         $bag['anio']=$anio;
         $bag['nombre']=$mes.$anio;
-        $bag['desde']='';$p->desde;
+        $bag['desde']=$p->hasta->addDays(1);
+        $bag['hasta']=$p->hasta->addMonths(1);
+
+        $bag['pago']=$p->f_vencimiento_pago->addMonths(1);
+        $bag['corte']=$p->f_vencimiento_corte->addMonths(1);
         $bag['ultimo']=$p;
         return view('admin.periodo.nuevo', ['bag' => $bag]);
     }
 
 
-    public function nuevoStore(Request $request)
+    public function nuevoStore(Request $r)
     {
         $respuesta= [];
-        $p = new Periodo();
-        $p->nombre= $request->nombre;
-        $p->anio= $request->anio;
-        $p->mes= $request->mes;
-        $p->activo_lectura= 0;
-        $p->activo_facturacion= 0;
-        $p->save();
+        $respuesta["correcto"]=0;
 
-        $respuesta["correcto"]=1;
+        if($r->desde > $r->hasta){
+            $respuesta["mensajeBAD"]="La fecha de termino del periodo debe ser inferior a la de inicio";
+        }else if($r->f_vencimiento_pago > $r->f_vencimiento_corte){
+            $respuesta["mensajeBAD"]="La fecha de corte debe ser superior a la de pago";
+        }else if($r->f_vencimiento_pago < $r->hasta){
+            $respuesta["mensajeBAD"]="La fecha de pago debe ser posterior al periodo";
+        }else{
+            $p = new Periodo();
+            $p->nombre= $r->nombre;
+            $p->anio= $r->anio;
+            $p->mes= $r->mes;
+            $p->activo_lectura= 0;
+            $p->activo_facturacion= 0;
+            $p->desde=$r->desde;
+            $p->hasta=$r->hasta;
+
+            $p->f_vencimiento_pago=$r->f_vencimiento_pago;
+            $p->f_vencimiento_corte=$r->f_vencimiento_corte;
+            $p->save();
+
+            $respuesta["correcto"]=1;
+        }
+
+
+
         //$respuesta["mensajeOK"]="El cliente ha sido ingresado";
         //$respuesta["mensajeBAD"]="Ha ocurrido un problema y el cliente no ha logrado registrarse";
         //$respuesta["redireccion"]="hola";
+
+
+
 
         return  json_encode($respuesta);
     }
