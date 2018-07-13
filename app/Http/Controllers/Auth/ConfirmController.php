@@ -16,7 +16,7 @@ class ConfirmController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('guest');
+       // $this->middleware('guest');
     }
 
     /**
@@ -27,13 +27,38 @@ class ConfirmController extends Controller
      */
     public function confirm(User $user)
     {
-        $user->confirmed = true;
+        /*$user->confirmed = true;
         $user->save();
 
         auth()->login($user);
         return redirect()->intended(app(LoginController::class)->redirectPath());
+        */
     }
 
+
+    public function confirmar($code)
+    {
+
+
+        $user= User::where('confirmation_code',$code)->first();
+        if($user){
+            if($user->confirmed) {
+                return 'El usuario ya está confirmado';
+            }else{
+                $user->confirmed = true;
+
+                $user->save();
+
+                auth()->login($user);
+                return redirect()->intended(app(LoginController::class)->redirectPath());
+            }
+
+        }else{
+            return 'No existe el usuario solicitado';
+        }
+
+
+    }
     public function sendEmail(User $user)
     {
         //create confirmation code

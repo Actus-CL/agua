@@ -4,6 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 use DB;
+use App\Models\Auth\User\User;
 
 class Cliente extends Model
 {
@@ -14,6 +15,10 @@ class Cliente extends Model
         return $this->belongsToMany('App\Proyecto' ,'cliente_proyecto');
     }
 
+    public function user()
+    {
+        return $this->belongsTo('App\Models\Auth\User\User' ,'user_id' );
+    }
     public function nombreCompleto()
     {
         return $this->nombre .' '. $this->apellido_paterno .' '. $this->apellido_materno;
