@@ -35,10 +35,12 @@ Route::group(['namespace' => 'Auth'], function () {
     Route::post('password/reset', 'ResetPasswordController@reset');
 
     // Confirmation Routes...
-    if (config('auth.users.confirm_email')) {
-        Route::get('confirm/{user_by_code}', 'ConfirmController@confirm')->name('confirm');
-        Route::get('confirm/resend/{user_by_email}', 'ConfirmController@sendEmail')->name('confirm.send');
-    }
+    Route::get('confirmar/{code}', 'ConfirmController@confirmar')->name('confirmar');
+    //if (config('auth.users.confirm_email')) {
+     //   Route::get('confirm/{user_by_code}', 'ConfirmController@confirm')->name('confirm');
+
+     //   Route::get('confirm/resend/{user_by_email}', 'ConfirmController@sendEmail')->name('confirm.send');
+    //}
 
     // Social Authentication Routes...
     Route::get('social/redirect/{provider}', 'SocialLoginController@redirect')->name('social.redirect');

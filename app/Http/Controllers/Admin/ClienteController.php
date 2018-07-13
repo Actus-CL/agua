@@ -12,6 +12,8 @@ use Ramsey\Uuid\Uuid;
 use App\Models\Auth\Role\Role;
 use DataTables;
 use DB;
+use Mail;
+use App\Mail\RegistroUsuario;
 
 
 class ClienteController extends Controller
@@ -41,27 +43,35 @@ class ClienteController extends Controller
         $cliente->rut= $request->rut;
         $cliente->email= $request->email;
         $cliente->direccion= $request->direccion;
-        $cliente->save();
+        //$cliente->save();
 
 
-        $user = User::create([
+      /*  $user = User::create([
             'name' => $cliente->nombreCompleto(),
             'email' => $request->email,
             'password' => bcrypt($request->rut),
             'confirmation_code' => Uuid::uuid4(),
             'confirmed' => true
         ]);
+      */
 
-        $cliente->user_id = $user->id;
-        $cliente->save();
+       // $cliente->user_id = $user->id;
+       // $cliente->save();
 
 
 
         //if (config('auth.users.default_role')) {
-            $user->roles()->attach(Role::firstOrCreate(['name' => config('auth.users.default_role')]));
+          //  $user->roles()->attach(Role::firstOrCreate(['name' => config('auth.users.default_role')]));
         //}
 
+        $cliente_correo= Cliente::find(1);
+        dd($cliente_correo->user);
+        Mail::to("rinostrozareb@gmail.com")
+            ->queue(new RegistroUsuario($cliente_correo));
 
+        /*
+            ->cc($moreUsers)
+            ->bcc($evenMoreUsers)*/
 
         $respuesta["correcto"]=1;
         //$respuesta["mensajeOK"]="El cliente ha sido ingresado";
