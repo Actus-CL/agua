@@ -9,7 +9,14 @@ class Periodo extends Model
 {
     protected $table = 'periodo';
 
-
+    protected $dates = [
+        'created_at',
+        'updated_at',
+        'desde',
+        'hasta',
+        'f_vencimiento_pago',
+        'f_vencimiento_corte'
+    ];
     public function boletas()
     {
         return $this->hasMany('App\Boleta' ,'boleta_id');
