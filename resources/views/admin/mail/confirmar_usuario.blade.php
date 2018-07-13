@@ -245,12 +245,10 @@
                                             <img style="width: 38px; height: 38px; margin: 0 0 15px 0; padding-right: 30px; padding-left: 30px;" alt="" width="38" height="38" src=https://actuscl.slack.com/x-360551544352-361149262899/img/email/slack_hash@2x.png />
 
                                             <h1 style="font-size: 30px; padding-right: 30px; padding-left: 30px;">
-                                                ¡Te damos la bienvenida al portal de clientes!	</h1>
+                                                ¡Se ha solicitado activar tu cuenta!	</h1>
                                             <p style="font-size: 17px; padding-right: 30px; padding-left: 30px;">
 
-                                                Bienvenido {{$cliente->nombre}} {{$cliente->apellido}} <br>
-                                                Has sido registrado el el portal de <strong>NeoAlerce</strong>.
-                                                Estos son los datos de tu cuenta:
+                                                Bienvenido {{$cliente->nombre}} {{$cliente->apellido}}
                                             </p>
 
                                             <!--[if mso]>
