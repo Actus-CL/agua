@@ -36,11 +36,11 @@ Route::group(['namespace' => 'Auth'], function () {
 
     // Confirmation Routes...
     Route::get('confirmar/{code}', 'ConfirmController@confirmar')->name('confirmar');
-    //if (config('auth.users.confirm_email')) {
-     //   Route::get('confirm/{user_by_code}', 'ConfirmController@confirm')->name('confirm');
+    if (config('auth.users.confirm_email')) {
+       Route::get('confirm/{user_by_code}', 'ConfirmController@confirm')->name('confirm');
 
-     //   Route::get('confirm/resend/{user_by_email}', 'ConfirmController@sendEmail')->name('confirm.send');
-    //}
+        Route::get('confirm/resend/{user_by_email}', 'ConfirmController@sendEmail')->name('confirm.send');
+    }
 
     // Social Authentication Routes...
     Route::get('social/redirect/{provider}', 'SocialLoginController@redirect')->name('social.redirect');
@@ -243,6 +243,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
 
 
 Route::get('/', 'HomeController@index');
+Route::get('error', 'ErrorController@index')->name('error');
 
 /**
  * Membership

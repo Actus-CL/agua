@@ -4,8 +4,11 @@ namespace App\Http\Controllers\Auth;
 
 use App\Models\Auth\User\User;
 use App\Notifications\Auth\ConfirmEmail;
+use App\Mail\ConfirmarUsuario;
 use App\Http\Controllers\Controller;
 use Ramsey\Uuid\Uuid;
+use App\Cliente;
+use Mail;
 
 class ConfirmController extends Controller
 {
@@ -27,12 +30,7 @@ class ConfirmController extends Controller
      */
     public function confirm(User $user)
     {
-        /*$user->confirmed = true;
-        $user->save();
 
-        auth()->login($user);
-        return redirect()->intended(app(LoginController::class)->redirectPath());
-        */
     }
 
 
@@ -43,30 +41,39 @@ class ConfirmController extends Controller
         $user= User::where('confirmation_code',$code)->first();
         if($user){
             if($user->confirmed) {
-                return 'El usuario ya está confirmado';
+
+
+                return redirect(route('error'))->with('status', __('auth.confirmed.dos'));
+
             }else{
                 $user->confirmed = true;
 
                 $user->save();
 
                 auth()->login($user);
-                return redirect()->intended(app(LoginController::class)->redirectPath());
+                return redirect()->intended(app(LoginController::class)->redirectPath())->with('status', __('auth.confirmed'));
             }
 
         }else{
-            return 'No existe el usuario solicitado';
+            return redirect(route('error'))->with('status', __('auth.confirmed.no.existe'));
+
         }
 
 
     }
     public function sendEmail(User $user)
     {
+
         //create confirmation code
         $user->confirmation_code = Uuid::uuid4();
         $user->save();
 
+        $cliente_correo=Cliente::where('user_id',$user->id)->first();
         //send email
-        $user->notify(new ConfirmEmail());
+        $user->notificar(new ConfirmarUsuario($cliente_correo));
+        //dd($cliente_correo);
+       // Mail::to("rinostrozareb@gmail.com")->queue(new ConfirmarUsuario($cliente_correo));
+
 
         return back()->with('status', __('auth.confirm'));
     }
