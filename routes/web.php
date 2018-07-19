@@ -250,7 +250,8 @@ Route::get('/', 'HomeController@index');
  */
 Route::group(['as' => 'protection.'], function () {
     Route::get('cliente/perfil', 'MembershipController@index')->name('cliente.perfil')->middleware('protection:' . config('protection.membership.product_module_number') . ',protection.membership.failed');
-    Route::get('cliente/pagar', 'MembershipController@index')->name('cliente.pagar')->middleware('protection:' . config('protection.membership.product_module_number') . ',protection.membership.failed');
+    Route::get('cliente/pagar', 'MembershipController@pagar')->name('cliente.pagar')->middleware('protection:' . config('protection.membership.product_module_number') . ',protection.membership.failed');
+    Route::post('cliente/pagar', 'MembershipController@pagarUpdate')->name('cliente.pagar.update')->middleware('protection:' . config('protection.membership.product_module_number') . ',protection.membership.failed');
     Route::get('cliente/historial', 'MembershipController@index')->name('cliente.historial')->middleware('protection:' . config('protection.membership.product_module_number') . ',protection.membership.failed');
 
 
